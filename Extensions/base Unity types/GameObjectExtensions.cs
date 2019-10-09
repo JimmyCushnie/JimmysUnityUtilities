@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using Lidgren.Network;
+using UnityEngine;
+using System.ComponentModel;
+using System.Linq.Expressions;
+
+using UnityEngine.UI;
+using Object = UnityEngine.Object;
+using Component = UnityEngine.Component;
+using Random = UnityEngine.Random;
+
+namespace JimmysUnityUtilities
+{
+    public static class GameObjectExtensions
+    {
+        public static T GetOrAddComponent<T>(this GameObject go) where T : Component
+        {
+            T component = go.GetComponent<T>();
+            if (component == null) component = go.AddComponent<T>();
+
+            return component;
+        }
+
+        ///<summary> returns true if the component existsed and was removed </summary>
+        public static bool RemoveComponent<T>(this GameObject go) where T : Component
+        {
+            T component = go.GetComponent<T>();
+            if (component != null)
+            {
+                Object.Destroy(component);
+                return true;
+            }
+            return false;
+        }
+
+        public static bool RemoveLastComponent<T>(this GameObject go) where T : Component
+        {
+            T[] components = go.GetComponents<T>();
+            T component = components[components.Length - 1];
+
+            if (component != null)
+            {
+                Object.Destroy(component);
+                return true;
+            }
+            return false;
+        }
+
+        ///<summary> returns true if the component existsed and was removed </summary>
+        public static bool RemoveComponentImmediate<T>(this GameObject go) where T : Component
+        {
+            T component = go.GetComponent<T>();
+            if (component != null)
+            {
+                Object.DestroyImmediate(component);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Sets the layer of the object as well as all of its children. </summary>
+        public static void SetLayerRecursively(this GameObject go, int layer)
+        {
+            foreach (var t in go.GetComponentsInChildren<Transform>())
+                t.gameObject.layer = layer;
+        }
+
+        public static RectTransform GetRectTransform(this GameObject go)
+        {
+            return (RectTransform)go.transform;
+        }
+    }
+}
