@@ -5,5 +5,5 @@ This repository contains a bunch of code that I like to have on hand when workin
 * `ScriptableObjectSingleton<T>` class, for creating scriptable object singletons
 * `ObjectPoolUtility<T>` class, for creating object pools
 * `FileUtilities` class, with helpful functions for working with the file system
-* `CoroutineUtility` class, for running coroutines
+* `CoroutineUtility` class, for running coroutines from disabled gameobjects or static methods
 * a crapload of extension methods both for Unity types and C# types
