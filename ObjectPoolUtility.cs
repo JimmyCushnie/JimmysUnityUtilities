@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tung
+namespace JimmysUnityUtilities
 {
     public class ObjectPoolUtility<T> where T : Component
     {
