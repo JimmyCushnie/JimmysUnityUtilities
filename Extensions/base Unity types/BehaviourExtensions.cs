@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Lidgren.Network;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
-using Component = UnityEngine.Component;
-using Random = UnityEngine.Random;
 
 namespace JimmysUnityUtilities
 {

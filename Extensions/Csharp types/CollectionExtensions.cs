@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Lidgren.Network;
-using UnityEngine;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
-using Component = UnityEngine.Component;
+﻿using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 namespace JimmysUnityUtilities
@@ -24,6 +15,13 @@ namespace JimmysUnityUtilities
 
             list[index1] = t2;
             list[index2] = t1;
+        }
+
+        public static void MoveItem<T>(this IList<T> list, int oldIndex, int newIndex)
+        {
+            T item = list[oldIndex];
+            list.RemoveAt(oldIndex);
+            list.Insert(newIndex, item);
         }
     }
 }

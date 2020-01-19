@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Lidgren.Network;
-using UnityEngine;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
-using Component = UnityEngine.Component;
-using Random = UnityEngine.Random;
-
-namespace JimmysUnityUtilities
+﻿namespace JimmysUnityUtilities
 {
     public static class NumberExtensions
     {
@@ -59,6 +47,12 @@ namespace JimmysUnityUtilities
             if (value > maxInclusive) return false;
             return true;
         }
+
+        public static bool IsEven(this int value)
+            => value % 2 == 0;
+
+        public static bool IsOdd(this int value)
+            => !value.IsEven();
 
         /// <summary> This is usefully disctinct from Math.Pow because it uses integers. </summary>
         public static int ToThePowerOf(this int @base, int exponent)

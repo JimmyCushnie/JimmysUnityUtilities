@@ -35,12 +35,32 @@ namespace JimmysUnityUtilities
         public override string ToString() 
             => $"#{r:X2}{g:X2}{b:X2}";
 
-        public static Color24 Parse(string hexCode)
+        /// <summary>
+        /// Text can be a hex code or a color name (see Color24.AllNamedColors). 
+        /// Hex codes can be preceded with a # or not. 
+        /// Color names are case-insensitive.
+        /// Spaces in color names are ignored.
+        /// </summary>
+        public static bool TryParse(string text, out Color24 value)
         {
-            if (hexCode.Length != 6)
-                throw new Exception($"cannot parse {hexCode} as {nameof(Color24)}");
+            text = text.Replace(" ", "");
 
-            return new Color24(Int32.Parse(hexCode, NumberStyles.HexNumber));
+            if (AllNamedColors.TryGetValue(text, out value))
+                return true;
+
+            text = text.TrimStart('#');
+            value = default;
+
+            if (text.Length != 6)
+                return false;
+
+            if (Int32.TryParse(text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int hexNumber))
+            {
+                value = new Color24(hexNumber);
+                return true;
+            }
+
+            return false;
         }
     }
 }

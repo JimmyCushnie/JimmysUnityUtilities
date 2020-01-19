@@ -7,7 +7,7 @@ namespace JimmysUnityUtilities
 {
     public static class FileUtilities
     {
-        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd@HH:mm:ss");
+        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd@HH-mm-ss");
 
         /// <summary> replaces any characters that cannot be in a file name </summary>
         /// <param name="replacement"> invalid characters will be replaced with this character </param>
@@ -72,13 +72,14 @@ namespace JimmysUnityUtilities
         public static string ByteCountToHumanReadableString(long byteCount, int decimalsToRoundTo = 1)
         {
             string[] byteSuffixes = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
+            const int @base = 1024; // 1024 for binary, 1000 for SI
 
             if (byteCount == 0)
                 return "0" + byteSuffixes[0];
 
             long bytes = Math.Abs(byteCount);
-            int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
-            double num = Math.Round(bytes / Math.Pow(1024, place), decimalsToRoundTo);
+            int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, @base)));
+            double num = Math.Round(bytes / Math.Pow(@base, place), decimalsToRoundTo);
 
             return (Math.Sign(byteCount) * num).ToString() + byteSuffixes[place];
         }

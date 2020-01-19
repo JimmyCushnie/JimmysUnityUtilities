@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Lidgren.Network;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
-using Component = UnityEngine.Component;
-using Random = UnityEngine.Random;
 
 namespace JimmysUnityUtilities
 {
@@ -17,10 +9,26 @@ namespace JimmysUnityUtilities
         public static void DestroyAllChildren(this Transform t)
             => t.DestroyChildren(0, t.childCount - 1);
 
-        public static void DestroyChildren(this Transform t, int StartDestroyingIndex, int EndDestroyingIndex)
+        public static void DestroyChildrenAfterIndex(this Transform t, int startDestroyingIndex)
+            => t.DestroyChildren(startDestroyingIndex, t.childCount - 1);
+
+        public static void DestroyChildren(this Transform t, int startDestroyingIndex, int endDestroyingIndex)
         {
-            for (int i = StartDestroyingIndex; i <= EndDestroyingIndex; i++)
+            // this works because Object.Destroy() doesn't actually take effect until the end of the frame
+            for (int i = startDestroyingIndex; i <= endDestroyingIndex; i++)
                 Object.Destroy(t.GetChild(i).gameObject);
+        }
+
+        public static void DestroyAllChildrenImmediate(this Transform t)
+            => t.DestroyChildrenImmediate(0, t.childCount - 1);
+
+        public static void DestroyChildrenAfterIndexImmediate(this Transform t, int startDestroyingIndex)
+            => t.DestroyChildrenImmediate(startDestroyingIndex, t.childCount - 1);
+
+        public static void DestroyChildrenImmediate(this Transform t, int startDestroyingIndex, int endDestroyingIndex)
+        {
+            for (int i = startDestroyingIndex; i <= endDestroyingIndex; i++)
+                Object.DestroyImmediate(t.GetChild(startDestroyingIndex).gameObject);
         }
 
         public static void DestroyActiveChildren(this Transform t)

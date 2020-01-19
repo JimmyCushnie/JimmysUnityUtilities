@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Reflection;
 using System.Linq;
 using UnityEngine;
@@ -7,8 +8,10 @@ namespace JimmysUnityUtilities
 {
     public partial struct Color24
     {
-        internal static IDictionary<string, Color24> ColorsByName { get; } = new Dictionary<string, Color24>();
+        private static Dictionary<string, Color24> ColorsByName { get; } = new Dictionary<string, Color24>(StringComparer.InvariantCultureIgnoreCase);
         private static List<Color24> AllColors { get; } = new List<Color24>();
+
+        public static IReadOnlyDictionary<string, Color24> AllNamedColors => ColorsByName;
 
         static Color24()
         {
@@ -16,16 +19,13 @@ namespace JimmysUnityUtilities
                 .Where(o => o.IsInitOnly && o.FieldType == typeof(Color24)))
             {
                 var color = (Color24)item.GetValue(null);
-                ColorsByName[item.Name] = color;
                 AllColors.Add(color);
+                ColorsByName.Add(item.Name, color);
             }
         }
 
-        public static Color24 FromName(string name)
-            => ColorsByName.TryGetValue(name, out var color) ? color : default;
-
-        public static Color24 RandomColor()
-            => AllColors[Random.Range(0, AllColors.Count)];
+        public static Color24 RandomNamedColor()
+            => AllColors.GetRandomElement();
 
         public static readonly Color24 AbsoluteZero = new Color24(0, 72, 186);
         public static readonly Color24 Acajou = new Color24(76, 47, 39);
