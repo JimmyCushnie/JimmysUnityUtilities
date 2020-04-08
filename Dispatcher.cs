@@ -9,45 +9,29 @@ namespace JimmysUnityUtilities
 {
     public class Dispatcher : MonoBehaviour
     {
-        private static Dispatcher Current;
+        private static Dispatcher _Instance;
+        private static Dispatcher Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
+                    _Instance = new GameObject("Dispatcher").AddComponent<Dispatcher>();
+                    DontDestroyOnLoad(_Instance);
+                }
+
+                return _Instance;
+            }
+        }
 
         private Thread MainThread;
         private ConcurrentQueue<(Action Action, ManualResetEventSlim Event)> Queue = new ConcurrentQueue<(Action, ManualResetEventSlim)>();
 
         private bool OnMainThread => Thread.CurrentThread == MainThread;
 
-        public Dispatcher()
-        {
-            Current = this;
-        }
-
         private void Awake()
         {
             MainThread = Thread.CurrentThread;
-        }
-
-        public static void InvokeAsync(Action action)
-        {
-            if (Current.OnMainThread)
-                action();
-            else
-                Current.Queue.Enqueue((action, null));
-        }
-
-        public static void Invoke(Action action)
-        {
-            if (Current.OnMainThread)
-            {
-                action();
-                return;
-            }
-
-            using (var ev = new ManualResetEventSlim())
-            {
-                Current.Queue.Enqueue((action, ev));
-
-                ev.Wait();
-            }
         }
 
         private void Update()
@@ -59,6 +43,31 @@ namespace JimmysUnityUtilities
 
                 item.Action();
                 item.Event?.Set();
+            }
+        }
+
+
+        public static void InvokeAsync(Action action)
+        {
+            if (Instance.OnMainThread)
+                action();
+            else
+                Instance.Queue.Enqueue((action, null));
+        }
+
+        public static void Invoke(Action action)
+        {
+            if (Instance.OnMainThread)
+            {
+                action();
+                return;
+            }
+
+            using (var ev = new ManualResetEventSlim())
+            {
+                Instance.Queue.Enqueue((action, ev));
+
+                ev.Wait();
             }
         }
     }
