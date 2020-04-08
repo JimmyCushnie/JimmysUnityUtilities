@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 namespace JimmysUnityUtilities
@@ -23,5 +25,16 @@ namespace JimmysUnityUtilities
             list.RemoveAt(oldIndex);
             list.Insert(newIndex, item);
         }
+
+        /// <summary>
+        /// Great for foreach loops on collections that might be null
+        /// </summary>
+        public static IEnumerable<T> OrEmptyIfNull<T>(this IEnumerable<T> source)
+        {
+            return source ?? Enumerable.Empty<T>();
+        }
+
+        public static bool IsEmpty<T>(this IEnumerable<T> collection)
+            => !collection.Any();
     }
 }

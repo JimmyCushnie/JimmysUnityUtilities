@@ -62,6 +62,9 @@ namespace JimmysUnityUtilities
 
         public static long GetDirectorySizeInBytes(string directoryPath)
         {
+            if (!Directory.Exists(directoryPath))
+                throw new DirectoryNotFoundException($"Couldn't find directory {directoryPath}");
+
             var info = new DirectoryInfo(directoryPath);
             return info.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
         }

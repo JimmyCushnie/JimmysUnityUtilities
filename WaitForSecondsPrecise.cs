@@ -24,12 +24,14 @@ namespace JimmysUnityUtilities
         }
     }
 
-    public class PreciseSecondsCounter
+    public abstract class PreciseSecondsCounter
     {
+        protected abstract float GetCurrentTime();
+
         private readonly float TimeOnCreation;
         public PreciseSecondsCounter() 
         {
-            TimeOnCreation = Time.time;
+            TimeOnCreation = GetCurrentTime();
         }
 
         private float totalWaitTime = 0;
@@ -37,6 +39,24 @@ namespace JimmysUnityUtilities
             => totalWaitTime += seconds;
 
         internal bool TotalWaitTimeMet
-            => Time.time >= TimeOnCreation + totalWaitTime;
+            => GetCurrentTime() >= TimeOnCreation + totalWaitTime;
+    }
+
+    /// <summary>
+    /// Measures in scaled time (<see cref="Time.time"/>)
+    /// </summary>
+    public class PreciseSecondsCounter_Scaled : PreciseSecondsCounter
+    {
+        protected override float GetCurrentTime()
+            => Time.time;
+    }
+
+    /// <summary>
+    /// Measures in unscaled time (<see cref="Time.unscaledTime"/>)
+    /// </summary>
+    public class PreciseSecondsCounter_Unscaled : PreciseSecondsCounter
+    {
+        protected override float GetCurrentTime()
+            => Time.unscaledTime;
     }
 }

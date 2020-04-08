@@ -15,5 +15,32 @@ namespace JimmysUnityUtilities
 
         public static void SetMarginBottom(this RectTransform rt, float bottom)
             => rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
+
+
+        public static void SetAnchoredPositionX(this RectTransform rt, float xPos)
+            => rt.anchoredPosition = new Vector2(xPos, rt.anchoredPosition.y);
+
+        public static void SetAnchoredPositionY(this RectTransform rt, float yPos)
+            => rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, yPos);
+
+
+        public static void SetAnchorMinX(this RectTransform rt, float value)
+            => rt.anchorMin = new Vector2(value, rt.anchorMin.y);
+
+        public static void SetAnchorMinY(this RectTransform rt, float value)
+            => rt.anchorMin = new Vector2(rt.anchorMin.x, value);
+
+        public static void SetAnchorMaxX(this RectTransform rt, float value)
+            => rt.anchorMax = new Vector2(value, rt.anchorMax.y);
+
+        public static void SetAnchorMaxY(this RectTransform rt, float value)
+            => rt.anchorMax = new Vector2(rt.anchorMax.x, value);
+
+
+        public static void SetPivotX(this RectTransform rt, float value)
+            => rt.pivot = new Vector2(value, rt.pivot.y);
+
+        public static void SetPivotY(this RectTransform rt, float value)
+            => rt.pivot = new Vector2(rt.pivot.x, value);
     }
 }

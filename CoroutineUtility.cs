@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace JimmysUnityUtilities
@@ -14,7 +15,10 @@ namespace JimmysUnityUtilities
             get
             {
                 if (_Instance == null)
+                {
                     _Instance = new GameObject("coroutine runner").AddComponent<CoroutineUtility>();
+                    DontDestroyOnLoad(_Instance);
+                }
 
                 return _Instance;
             }
@@ -26,8 +30,37 @@ namespace JimmysUnityUtilities
         }
         public static void StopRunning(Coroutine coroutine)
         {
-            if (coroutine == null) return;
+            if (coroutine == null) 
+                return;
             Instance.StopCoroutine(coroutine);
+        }
+
+
+
+        public static void RunAfterOneFrame(Action action)
+            => RunAfterFrameDelay(action, 1);
+
+        public static void RunAfterFrameDelay(Action action, int framesToWait)
+        {
+            Run(routine());
+            IEnumerator routine()
+            {
+                for (int i = 0; i < framesToWait; i++)
+                    yield return new WaitForEndOfFrame();
+
+                action.Invoke();
+            }
+        }
+
+        public static void RunAfterSecondsDelay(Action action, float secondsToWait)
+        {
+            Run(routine());
+            IEnumerator routine()
+            {
+                yield return new WaitForSeconds(secondsToWait);
+
+                action.Invoke();
+            }
         }
     }
 }

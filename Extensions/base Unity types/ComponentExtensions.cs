@@ -7,7 +7,7 @@ namespace JimmysUnityUtilities
 {
     public static class ComponentExtensions
     {
-        // for some reason, you can use GetComponent from a component, but not AddComponent. This provides parity with GameObject methods.
+        // For some reason, you can use GetComponent from a component, but not AddComponent. This provides parity with GameObject methods.
         public static T AddComponent<T>(this Component co) where T : Component
             => co.gameObject.AddComponent<T>();
 
@@ -19,7 +19,7 @@ namespace JimmysUnityUtilities
             return component;
         }
 
-        ///<summary> returns true if the component existsed and was removed </summary>
+        ///<summary> Returns true if the component existsed and was removed </summary>
         public static bool RemoveComponent<T>(this Component co) where T : Component
         {
             T component = co.GetComponent<T>();
@@ -31,7 +31,7 @@ namespace JimmysUnityUtilities
             return false;
         }
 
-        ///<summary> returns true if the component existsed and was removed </summary>
+        ///<summary> Returns true if the component existsed and was removed </summary>
         public static bool RemoveComponentImmediate<T>(this Component co) where T : Component
         {
             T component = co.GetComponent<T>();
@@ -43,10 +43,22 @@ namespace JimmysUnityUtilities
             return false;
         }
 
+        ///<summary> Returns true if the component existsed and was removed </summary>
+        public static bool RemoveComponentInChildren<T>(this Component co) where T : Component
+        {
+            T component = co.GetComponentInChildren<T>();
+            if (component != null)
+            {
+                Object.Destroy(component);
+                return true;
+            }
+            return false;
+        }
+
         public static RectTransform GetRectTransform(this Component co)
             => (RectTransform)co.transform;
 
-        public static void SetEnabled(this ICollection<MonoBehaviour> components, bool value)
+        public static void SetEnabled<T>(this IEnumerable<T> components, bool value) where T : MonoBehaviour
         {
             foreach (var component in components)
                 component.enabled = value;

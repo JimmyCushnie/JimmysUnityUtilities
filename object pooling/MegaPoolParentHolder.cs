@@ -13,6 +13,8 @@ namespace JimmysUnityUtilities
                 {
                     _MegaParent = new GameObject("pooled objects parent").transform;
                     _MegaParent.gameObject.SetActive(false);
+
+                    Object.DontDestroyOnLoad(_MegaParent);
                 }
 
                 return _MegaParent;
