@@ -1,0 +1,11 @@
+{
+  "name": "com.jimmycushnie.jimmysunityutilities",
+  "displayName": "Jimmy's Unity Utilities",
+  "version": "1.0.0",
+  "unity": "2018.3",
+  "description": "A collection of utilities for working in Unity.",
+  "keywords": [ "Color24", "singletons", "object pooling" ],
+  "category": "penis lmao",
+  "dependencies": {
+  }
+}
