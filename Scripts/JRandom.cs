@@ -104,7 +104,7 @@ namespace JimmysUnityUtilities
         {
             // TODO: algorithm that isn't stupid
             // TODO: support floats/doubles for weight
-            // TODO: support dictionaries of <T, int>
+            // TODO: support something better for parameters. Dictionaries?
             var indexedOptions = new List<T>();
             foreach (var option in options)
             {
@@ -142,7 +142,18 @@ namespace JimmysUnityUtilities
             => (sbyte)Range(sbyte.MinValue, sbyte.MaxValue);
 
 
+        public Color24 Color24()
+            => new Color24(Byte(), Byte(), Byte());
+
+
+        public Color Color(float alpha = 1)
+            => new Color(Fraction(), Fraction(), Fraction(), alpha);
+
+        public Color ColorWithRandomAlpha()
+            => Color(Fraction());
+
+
         // TODO: random ranges for all the c# number types (uint, short, long, ect)
-        // TODO: random vectors, quaternions, colors
+        // TODO: random vectors and quaternions
     }
 }
