@@ -12,6 +12,7 @@ namespace JimmysUnityUtilities
         private static List<Color24> AllColors { get; } = new List<Color24>();
 
         public static IReadOnlyDictionary<string, Color24> AllNamedColors => ColorsByName;
+        public static IReadOnlyList<Color24> AllNamedColorsList => AllColors;
 
         static Color24()
         {
