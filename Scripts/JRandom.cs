@@ -133,7 +133,16 @@ namespace JimmysUnityUtilities
             => PointWithinUnitCircle() * radius;
 
 
-        // TODO: random stuff for all the c# number types (bytes, shorts, longs ect)
+
+
+        public byte Byte()
+            => (byte)Range(byte.MinValue, byte.MaxValue);
+
+        public sbyte SByte()
+            => (sbyte)Range(sbyte.MinValue, sbyte.MaxValue);
+
+
+        // TODO: random ranges for all the c# number types (uint, short, long, ect)
         // TODO: random vectors, quaternions, colors
     }
 }
