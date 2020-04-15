@@ -62,5 +62,33 @@ namespace JimmysUnityUtilities
 
             return false;
         }
+
+
+        #region equality
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj is Color24 other)
+                return this == other;
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => r << 16 | g << 8 | b;
+
+
+        /// <inheritdoc/>
+        public static bool operator ==(Color24 a, Color24 b)
+        {
+            return 
+                a.r == b.r && 
+                a.g == b.g && 
+                a.b == b.b;
+        }
+
+        /// <inheritdoc/>
+        public static bool operator !=(Color24 a, Color24 b) => !(a == b);
+        #endregion
     }
 }
