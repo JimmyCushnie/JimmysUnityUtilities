@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace JimmysUnityUtilities
@@ -13,9 +14,28 @@ namespace JimmysUnityUtilities
         /// <param name="replacement"> invalid characters will be replaced with this character </param>
         public static string ValidatedFileName(string name, string replacement = "_")
         {
+            // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+            // Todo support the rest of this nonsense
+
             Regex searcher = new Regex("[" + new string(Path.GetInvalidFileNameChars()) + "]"); // the characters between [ and ] are the characters to search for - all the invalid file name characters
-            return searcher.Replace(name, replacement);
+            string validatedName = searcher.Replace(name, replacement);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                foreach (var illegalName in IllegalWindowsFileNames)
+                {
+                    if (validatedName.Equals(illegalName, StringComparison.OrdinalIgnoreCase) ||
+                        validatedName.StartsWith(illegalName + '.', StringComparison.OrdinalIgnoreCase))
+                        return validatedName.Insert(illegalName.Length, "_");
+                }
+            }
+
+            return validatedName;
         }
+        static string[] IllegalWindowsFileNames = new string[]
+        {
+            "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
+        };
         
         /// <summary>
         /// You provide a parent directory and a desired name. We return that name, modified if necessary to make sure it is a valid path name and doesn't already exist.
