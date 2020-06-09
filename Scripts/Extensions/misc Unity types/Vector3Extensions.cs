@@ -26,5 +26,17 @@ namespace JimmysUnityUtilities
                 value.z.CapRange(max.z)
                 );
         }
+
+        public static bool IsPrettyCloseToPointingInTheSameDirectionAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
+            => Vector3.Dot(vectorA, vectorB).IsPrettyCloseTo(1, dotMarginOfError);
+
+        public static bool IsPrettyCloseToPointingInTheOppositeDirectionAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
+            => Vector3.Dot(vectorA, vectorB).IsPrettyCloseTo(-1, dotMarginOfError);
+
+        public static bool IsPrettyCloseToBeingPerpendicularWith(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
+            => Vector3.Dot(vectorA, vectorB).IsPrettyCloseTo(0, dotMarginOfError);
+
+        public static bool IsPrettyCloseToPointingAlongSameAxisAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
+            => vectorA.IsPrettyCloseToPointingInTheSameDirectionAs(vectorB, dotMarginOfError) || vectorA.IsPrettyCloseToPointingInTheOppositeDirectionAs(vectorB, dotMarginOfError);
     }
 }
