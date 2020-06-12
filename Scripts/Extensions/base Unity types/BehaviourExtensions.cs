@@ -7,7 +7,7 @@ namespace JimmysUnityUtilities
     {
         public static void SetEnabled<T>(this ICollection<T> behaviours, bool enabled) where T : Behaviour
         {
-            foreach (var behaviour in behaviours)
+            foreach (var behaviour in behaviours.OrEmptyIfNull())
                 behaviour.enabled = enabled;
         }
     }
