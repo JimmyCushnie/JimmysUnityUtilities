@@ -35,9 +35,6 @@ namespace JimmysUnityUtilities
         public override string ToString() 
             => $"#{r:X2}{g:X2}{b:X2}";
 
-        public static implicit operator Color(Color24 c) => new Color(c.r / 255f, c.g / 255f, c.b / 255f);
-        public static implicit operator Color24(Color c) => new Color24((byte)(c.r * 255), (byte)(c.g * 255), (byte)(c.b * 255));
-
         /// <summary>
         /// Text can be a hex code or a color name (see Color24.AllNamedColors). 
         /// Hex codes can be preceded with a # or not. 
