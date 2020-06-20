@@ -53,7 +53,7 @@ namespace JimmysUnityUtilities
 
         
 
-        // based on https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories
+        // Based on https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories
         public static void CopyDirectory(string sourcePath, string destinationPath, bool copySubDirectories = true)
         {
             DirectoryInfo souce = new DirectoryInfo(sourcePath);
@@ -95,7 +95,7 @@ namespace JimmysUnityUtilities
         public static string ByteCountToHumanReadableString(long byteCount, int decimalsToRoundTo = 1)
         {
             string[] byteSuffixes = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
-            const int @base = 1024; // 1024 for binary, 1000 for SI
+            const int @base = 1000; // 1024 for binary, 1000 for SI
 
             if (byteCount == 0)
                 return "0" + byteSuffixes[0];
@@ -107,7 +107,7 @@ namespace JimmysUnityUtilities
             return (Math.Sign(byteCount) * num).ToString() + byteSuffixes[place];
         }
 
-        // todo: should also have a BitCountToHumanReadableString for download & upload speeds
+        // Todo: should also have a BitCountToHumanReadableString for download & upload speeds
 
         public static string PrettyFileSize(string filePath, int decimalsToRoundTo = 1)
             => ByteCountToHumanReadableString(new FileInfo(filePath).Length, decimalsToRoundTo);
