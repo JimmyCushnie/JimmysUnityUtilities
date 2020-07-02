@@ -43,6 +43,12 @@ namespace JimmysUnityUtilities
             item.transform.SetParent(InactiveObjectParent, worldPositionStays: false);
             InactiveObjectPool.Push(item);
         }
+
+        public void Recyle(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+                Recycle(item);
+        }
         
 
         private Transform _InactiveObjectParent;
