@@ -12,9 +12,9 @@ namespace JimmysUnityUtilities
     public static class ImageUtility
     {
         /// <summary>
-        /// save a Texture2D to disk as PNG or JPG
+        /// Save a Texture2D to disk as PNG or JPG.
         /// </summary>
-        /// <param name="path">the rooted path of the file - extension optional</param>
+        /// <param name="path">The rooted path of the file. Extension optional.</param>
         public static void SaveImageToDisk(Texture2D texture, string path, ImageFormat format = ImageFormat.PNG)
         {
             path = Path.ChangeExtension(path, format.ToString());
@@ -35,10 +35,10 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// load a PNG or JPG from disk into a Texture2D.
+        /// Load a PNG or JPG from disk into a Texture2D.
         /// </summary>
-        /// <param name="path">the full, rooted path of the file</param>
-        /// <returns>null if there's no file at the provided path</returns>
+        /// <param name="path">The full, rooted path of the file.</param>
+        /// <returns>Null if there's no file at the provided path.</returns>
         public static Texture2D LoadImageFromDisk(string path)
         {
             if (!File.Exists(path))
