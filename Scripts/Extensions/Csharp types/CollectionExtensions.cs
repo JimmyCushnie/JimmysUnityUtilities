@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
@@ -36,5 +37,22 @@ namespace JimmysUnityUtilities
 
         public static bool IsEmpty<T>(this IEnumerable<T> collection)
             => !collection.Any();
+
+
+        public static IEnumerable<T> Subsequence<T>(this IReadOnlyList<T> list, int startIndex)
+        {
+            if (startIndex < 0)
+                throw new ArgumentException($"{nameof(startIndex)} must not be less than 0");
+
+            if (startIndex >= list.Count)
+                throw new ArgumentException($"{nameof(startIndex)} must not be greater than the length of {nameof(list)}");
+
+            return list.Subsequence(startIndex, list.Count - startIndex);
+        }
+
+        public static IEnumerable<T> Subsequence<T>(this IEnumerable<T> collection, int startIndex, int length)
+        {
+            return collection.Skip(startIndex).Take(length);
+        }
     }
 }
