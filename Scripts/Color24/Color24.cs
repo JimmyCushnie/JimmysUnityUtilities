@@ -31,6 +31,13 @@ namespace JimmysUnityUtilities
         public Color32 WithOpacity(byte opacity = byte.MaxValue)
             => new Color32(r, g, b, opacity);
 
+        public Color WithOpacity(float opacity)
+        {
+            Color color = this.WithOpacity();
+            color.a = opacity;
+            return color;
+        }
+
 
         public override string ToString() 
             => $"#{r:X2}{g:X2}{b:X2}";
