@@ -79,5 +79,8 @@ namespace JimmysUnityUtilities
                 yield return subset;
             }
         }
+
+        public static bool IsSubsetOf<T>(this IEnumerable<T> subset, IEnumerable<T> set)
+            => subset.Except(set).IsEmpty();
     }
 }
