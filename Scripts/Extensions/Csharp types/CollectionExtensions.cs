@@ -54,5 +54,30 @@ namespace JimmysUnityUtilities
         {
             return collection.Skip(startIndex).Take(length);
         }
+
+
+        public static IEnumerable<IEnumerable<T>> GetAllPossibleSubsets<T>(this IEnumerable<T> set)
+        {
+            var array = set.ToArray();
+            int max = 2.ToThePowerOf(array.Length);
+
+            for (int i = 0; i < max; i++)
+            {
+                var subset = new List<T>();
+                uint bitmaskFuckery = 0;
+
+                while (bitmaskFuckery < array.Length)
+                {
+                    if ((i & (1u << (int)bitmaskFuckery)) > 0)
+                    {
+                        subset.Add(array[(int)bitmaskFuckery]);
+                    }
+
+                    bitmaskFuckery++;
+                }
+
+                yield return subset;
+            }
+        }
     }
 }
