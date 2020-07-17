@@ -44,7 +44,7 @@ namespace JimmysUnityUtilities
             InactiveObjectPool.Push(item);
         }
 
-        public void Recyle(IEnumerable<T> items)
+        public void Recycle(IEnumerable<T> items)
         {
             foreach (var item in items)
                 Recycle(item);
