@@ -70,6 +70,14 @@ namespace JimmysUnityUtilities
             return false;
         }
 
+        public static Color24 Parse(string text)
+        {
+            if (TryParse(text, out var value))
+                return value;
+
+            throw new Exception($"Could not parse text '{text}' as {nameof(Color24)}");
+        }
+
 
         #region equality
         /// <inheritdoc/>
