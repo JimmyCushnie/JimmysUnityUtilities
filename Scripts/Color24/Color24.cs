@@ -40,7 +40,10 @@ namespace JimmysUnityUtilities
 
 
         public override string ToString() 
-            => $"#{r:X2}{g:X2}{b:X2}";
+            => "#" + ToStringWithoutPrefix();
+
+        public string ToStringWithoutPrefix()
+            => $"{r:X2}{g:X2}{b:X2}";
 
         /// <summary>
         /// Text can be a hex code or a color name (see Color24.AllNamedColors). 
