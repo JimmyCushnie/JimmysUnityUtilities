@@ -82,5 +82,27 @@ namespace JimmysUnityUtilities
 
         public static bool IsSubsetOf<T>(this IEnumerable<T> subset, IEnumerable<T> set)
             => subset.Except(set).IsEmpty();
+
+
+        /// <summary>
+        /// Swaps a dictionary so that the keys become the values and the values become the keys.
+        /// If multiple keys in the original contain the same value, some information will be lost. To preserve it, use <see cref="InvertWithList{T1, T2}(IReadOnlyDictionary{T1, T2})"/>
+        /// </summary>
+        public static Dictionary<T2, T1> Invert<T1, T2>(this IReadOnlyDictionary<T1, T2> dictionary)
+        {
+            return dictionary
+                .GroupBy(p => p.Value)
+                .ToDictionary(g => g.Key, g => g.Select(pp => pp.Key).First());
+        }
+
+        /// <summary>
+        /// Swaps a dictionary so that the keys become the values and the values become the keys.
+        /// </summary>
+        public static Dictionary<T2, List<T1>> InvertWithList<T1, T2>(this IReadOnlyDictionary<T1, T2> dictionary)
+        {
+            return dictionary
+                .GroupBy(p => p.Value)
+                .ToDictionary(g => g.Key, g => g.Select(pp => pp.Key).ToList());
+        }
     }
 }
