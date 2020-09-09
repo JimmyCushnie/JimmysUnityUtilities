@@ -51,17 +51,22 @@ namespace JimmysUnityUtilities
             }
         }
 
-        public static void SortChildrenAlphabetically(this Transform t)
+        public static void SortChildrenAlphabetically(this Transform t, bool inverse = false)
         {
-            var childNames = new List<string>(t.childCount);
+            var children = new List<Transform>(t.childCount);
 
             for (int i = 0; i < t.childCount; i++)
-                childNames.Add(t.GetChild(i).gameObject.name);
+                children.Add(t.GetChild(i));
 
-            childNames.Sort();
 
-            for (int i = 0; i < childNames.Count; i++)
-                t.Find(childNames[i]).SetAsLastSibling();
+            if (inverse)
+                children.Sort((t1, t2) => t2.name.CompareTo(t1.name));
+            else
+                children.Sort((t1, t2) => t1.name.CompareTo(t2.name));
+
+
+            for (int i = 0; i < children.Count; ++i)
+                children[i].SetSiblingIndex(i);
         }
     }
 }
