@@ -85,9 +85,31 @@ namespace JimmysUnityUtilities
             if (!Directory.Exists(directoryPath))
                 throw new DirectoryNotFoundException($"Couldn't find directory {directoryPath}");
 
-            var info = new DirectoryInfo(directoryPath);
-            return info.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
+            var directory = new DirectoryInfo(directoryPath);
+            return directory.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
         }
+
+        /// <summary>
+        /// When the OS reports a directory's last write time, it usually doesn't include when items inside the directory were written to.
+        /// This function iterates through a directory's files to find the last write time of any file within.
+        /// </summary>
+        public static DateTime GetDirectoryLastWriteTimeIncludingSubFiles(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+                throw new DirectoryNotFoundException($"Couldn't find directory {directoryPath}");
+
+            var directory = new DirectoryInfo(directoryPath);
+            var latestTime = directory.LastWriteTime;
+
+            foreach (var file in directory.EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                if (file.LastWriteTime > latestTime)
+                    latestTime = file.LastWriteTime;
+            }
+
+            return latestTime;
+        }
+
 
         /// <summary>
         /// Returns strings like "13 B", "5.3 KB" ect
