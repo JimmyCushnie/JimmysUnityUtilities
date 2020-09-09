@@ -90,7 +90,7 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// Returns strings like 13B, 5.3KB ect
+        /// Returns strings like "13 B", "5.3 KB" ect
         /// </summary>
         public static string ByteCountToHumanReadableString(long byteCount, int decimalsToRoundTo = 1)
         {
@@ -104,7 +104,7 @@ namespace JimmysUnityUtilities
             int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, @base)));
             double num = Math.Round(bytes / Math.Pow(@base, place), decimalsToRoundTo);
 
-            return (Math.Sign(byteCount) * num).ToString() + byteSuffixes[place];
+            return (Math.Sign(byteCount) * num).ToString() + " " + byteSuffixes[place];
         }
 
         // Todo: should also have a BitCountToHumanReadableString for download & upload speeds
