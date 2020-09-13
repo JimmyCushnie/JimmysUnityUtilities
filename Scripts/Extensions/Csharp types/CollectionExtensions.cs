@@ -22,6 +22,15 @@ namespace JimmysUnityUtilities
 
         public static void MoveItem<T>(this IList<T> list, int oldIndex, int newIndex)
         {
+            if (oldIndex < 0 || oldIndex >= list.Count)
+                throw new ArgumentOutOfRangeException(nameof(oldIndex));
+
+            if (newIndex < 0 || newIndex >= list.Count)
+                throw new ArgumentOutOfRangeException(nameof(newIndex));
+
+            if (oldIndex == newIndex)
+                return;
+
             T item = list[oldIndex];
             list.RemoveAt(oldIndex);
             list.Insert(newIndex, item);
