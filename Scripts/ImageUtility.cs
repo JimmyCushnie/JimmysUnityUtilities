@@ -39,7 +39,10 @@ namespace JimmysUnityUtilities
         /// </summary>
         /// <param name="path">The full, rooted path of the file.</param>
         /// <returns>Null if there's no file at the provided path or if the file failed to load.</returns>
-        public static Texture2D LoadImageFromDisk(string path, LoadOptions options = new LoadOptions())
+        public static Texture2D LoadImageFromDisk(string path)
+            => LoadImageFromDisk(path, LoadOptions.Default);
+
+        public static Texture2D LoadImageFromDisk(string path, LoadOptions options)
         {
             if (!File.Exists(path))
                 return null;
@@ -47,10 +50,10 @@ namespace JimmysUnityUtilities
 
             // See https://docs.unity3d.com/ScriptReference/ImageConversion.LoadImage.html for compression details
             // See https://docs.unity3d.com/ScriptReference/Texture2D-ctor.html for non-compression details
-            TextureFormat format = options.CompressLoadedTextureInMemory ? TextureFormat.DXT1 : TextureFormat.RGBA32;
+            var format = options.CompressLoadedTextureInMemory ? TextureFormat.DXT1 : TextureFormat.RGBA32;
 
             var bytes = File.ReadAllBytes(path);
-            var texture = new Texture2D(2, 2, format, options.UseMipMaps);
+            var texture = new Texture2D(4, 4, format, options.UseMipMaps); // Must be at least 4; 2x2 textures can't be created with mipmaps enabled. This, of course, isn't documented anywhere, and the error you get doesn't mention it at all. Fuck you unity
 
             if (!texture.LoadImage(bytes, options.MarkLoadedTextureReadOnly))
                 return null;
@@ -72,16 +75,15 @@ namespace JimmysUnityUtilities
             /// </summary>
             /// <param name="markLoadedTextureReadOnly">If true, the loaded texture will be read-only, and use much less memory.</param>
             /// <param name="useMipMaps">Whether the loaded texture should have mipmaps.</param>
-            /// <param name="compressLoadedTextureInMemory">Whether to compress the loaded texture in memory. This cannot be true while useMipMaps is also true.</param>
-            public LoadOptions(bool markLoadedTextureReadOnly = true, bool useMipMaps = true, bool compressLoadedTextureInMemory = false)
+            /// <param name="compressLoadedTextureInMemory">Whether to compress the loaded texture in memory.</param>
+            public LoadOptions(bool markLoadedTextureReadOnly = true, bool useMipMaps = true, bool compressLoadedTextureInMemory = true)
             {
-                if (useMipMaps && compressLoadedTextureInMemory)
-                    throw new System.Exception($"{nameof(useMipMaps)} and {nameof(compressLoadedTextureInMemory)} cannot both be true simultaneously"); // Sorry, graphics APIs are stupid
-
                 this.MarkLoadedTextureReadOnly = markLoadedTextureReadOnly;
                 this.UseMipMaps = useMipMaps;
                 this.CompressLoadedTextureInMemory = compressLoadedTextureInMemory;
             }
+
+            public static LoadOptions Default => new LoadOptions(true, true, true);
         }
     }
 }
