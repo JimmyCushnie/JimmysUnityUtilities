@@ -17,7 +17,7 @@ namespace JimmysUnityUtilities
         /// <param name="path">The rooted path of the file. Extension optional.</param>
         public static void SaveImageToDisk(Texture2D texture, string path, ImageFormat format = ImageFormat.PNG)
         {
-            path = Path.ChangeExtension(path, format.ToString());
+            path = Path.ChangeExtension(path, format.ToString().ToLower());
 
             byte[] data;
             switch (format)
