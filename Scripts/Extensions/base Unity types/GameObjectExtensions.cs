@@ -54,8 +54,10 @@ namespace JimmysUnityUtilities
         /// <summary> Sets the layer of the object as well as all of its children. </summary>
         public static void SetLayerRecursively(this GameObject go, int layer)
         {
-            foreach (var t in go.GetComponentsInChildren<Transform>())
-                t.gameObject.layer = layer;
+            go.layer = layer;
+
+            for (int i = 0; i < go.transform.childCount; i++)
+                go.transform.GetChild(i).gameObject.SetLayerRecursively(layer);
         }
 
         public static RectTransform GetRectTransform(this GameObject go)
