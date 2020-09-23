@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -8,7 +9,12 @@ namespace JimmysUnityUtilities
 {
     public static class FileUtilities
     {
-        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd@HH-mm-ss");
+        public const string FileTimestampFormat = "yyyy-MM-dd@HH-mm-ss";
+        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString(FileTimestampFormat);
+
+        public static bool TryParseDateTimeFromFileTimestamp(string timeStamp, out DateTime result)
+            => DateTime.TryParseExact(timeStamp, FileTimestampFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
+
 
         /// <summary> replaces any characters that cannot be in a file name </summary>
         /// <param name="replacement"> invalid characters will be replaced with this character </param>
