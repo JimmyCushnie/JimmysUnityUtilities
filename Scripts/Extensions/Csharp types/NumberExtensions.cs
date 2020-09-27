@@ -47,6 +47,17 @@ namespace JimmysUnityUtilities
             return value;
         }
 
+        public static float Clamp(this float value, float minInclusive, float maxInclusive)
+        {
+            if (value > maxInclusive) 
+                return maxInclusive;
+
+            if (value < minInclusive) 
+                return minInclusive;
+
+            return value;
+        }
+
         public static bool IsBetween(this int value, int minInclusive, int maxInclusive)
         {
             if (value < minInclusive || value > maxInclusive) 
