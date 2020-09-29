@@ -5,7 +5,7 @@ using UnityEngine;
 namespace JimmysUnityUtilities
 {
     /// <summary>
-    /// Seeded random generation, with more built-in methods than <see cref="System.Random"/>
+    /// Seeded random generation, with more built-in methods than <see cref="System.Random"/>.
     /// </summary>
     public class JRandom
     {
@@ -13,7 +13,7 @@ namespace JimmysUnityUtilities
 
 
         /// <summary>
-        /// Creates a new <see cref="JRandom"/> with a pseudorandom seed
+        /// Creates a new <see cref="JRandom"/> with a pseudorandom seed.
         /// </summary>
         public JRandom(): this(GetPseudorandomSeed())
         {
@@ -29,7 +29,7 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// Creates a new seeded <see cref="JRandom"/>
+        /// Creates a new seeded <see cref="JRandom"/>.
         /// </summary>
         public JRandom(int seed)
         {
@@ -116,7 +116,9 @@ namespace JimmysUnityUtilities
         }
 
 
-        /// <summary> In degrees. </summary>
+        /// <summary>
+        /// In degrees.
+        /// </summary>
         public float Angle()
             => Range(0f, 360f);
 
