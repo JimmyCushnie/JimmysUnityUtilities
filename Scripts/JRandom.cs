@@ -77,6 +77,9 @@ namespace JimmysUnityUtilities
 
         public int Range(int minInclusive, int maxInclusive)
         {
+            if (maxInclusive == int.MaxValue)
+                throw new ArgumentException($"{nameof(maxInclusive)} must be at least one less than int.MaxValue. Sorry, I want to fix that, but System.Random is a bitch about it");
+
             if (minInclusive > maxInclusive)
                 throw new ArgumentException($"{nameof(minInclusive)} cannot be greater than {nameof(maxInclusive)}");
 
