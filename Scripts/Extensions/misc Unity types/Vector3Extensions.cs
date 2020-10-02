@@ -4,13 +4,13 @@ namespace JimmysUnityUtilities
 {
     public static class Vector3Extensions
     {
-        public static Vector3 ClampDimensions(this Vector3 value, Vector3 min, Vector3 max)
+        public static Vector3 ClampDimensions(this Vector3 value, Vector3 minInclusive, Vector3 maxInclusive)
         {
             return new Vector3
                 (
-                Mathf.Clamp(value.x, min.x, max.x),
-                Mathf.Clamp(value.y, min.y, max.y),
-                Mathf.Clamp(value.z, min.z, max.z)
+                value.x.Clamp(minInclusive.x, maxInclusive.x),
+                value.y.Clamp(minInclusive.y, maxInclusive.y),
+                value.z.Clamp(minInclusive.z, maxInclusive.z)
                 );
         }
 
