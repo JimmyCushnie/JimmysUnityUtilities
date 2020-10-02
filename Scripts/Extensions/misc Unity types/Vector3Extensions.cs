@@ -14,6 +14,14 @@ namespace JimmysUnityUtilities
                 );
         }
 
+        public static bool IsBetween(this Vector3 value, Vector3 minInclusive, Vector3 maxInclusive)
+        {
+            return
+                value.x.IsBetween(minInclusive.x, maxInclusive.x) &&
+                value.y.IsBetween(minInclusive.y, maxInclusive.y) &&
+                value.z.IsBetween(minInclusive.z, maxInclusive.z);
+        }
+
         public static Vector3 CapRange(this Vector3 value, float maxX, float maxY, float maxZ)
             => CapRange(value, new Vector3(maxX, maxY, maxZ));
 
