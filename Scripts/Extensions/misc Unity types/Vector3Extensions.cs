@@ -46,5 +46,9 @@ namespace JimmysUnityUtilities
 
         public static bool IsPrettyCloseToPointingAlongSameAxisAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
             => vectorA.IsPrettyCloseToPointingInTheSameDirectionAs(vectorB, dotMarginOfError) || vectorA.IsPrettyCloseToPointingInTheOppositeDirectionAs(vectorB, dotMarginOfError);
+
+
+        public static Vector2 RemoveZComponent(this Vector3 vector3)
+            => new Vector2(vector3.x, vector3.y);
     }
 }
