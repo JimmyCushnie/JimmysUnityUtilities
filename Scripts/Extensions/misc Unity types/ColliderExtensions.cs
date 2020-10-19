@@ -7,6 +7,9 @@ namespace JimmysUnityUtilities
     {
         public static void SetEnabled<T>(this IEnumerable<T> colliders, bool value) where T : Collider
         {
+            if (colliders == null)
+                return;
+
             foreach (var collider in colliders)
                 collider.enabled = value;
         }
