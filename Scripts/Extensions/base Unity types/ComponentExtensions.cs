@@ -32,12 +32,12 @@ namespace JimmysUnityUtilities
         }
 
         ///<summary> Returns true if the component existsed and was removed </summary>
-        public static bool RemoveComponentImmediate<T>(this Component co) where T : Component
+        public static bool RemoveComponentImmediate<T>(this Component co, bool allowDestroyingAssets = false) where T : Component
         {
             T component = co.GetComponent<T>();
             if (component != null)
             {
-                Object.DestroyImmediate(component);
+                Object.DestroyImmediate(component, allowDestroyingAssets);
                 return true;
             }
             return false;
