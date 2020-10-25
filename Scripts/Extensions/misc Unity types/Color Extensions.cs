@@ -15,10 +15,10 @@ namespace JimmysUnityUtilities
 
 
 
-        public static Color32 SetAlpha(this Color32 rgba, byte newAlpha)
+        public static Color32 WithAlpha(this Color32 rgba, byte newAlpha)
             => new Color32(rgba.r, rgba.g, rgba.b, newAlpha);
 
-        public static Color SetAlpha(this Color rgba, float newAlpha)
+        public static Color WithAlpha(this Color rgba, float newAlpha)
             => new Color(rgba.r, rgba.g, rgba.b, newAlpha);
     }
 }
