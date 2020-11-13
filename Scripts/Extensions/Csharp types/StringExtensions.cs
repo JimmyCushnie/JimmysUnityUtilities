@@ -26,9 +26,9 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Like <see cref="string.Replace(string, string)"/> but it only replaces the first instance
         /// </summary>
-        public static string ReplaceFirst(this string text, string search, string replace)
+        public static string ReplaceFirst(this string text, string search, string replace, int startIndex = 0)
         {
-            int index = text.IndexOf(search);
+            int index = text.IndexOf(search, startIndex);
 
             if (index < 0)
                 return text;
