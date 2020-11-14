@@ -37,6 +37,19 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
+        /// Removes an item in 0(1) time by swapping it with the last item in the list, then removing it from there.
+        /// In almost all situations this will be faster than <see cref="IList{T}.RemoveAt(int)"/>, but it will mess up
+        /// the order of the list, so only use it where order is unimportant.
+        /// </summary>
+        public static void FastRemoveAt<T>(this IList<T> list, int index)
+        {
+            int lastIndex = list.Count - 1;
+
+            list.SwapPositions(index, lastIndex);
+            list.RemoveAt(lastIndex);
+        }
+
+        /// <summary>
         /// Great for foreach loops on collections that might be null
         /// </summary>
         public static IEnumerable<T> OrEmptyIfNull<T>(this IEnumerable<T> source)
