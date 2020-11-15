@@ -6,6 +6,17 @@ namespace JimmysUnityUtilities
 {
     public static class StringBuilderExtensions
     {
+        public static int IndexOf(this StringBuilder builder, char find, int startIndex = 0)
+        {
+            for (int i = startIndex; i < builder.Length; ++i)
+            {
+                if (builder[i] == find)
+                    return i;
+            }
+
+            return -1;
+        }
+
         public static int IndexOf(this StringBuilder builder, string find, int startIndex = 0)
         {
             int maxSearchLength = builder.Length - find.Length + 1;
