@@ -110,5 +110,24 @@ namespace JimmysUnityUtilities
 
             return builder;
         }
+
+
+
+        public static bool StartsWith(this StringBuilder builder, char character)
+            => builder.Length > 0 && builder[0] == character;
+
+        public static bool StartsWith(this StringBuilder builder, string substring)
+        {
+            if (builder.Length < substring.Length)
+                return false;
+
+            for (int i = 0; i < substring.Length; i++)
+            {
+                if (builder[i] != substring[i])
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
