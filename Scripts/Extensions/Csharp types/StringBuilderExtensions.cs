@@ -41,5 +41,16 @@ namespace JimmysUnityUtilities
 
             return count;
         }
+
+        public static void ReplaceFirst(this StringBuilder builder, string search, string replace, int startIndex = 0)
+        {
+            int index = builder.IndexOf(search, startIndex);
+
+            if (index < 0)
+                return;
+
+            builder.Remove(index, search.Length);
+            builder.Insert(index, replace);
+        }
     }
 }
