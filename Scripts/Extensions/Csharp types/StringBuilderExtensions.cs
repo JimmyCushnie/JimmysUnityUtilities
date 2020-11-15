@@ -43,58 +43,72 @@ namespace JimmysUnityUtilities
             return count;
         }
 
-        public static void ReplaceFirst(this StringBuilder builder, string search, string replace, int startIndex = 0)
+        public static StringBuilder ReplaceFirst(this StringBuilder builder, string search, string replace, int startIndex = 0)
         {
             int index = builder.IndexOf(search, startIndex);
 
             if (index < 0)
-                return;
+                return builder;
 
             builder.Remove(index, search.Length);
             builder.Insert(index, replace);
+
+            return builder;
         }
 
-        public static void Prepend(this StringBuilder builder, string value)
+        public static StringBuilder Prepend(this StringBuilder builder, string value)
             => builder.Insert(0, value);
 
 
 
-        public static void TrimStart(this StringBuilder builder, char remove = ' ')
+        public static StringBuilder TrimStart(this StringBuilder builder, char remove = ' ')
         {
             while (builder.Length > 0 && builder[0] == remove)
                 builder.Remove(startIndex: 0, length: 1);
+
+            return builder;
         }
 
-        public static void TrimStart(this StringBuilder builder, params char[] remove)
+        public static StringBuilder TrimStart(this StringBuilder builder, params char[] remove)
         {
             while (builder.Length > 0 && remove.Contains(builder[0]))
                 builder.Remove(startIndex: 0, length: 1);
+
+            return builder;
         }
 
 
-        public static void TrimEnd(this StringBuilder builder, char remove = ' ')
+        public static StringBuilder TrimEnd(this StringBuilder builder, char remove = ' ')
         {
             while (builder.Length > 0 && builder[builder.Length - 1] == remove)
                 builder.Remove(startIndex: builder.Length - 1, length: 1);
+
+            return builder;
         }
 
-        public static void TrimEnd(this StringBuilder builder,  char[] remove)
+        public static StringBuilder TrimEnd(this StringBuilder builder,  char[] remove)
         {
             while (builder.Length > 0 && remove.Contains(builder[builder.Length - 1]))
                 builder.Remove(startIndex: builder.Length - 1, length: 1);
+
+            return builder;
         }
 
 
-        public static void Trim(this StringBuilder builder, char remove = ' ')
+        public static StringBuilder Trim(this StringBuilder builder, char remove = ' ')
         {
             builder.TrimEnd(remove);
             builder.TrimStart(remove);
+
+            return builder;
         }
 
-        public static void Trim(this StringBuilder builder, params char[] remove)
+        public static StringBuilder Trim(this StringBuilder builder, params char[] remove)
         {
             builder.TrimEnd(remove);
             builder.TrimStart(remove);
+
+            return builder;
         }
     }
 }
