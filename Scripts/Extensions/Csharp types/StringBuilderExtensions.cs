@@ -52,5 +52,8 @@ namespace JimmysUnityUtilities
             builder.Remove(index, search.Length);
             builder.Insert(index, replace);
         }
+
+        public static void Prepend(this StringBuilder builder, string value)
+            => builder.Insert(0, value);
     }
 }
