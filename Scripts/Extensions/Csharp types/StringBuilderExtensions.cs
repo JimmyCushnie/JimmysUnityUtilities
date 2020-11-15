@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -163,5 +164,34 @@ namespace JimmysUnityUtilities
             int length = endIndex - startIndex + 1;
             return builder.ToString(startIndex, length);
         }
+
+
+
+        public static StringBuilder InsertChain(this StringBuilder builder, int index, IEnumerable<string> elements)
+        {
+            foreach (var element in elements)
+            {
+                builder.Insert(index, element);
+                index += element.Length;
+            }
+
+            return builder;
+        }
+
+        public static StringBuilder PrependChain(this StringBuilder builder, IEnumerable<string> elements) 
+            => builder.InsertChain(0, elements);
+
+        public static StringBuilder AppendChain(this StringBuilder builder, IEnumerable<string> elements) 
+            => builder.InsertChain(builder.Length - 1, elements);
+
+
+        public static StringBuilder InsertChain(this StringBuilder builder, int index, params string[] elements)
+            => builder.InsertChain(index, (IEnumerable<string>)elements);
+
+        public static StringBuilder PrependChain(this StringBuilder builder, params string[] elements) 
+            => builder.InsertChain(0, elements);
+
+        public static StringBuilder AppendChain(this StringBuilder builder, params string[] elements) 
+            => builder.InsertChain(builder.Length - 1, elements);
     }
 }
