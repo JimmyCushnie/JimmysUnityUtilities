@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace JimmysUnityUtilities
@@ -55,5 +56,45 @@ namespace JimmysUnityUtilities
 
         public static void Prepend(this StringBuilder builder, string value)
             => builder.Insert(0, value);
+
+
+
+        public static void TrimStart(this StringBuilder builder, char remove = ' ')
+        {
+            while (builder.Length > 0 && builder[0] == remove)
+                builder.Remove(startIndex: 0, length: 1);
+        }
+
+        public static void TrimStart(this StringBuilder builder, params char[] remove)
+        {
+            while (builder.Length > 0 && remove.Contains(builder[0]))
+                builder.Remove(startIndex: 0, length: 1);
+        }
+
+
+        public static void TrimEnd(this StringBuilder builder, char remove = ' ')
+        {
+            while (builder.Length > 0 && builder[builder.Length - 1] == remove)
+                builder.Remove(startIndex: builder.Length - 1, length: 1);
+        }
+
+        public static void TrimEnd(this StringBuilder builder,  char[] remove)
+        {
+            while (builder.Length > 0 && remove.Contains(builder[builder.Length - 1]))
+                builder.Remove(startIndex: builder.Length - 1, length: 1);
+        }
+
+
+        public static void Trim(this StringBuilder builder, char remove = ' ')
+        {
+            builder.TrimEnd(remove);
+            builder.TrimStart(remove);
+        }
+
+        public static void Trim(this StringBuilder builder, params char[] remove)
+        {
+            builder.TrimEnd(remove);
+            builder.TrimStart(remove);
+        }
     }
 }
