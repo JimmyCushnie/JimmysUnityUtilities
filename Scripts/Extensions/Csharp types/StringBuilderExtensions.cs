@@ -140,5 +140,28 @@ namespace JimmysUnityUtilities
 
             return true;
         }
+
+
+        public static string Snip(this StringBuilder builder, int startIndex, int endIndex)
+        {
+            if (startIndex < 0)
+                throw new ArgumentException($"{nameof(startIndex)} must not be less than 0");
+
+            if (endIndex < 0)
+                throw new ArgumentException($"{nameof(endIndex)} must not be less than 0");
+
+            if (endIndex < startIndex)
+                throw new ArgumentException($"{nameof(endIndex)} must not be less than {nameof(startIndex)}");
+
+            if (startIndex >= builder.Length)
+                throw new ArgumentOutOfRangeException($"{nameof(startIndex)} is outside the range of the string!");
+
+            if (endIndex >= builder.Length)
+                throw new ArgumentOutOfRangeException($"{nameof(endIndex)} is outside the range of the string!");
+
+
+            int length = endIndex - startIndex + 1;
+            return builder.ToString(startIndex, length);
+        }
     }
 }
