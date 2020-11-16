@@ -7,28 +7,38 @@ namespace JimmysUnityUtilities
 {
     public static class StringBuilderExtensions
     {
-        public static int IndexOf(this StringBuilder builder, char find, int startIndex = 0)
+        public static int IndexOf(this StringBuilder builder, char find, int startIndex = 0, bool ignoreCase = false)
         {
+            if (ignoreCase)
+                find = Char.ToLowerInvariant(find);
+
             for (int i = startIndex; i < builder.Length; ++i)
             {
-                if (builder[i] == find)
+                char charAtIndex = builder[i];
+
+                if (ignoreCase)
+                    charAtIndex = Char.ToLowerInvariant(charAtIndex);
+
+                if (charAtIndex == find)
                     return i;
             }
 
             return -1;
         }
 
-        public static int IndexOf(this StringBuilder builder, string find, int startIndex = 0)
+        public static int IndexOf(this StringBuilder builder, string find, int startIndex = 0, bool ignoreCase = false)
         {
             int maxSearchLength = builder.Length - find.Length + 1;
 
             int findIndex;
             for (int i = startIndex; i < maxSearchLength; ++i)
             {
-                if (builder[i] == find[0])
+                char charAtIndex = GetCharInBuilder(i);
+
+                if (charAtIndex == GetCharInFind(0))
                 {
                     findIndex = 1;
-                    while (findIndex < find.Length && builder[i + findIndex] == find[findIndex])
+                    while (findIndex < find.Length && GetCharInBuilder(i + findIndex) == GetCharInFind(findIndex))
                         findIndex++;
 
                     if (findIndex == find.Length)
@@ -37,6 +47,22 @@ namespace JimmysUnityUtilities
             }
 
             return -1;
+
+
+            char GetCharInBuilder(int index)
+            {
+                if (ignoreCase)
+                    return char.ToLowerInvariant(builder[index]);
+
+                return builder[index];
+            }
+            char GetCharInFind(int index) // Ideally we would cache this somehow
+            {
+                if (ignoreCase)
+                    return char.ToLowerInvariant(find[index]);
+
+                return find[index];
+            }
         }
 
         public static int CountInstancesOf(this StringBuilder builder, string find)
