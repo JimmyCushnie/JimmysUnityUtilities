@@ -193,5 +193,28 @@ namespace JimmysUnityUtilities
 
         public static StringBuilder AppendChain(this StringBuilder builder, params string[] elements) 
             => builder.InsertChain(builder.Length - 1, elements);
+
+
+
+        public static bool IsEmpty(this StringBuilder builder)
+            => builder.Length == 0;
+
+        public static bool IsNotEmpty(this StringBuilder builder)
+            => builder.Length > 0;
+
+
+        public static bool IsEmptyOrWhitespace(this StringBuilder builder)
+        {
+            if (builder.IsEmpty())
+                return true;
+
+            for (int i = 0; i < builder.Length; i++)
+            {
+                if (!Char.IsWhiteSpace(builder[i]))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
