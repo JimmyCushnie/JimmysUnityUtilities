@@ -65,6 +65,17 @@ namespace JimmysUnityUtilities
             }
         }
 
+        public static int IndexOfWhitespace(this StringBuilder builder, int startIndex = 0)
+        {
+            for (int i = startIndex; i < builder.Length; ++i)
+            {
+                if (Char.IsWhiteSpace(builder[i]))
+                    return i;
+            }
+
+            return -1;
+        }
+
         public static int CountInstancesOf(this StringBuilder builder, string find)
         {
             int count = 0;
