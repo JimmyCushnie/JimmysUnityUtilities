@@ -192,8 +192,10 @@ namespace JimmysUnityUtilities
         }
 
 
-
         public static StringBuilder InsertChain(this StringBuilder builder, int index, IEnumerable<string> elements)
+            => InsertChain(builder, index, out var _, elements);
+
+        public static StringBuilder InsertChain(this StringBuilder builder, int index, out int insertionEndIndex, IEnumerable<string> elements)
         {
             foreach (var element in elements)
             {
@@ -201,11 +203,15 @@ namespace JimmysUnityUtilities
                 index += element.Length;
             }
 
+            insertionEndIndex = index;
             return builder;
         }
 
         public static StringBuilder PrependChain(this StringBuilder builder, IEnumerable<string> elements) 
             => builder.InsertChain(0, elements);
+
+        public static StringBuilder PrependChain(this StringBuilder builder, out int insertionEndIndex, IEnumerable<string> elements) 
+            => builder.InsertChain(0, out insertionEndIndex, elements);
 
         public static StringBuilder AppendChain(this StringBuilder builder, IEnumerable<string> elements) 
             => builder.InsertChain(builder.Length - 1, elements);
@@ -214,8 +220,14 @@ namespace JimmysUnityUtilities
         public static StringBuilder InsertChain(this StringBuilder builder, int index, params string[] elements)
             => builder.InsertChain(index, (IEnumerable<string>)elements);
 
+        public static StringBuilder InsertChain(this StringBuilder builder, int index, out int insertionEndIndex, params string[] elements)
+            => builder.InsertChain(index, out insertionEndIndex, (IEnumerable<string>)elements);
+
         public static StringBuilder PrependChain(this StringBuilder builder, params string[] elements) 
             => builder.InsertChain(0, elements);
+
+        public static StringBuilder PrependChain(this StringBuilder builder, out int insertionEndIndex, params string[] elements) 
+            => builder.InsertChain(0, out insertionEndIndex, elements);
 
         public static StringBuilder AppendChain(this StringBuilder builder, params string[] elements) 
             => builder.InsertChain(builder.Length - 1, elements);
