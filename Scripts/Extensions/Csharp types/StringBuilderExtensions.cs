@@ -93,14 +93,17 @@ namespace JimmysUnityUtilities
         }
 
         public static StringBuilder ReplaceFirst(this StringBuilder builder, string search, string replace, int startIndex = 0)
-        {
-            int index = builder.IndexOf(search, startIndex);
+            => builder.ReplaceFirst(search, replace, out _, startIndex);
 
-            if (index < 0)
+        public static StringBuilder ReplaceFirst(this StringBuilder builder, string search, string replace, out int indexOfReplacementStart, int startIndex = 0)
+        {
+            indexOfReplacementStart = builder.IndexOf(search, startIndex);
+
+            if (indexOfReplacementStart < 0)
                 return builder;
 
-            builder.Remove(index, search.Length);
-            builder.Insert(index, replace);
+            builder.Remove(indexOfReplacementStart, search.Length);
+            builder.Insert(indexOfReplacementStart, replace);
 
             return builder;
         }
