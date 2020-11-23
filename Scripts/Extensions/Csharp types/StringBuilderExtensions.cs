@@ -268,5 +268,20 @@ namespace JimmysUnityUtilities
 
             return true;
         }
+
+
+        public static bool IsExclusively(this StringBuilder builder, char target)
+        {
+            if (builder.IsEmpty())
+                return false;
+
+            for (int i = 0; i < builder.Length; i++)
+            {
+                if (builder[i] != target)
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
