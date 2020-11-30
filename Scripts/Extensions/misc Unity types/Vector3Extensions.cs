@@ -35,6 +35,10 @@ namespace JimmysUnityUtilities
                 );
         }
 
+
+        public static bool IsPrettyCloseTo(this Vector3 vectorA, Vector3 vectorB, float maxDistance = 0.01f)
+            => Vector3.Distance(vectorA, vectorB) <= maxDistance;
+
         public static bool IsPrettyCloseToPointingInTheSameDirectionAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
             => Vector3.Dot(vectorA, vectorB).IsPrettyCloseTo(1, dotMarginOfError);
 
