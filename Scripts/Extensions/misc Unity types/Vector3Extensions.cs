@@ -54,5 +54,44 @@ namespace JimmysUnityUtilities
 
         public static Vector2 RemoveZComponent(this Vector3 vector3)
             => new Vector2(vector3.x, vector3.y);
+
+
+        /// <summary>
+        /// Returns the vector closest to the input which is 1 or -1 on one axis, and 0 on all the other axes.
+        /// </summary>
+        public static Vector3 RoundToNearestCardinalValue(this Vector3 vector3)
+        {
+            float absX = Mathf.Abs(vector3.x);
+            float absY = Mathf.Abs(vector3.y);
+            float absZ = Mathf.Abs(vector3.z);
+
+            // This code is pretty bad lmao
+            if (absX > absY)
+            {
+                if (absX > absZ)
+                {
+                    float signX = Mathf.Sign(vector3.x);
+                    return new Vector3(signX, 0, 0);
+                }
+                else
+                {
+                    float signZ = Mathf.Sign(vector3.z);
+                    return new Vector3(0, 0, signZ);
+                }
+            }
+            else
+            {
+                if (absY > absZ)
+                {
+                    float signY = Mathf.Sign(vector3.y);
+                    return new Vector3(0, signY ,0);
+                }
+                else
+                {
+                    float signZ = Mathf.Sign(vector3.z);
+                    return new Vector3(0, 0, signZ);
+                }
+            }
+        }
     }
 }
