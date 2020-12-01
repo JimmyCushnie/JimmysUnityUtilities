@@ -9,5 +9,8 @@ namespace JimmysUnityUtilities
 
         public static bool IsWhitespaceOrNonBreakingSpace(this char value)
             => value.IsWhitespace() || value == '\u200B';
+
+        public static bool EqualsCaseInsensitive(this char value, char other)
+            => Char.ToUpperInvariant(value) == Char.ToUpperInvariant(other);
     }
 }
