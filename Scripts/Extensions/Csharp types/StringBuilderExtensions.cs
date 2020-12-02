@@ -108,6 +108,27 @@ namespace JimmysUnityUtilities
             return builder;
         }
 
+        /// <summary>
+        /// Replace any characters from a list with a given character.
+        /// </summary>
+        public static StringBuilder ReplaceAny(this StringBuilder builder, char[] search, char replace, int startIndex = 0)
+        {
+            for (int i = startIndex; i < builder.Length; i++)
+            {
+                foreach (var candidate in search)
+                {
+                    if (builder[i] == candidate)
+                    {
+                        builder[i] = replace;
+                        break;
+                    }
+                }
+            }
+
+            return builder;
+        }
+
+
         public static StringBuilder Prepend(this StringBuilder builder, string value)
             => builder.Insert(0, value);
 

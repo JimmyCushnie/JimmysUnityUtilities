@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace JimmysUnityUtilities
 {
@@ -34,6 +35,16 @@ namespace JimmysUnityUtilities
                 return text;
 
             return text.Substring(0, index) + replace + text.Substring(index + search.Length);
+        }
+
+        /// <summary>
+        /// Replace any characters from a list with a given character.
+        /// </summary>
+        public static string ReplaceAny(this string text, char[] search, char replace, int startIndex = 0)
+        {
+            var builder = new StringBuilder(text);
+            builder.ReplaceAny(search, replace, startIndex);
+            return builder.ToString();
         }
 
         /// <summary>
