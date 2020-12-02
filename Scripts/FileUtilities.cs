@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace JimmysUnityUtilities
 {
@@ -18,13 +17,12 @@ namespace JimmysUnityUtilities
 
         /// <summary> replaces any characters that cannot be in a file name </summary>
         /// <param name="replacement"> invalid characters will be replaced with this character </param>
-        public static string ValidatedFileName(string name, string replacement = "_")
+        public static string ValidatedFileName(string name, char replacement = '_')
         {
             // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
             // Todo support the rest of this nonsense
 
-            Regex searcher = new Regex("[" + new string(Path.GetInvalidFileNameChars()) + "]"); // the characters between [ and ] are the characters to search for - all the invalid file name characters
-            string validatedName = searcher.Replace(name, replacement);
+            string validatedName = name.ReplaceAny(Path.GetInvalidFileNameChars(), replacement, 0);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
