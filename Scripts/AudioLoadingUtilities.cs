@@ -40,7 +40,7 @@ namespace JimmysUnityUtilities
                         yield break;
                     }
 
-                    var clipDownloader = ((DownloadHandlerAudioClip)webRequest.downloadHandler);
+                    var clipDownloader = (DownloadHandlerAudioClip)webRequest.downloadHandler;
                     var clip = clipDownloader.audioClip;
 
                     try
