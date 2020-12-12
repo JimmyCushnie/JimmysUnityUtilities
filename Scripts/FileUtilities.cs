@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace JimmysUnityUtilities
 {
@@ -144,5 +146,76 @@ namespace JimmysUnityUtilities
 
         public static void OpenInFileExplorer(string path)
             => System.Diagnostics.Process.Start(path);
+
+
+
+
+        // Somehow, .NET totally lacks this functionality, so we have to add it ourselves
+        /// <summary>
+        /// Converts a file path to a URI path.
+        /// </summary>
+        /// <param name="filePath">The full, rooted path of the file or directory</param>
+        public static string FilePathToURI(string filePath)
+        {
+            StringBuilder uriBuilder = new StringBuilder(filePath);
+            for (int i = 0; i < uriBuilder.Length; i++)
+            {
+                char c = uriBuilder[i];
+
+                if (AsciiCharactersAllowedInURIWithoutEscaping.Contains(c)) // This will be the vast majority of characters, so checking this first is best for performance
+                    continue;
+
+                if (c > '\xFF') // Not an ascii character
+                    continue;
+
+                if (c == Path.DirectorySeparatorChar || c == Path.AltDirectorySeparatorChar)
+                {
+                    uriBuilder[i] = '/';
+                    continue;
+                }
+
+
+                int charAsInt = (int)c;
+                string escapedCharacter = charAsInt.ToString("X2");
+
+                uriBuilder[i] = '%';
+                uriBuilder.Insert(i + 1, escapedCharacter);
+
+                i += escapedCharacter.Length - 1;
+            }
+
+
+            if (uriBuilder.Length >= 2 && uriBuilder[0] == '/' && uriBuilder[1] == '/') // UNC path
+                uriBuilder.Insert(0, "file:");
+            else
+                uriBuilder.Insert(0, "file:///");
+
+            return uriBuilder.ToString();
+        }
+
+        static readonly HashSet<char> AsciiCharactersAllowedInURIWithoutEscaping = GetAsciiCharactersAllowedInURI();
+        static HashSet<char> GetAsciiCharactersAllowedInURI()
+        {
+            var set = new HashSet<char>();
+
+            for (int i = 'a'; i <= 'z'; i++)
+                set.Add((char)i);
+
+            for (int i = 'A'; i <= 'Z'; i++)
+                set.Add((char)i);
+
+            for (int i = '0'; i <= '9'; i++)
+                set.Add((char)i);
+
+            set.Add('+');
+            set.Add('/');
+            set.Add(':');
+            set.Add('.');
+            set.Add('-');
+            set.Add('_');
+            set.Add('~');
+
+            return set;
+        }
     }
 }
