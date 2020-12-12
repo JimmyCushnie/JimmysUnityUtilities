@@ -106,6 +106,15 @@ namespace JimmysUnityUtilities
             }
         }
 
+        public static bool FileCanBeLoadedAsAudio(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return false;
+
+            string extension = Path.GetExtension(filePath);
+            return CanLoadFileType(extension, out _);
+        }
+
 
         private static void EnsureFileCanBeLoaded(string filePath, out AudioType audioType)
         {
@@ -115,26 +124,25 @@ namespace JimmysUnityUtilities
             string extension = Path.GetExtension(filePath);
             if (!CanLoadFileType(extension, out audioType))
                 throw new Exception($"Cannot load audio file at {filePath}; wrong type. Supported types are .ogg, .wav and .mp3.");
+        }
 
-
-            bool CanLoadFileType(string _extension, out AudioType _audioType)
+        private static bool CanLoadFileType(string extension, out AudioType audioType)
+        {
+            switch (extension.ToLower())
             {
-                switch (_extension.ToLower())
-                {
-                    case ".mp3":
-                        _audioType = AudioType.MPEG;
-                        return true;
-                    case ".ogg":
-                        _audioType = AudioType.OGGVORBIS;
-                        return true;
-                    case ".wav":
-                        _audioType = AudioType.WAV;
-                        return true;
+                case ".mp3":
+                    audioType = AudioType.MPEG;
+                    return true;
+                case ".ogg":
+                    audioType = AudioType.OGGVORBIS;
+                    return true;
+                case ".wav":
+                    audioType = AudioType.WAV;
+                    return true;
 
-                    default:
-                        _audioType = AudioType.UNKNOWN;
-                        return false;
-                }
+                default:
+                    audioType = AudioType.UNKNOWN;
+                    return false;
             }
         }
     }
