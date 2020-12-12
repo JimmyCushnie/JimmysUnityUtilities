@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 namespace JimmysUnityUtilities
 {
     /// <summary>
-    /// For loading audio from files on disk.
+    /// For loading <see cref="AudioClip"/> from a file on disk.
     /// </summary>
     public static class AudioLoadingUtilities
     {
@@ -106,6 +106,15 @@ namespace JimmysUnityUtilities
             }
         }
 
+
+        public static bool FileCanBeLoadedAsAudio(FileInfo file)
+        {
+            if (!file.Exists)
+                return false;
+
+            return CanLoadFileType(file.Extension, out _);
+        }
+
         public static bool FileCanBeLoadedAsAudio(string filePath)
         {
             if (!File.Exists(filePath))
@@ -145,5 +154,18 @@ namespace JimmysUnityUtilities
                     return false;
             }
         }
+
+
+        /// <summary>
+        /// See <see cref="LoadAudioFromDisk(string, Action{AudioClip})"/>
+        /// </summary>
+        public static void LoadAudioFromDisk(FileInfo file, Action<AudioClip> onFinishedLoadingCallback)
+            => LoadAudioFromDisk(file.FullName, onFinishedLoadingCallback);
+
+        /// <summary>
+        /// See <see cref="StreamAudioFromDisk(string, Action{AudioClip})"/>
+        /// </summary>
+        public static void StreamAudioFromDisk(FileInfo file, Action<AudioClip> onFinishedLoadingCallback)
+            => StreamAudioFromDisk(file.FullName, onFinishedLoadingCallback);
     }
 }
