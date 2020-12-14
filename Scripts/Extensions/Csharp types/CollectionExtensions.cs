@@ -126,5 +126,26 @@ namespace JimmysUnityUtilities
                 .GroupBy(p => p.Value)
                 .ToDictionary(g => g.Key, g => g.Select(pp => pp.Key).ToList());
         }
+
+
+        public static bool ContainsIndex<T>(this IReadOnlyList<T> list, int index)
+        {
+            if (index < 0)
+                return false;
+
+            return index < list.Count;
+        }
+
+        public static bool ContainsIndex<T>(this IReadOnlyList<T> list, int index, out T valueAtIndex)
+        {
+            if (!list.ContainsIndex(index))
+            {
+                valueAtIndex = default;
+                return false;
+            }
+
+            valueAtIndex = list[index];
+            return true;
+        }
     }
 }
