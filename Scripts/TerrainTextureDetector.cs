@@ -28,7 +28,7 @@ namespace JimmysUnityUtilities
         /// </summary>
         public int GetDominantTextureIndexAt(Vector3 worldPosition)
         {
-            Vector3Int alphamapCoordinates = ConvertToAlphamapCoordinate(worldPosition);
+            Vector3Int alphamapCoordinates = ConvertToAlphamapCoordinates(worldPosition);
 
             if (!CachedTerrainAlphamapData.ContainsIndex(alphamapCoordinates.x, dimension: 1))
                 return -1;
@@ -56,7 +56,7 @@ namespace JimmysUnityUtilities
             return mostDominantTextureIndex;
 
 
-            Vector3Int ConvertToAlphamapCoordinate(Vector3 _worldPosition)
+            Vector3Int ConvertToAlphamapCoordinates(Vector3 _worldPosition)
             {
                 Vector3 relativePosition = _worldPosition - transform.position;
                 // Important note: terrains cannot be rotated, so we don't have to worry about rotation
