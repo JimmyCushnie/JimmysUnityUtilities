@@ -59,14 +59,17 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Get a boolean value with a certain probability of being true. Default probability is 50/50.
         /// </summary>
-        public bool Chance(double probabilityOfTrue = 0.5)
+        public bool Chance(double probabilityOfTrue)
             => FractionD() < probabilityOfTrue;
+
+        public bool FiftyFifty()
+            => Chance(0.5d);
 
         /// <summary>
         /// 50% chance to be 1, 50% chance to be -1
         /// </summary>
         public int Sign()
-            => Chance() ? 1 : -1;
+            => FiftyFifty() ? 1 : -1;
 
         /// <summary>
         /// Random float between -1 and 1.
