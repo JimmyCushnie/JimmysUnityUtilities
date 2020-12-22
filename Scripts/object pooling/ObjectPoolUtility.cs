@@ -56,6 +56,8 @@ namespace JimmysUnityUtilities
         {
             get
             {
+                // Intentionally using "is null" instead of Unity's overloaded "== null" for performance when doing a lot of operations on a pool.
+                // We should be safe here because the MegaParent is DontDestroyOnLoad and so should never be destroyed.
                 if (_InactiveObjectParent is null)
                 {
                     _InactiveObjectParent = new GameObject(typeof(T).Name).transform;
