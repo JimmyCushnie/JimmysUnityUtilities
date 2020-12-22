@@ -56,7 +56,7 @@ namespace JimmysUnityUtilities
         {
             get
             {
-                if (_InactiveObjectParent == null)
+                if (_InactiveObjectParent is null)
                 {
                     _InactiveObjectParent = new GameObject(typeof(T).Name).transform;
                     _InactiveObjectParent.SetParent(MegaPoolParentHolder.MegaParent);
