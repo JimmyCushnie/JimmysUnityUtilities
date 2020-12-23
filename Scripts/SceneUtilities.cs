@@ -40,14 +40,14 @@ namespace JimmysUnityUtilities
 
 
         /// <summary>
-        /// Loads a scene (additively) then runs <see cref="UnityEngine.Object.DontDestroyOnLoad(Object)"/> on all the GameObjects in a scene.
+        /// Loads a scene (additively) then runs <see cref="UnityEngine.Object.DontDestroyOnLoad(Object)"/> on all the GameObjects in the scene.
         /// Make sure the scene is not already loaded when you call this.
         /// </summary>
         public static void PermanentlyLoadScene(int sceneBuildIndex)
             => PermanentlyLoadScene(SceneIndexToName(sceneBuildIndex));
 
         /// <summary>
-        /// Loads a scene (additively) then runs <see cref="UnityEngine.Object.DontDestroyOnLoad(Object)"/> on all the GameObjects in a scene.
+        /// Loads a scene (additively) then runs <see cref="UnityEngine.Object.DontDestroyOnLoad(Object)"/> on all the GameObjects in the scene.
         /// Make sure the scene is not already loaded when you call this.
         /// </summary>
         public static void PermanentlyLoadScene(string sceneName)
