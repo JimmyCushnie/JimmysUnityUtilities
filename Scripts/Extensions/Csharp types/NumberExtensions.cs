@@ -26,7 +26,7 @@ namespace JimmysUnityUtilities
         public static int CapRange(this int value, int max, int min = 0)
         {
             if (max < min)
-                throw new ArgumentException($"{nameof(max)} must be greater or equal to {nameof(min)}");
+                throw new ArgumentException($"{nameof(max)} must be greater than or equal to {nameof(min)}");
 
 
             int diff = max - min + 1;
