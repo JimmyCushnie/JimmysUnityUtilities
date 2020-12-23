@@ -28,6 +28,9 @@ namespace JimmysUnityUtilities
             if (max < min)
                 throw new ArgumentException($"{nameof(max)} must be greater than or equal to {nameof(min)}");
 
+            if (min == max)
+                return min;
+
 
             int diff = max - min + 1;
 
