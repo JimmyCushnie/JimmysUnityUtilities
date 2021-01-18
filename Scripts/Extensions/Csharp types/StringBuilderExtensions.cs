@@ -249,7 +249,7 @@ namespace JimmysUnityUtilities
             => builder.InsertChain(0, out insertionEndIndex, elements);
 
         public static StringBuilder AppendChain(this StringBuilder builder, IEnumerable<string> elements) 
-            => builder.InsertChain(builder.Length - 1, elements);
+            => builder.InsertChain(builder.Length, elements);
 
 
         public static StringBuilder InsertChain(this StringBuilder builder, int index, params string[] elements)
@@ -265,7 +265,7 @@ namespace JimmysUnityUtilities
             => builder.InsertChain(0, out insertionEndIndex, elements);
 
         public static StringBuilder AppendChain(this StringBuilder builder, params string[] elements) 
-            => builder.InsertChain(builder.Length - 1, elements);
+            => builder.InsertChain(builder.Length, elements);
 
 
 
