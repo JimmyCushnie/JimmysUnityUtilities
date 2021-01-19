@@ -24,6 +24,9 @@ namespace JimmysUnityUtilities
             // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
             // Todo support the rest of this nonsense
 
+            if (name.IsNullOrEmpty())
+                name = replacement.ToString();
+
             string validatedName = name.ReplaceAny(Path.GetInvalidFileNameChars(), replacement, 0);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
