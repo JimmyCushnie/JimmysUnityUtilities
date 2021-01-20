@@ -17,7 +17,7 @@ namespace JimmysUnityUtilities
 
         protected System.Func<Transform, T> CreateNewObjectInParent;
 
-        public ObjectPoolUtility (System.Func<Transform, T> createNewObjectInParent)
+        public ObjectPoolUtility(System.Func<Transform, T> createNewObjectInParent)
         {
             CreateNewObjectInParent = createNewObjectInParent;
         }
@@ -49,6 +49,19 @@ namespace JimmysUnityUtilities
             foreach (var item in items)
                 Recycle(item);
         }
+
+
+        /// <summary>
+        /// Call this when you're done using the pool to clean up inactive pool objects.
+        /// </summary>
+        public void DeleteAllInactiveObjects()
+        {
+            if (_InactiveObjectParent == null)
+                return;
+
+            Object.Destroy(_InactiveObjectParent);
+            _InactiveObjectParent = null; // Set this explicity so that the "is null" check works.
+        }
         
 
         private Transform _InactiveObjectParent;
@@ -57,6 +70,7 @@ namespace JimmysUnityUtilities
             get
             {
                 // Intentionally using "is null" instead of Unity's overloaded "== null" for performance when doing a lot of operations on a pool.
+                // Unity's overload actually *does* have a significant performance impact, in terms of both CPU usage and GC. I checked with the profiler.
                 // We should be safe here because the MegaParent is DontDestroyOnLoad and so should never be destroyed.
                 if (_InactiveObjectParent is null)
                 {
