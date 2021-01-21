@@ -61,6 +61,8 @@ namespace JimmysUnityUtilities
 
             Object.Destroy(_InactiveObjectParent);
             _InactiveObjectParent = null; // Set this explicity so that the "is null" check works.
+
+            InactiveObjectPool.Clear();
         }
         
 
