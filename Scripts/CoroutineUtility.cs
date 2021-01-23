@@ -62,5 +62,8 @@ namespace JimmysUnityUtilities
                 action.Invoke();
             }
         }
+
+        public static void RunAfterDelay(Action action, TimeSpan delay)
+            => RunAfterSecondsDelay(action, (float)delay.TotalSeconds);
     }
 }
