@@ -155,5 +155,21 @@ namespace JimmysUnityUtilities
 
             return index < array.GetLength(dimension);
         }
+
+
+        public static int FirstIndex<T>(this IReadOnlyList<T> list)
+        {
+            if (list.Count == 0)
+                throw new Exception("List has no elements, and therefore no first index");
+
+            return 0;
+        }
+        public static int LastIndex<T>(this IReadOnlyList<T> list)
+        {
+            if (list.Count == 0)
+                throw new Exception("List has no elements, and therefore no last index");
+
+            return list.Count - 1;
+        }
     }
 }
