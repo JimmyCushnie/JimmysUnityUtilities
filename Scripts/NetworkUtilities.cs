@@ -25,7 +25,7 @@ namespace JimmysUnityUtilities
         }
 
 
-        public static bool TryParseServerIpAndPort(string address, int defaultPort, out IPEndPoint endpoint)
+        public static bool TryParseServerEndpoint(string address, int defaultPort, out IPEndPoint endpoint)
         {
             try
             {
