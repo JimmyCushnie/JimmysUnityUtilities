@@ -2,6 +2,6 @@
 {
     public class PingFailure
     {
-        public PingFailureReason Failure { get; set; }
+        public PingFailureReason FailureReason { get; set; }
     }
 }

@@ -136,7 +136,7 @@ namespace JimmysUnityUtilities.Pings
             Dispatcher.InvokeAsync(() =>
             {
                 // Invoke on the main thread
-                PingFailureCallback?.Invoke(new PingFailure() { Failure = failure });
+                PingFailureCallback?.Invoke(new PingFailure() { FailureReason = failure });
             });
         }
     }
