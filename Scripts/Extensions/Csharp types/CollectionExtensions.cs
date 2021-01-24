@@ -130,7 +130,7 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Removes all entries from a dictionary with the specified value.
         /// </summary>
-        public static void RemoveAllEntriesWithValue<T1, T2>(this Dictionary<T1, T2> dictionary, T2 value)
+        public static void RemoveAllEntriesWithValue<T1, T2>(this IDictionary<T1, T2> dictionary, T2 value)
         {
             foreach (var matchingEntry in dictionary.Where(kvp => kvp.Value.Equals(value)).ToArray())
                 dictionary.Remove(matchingEntry.Key);
