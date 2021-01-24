@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using JimmysUnityUtilities.Threading;
 
 namespace JimmysUnityUtilities.Pings
 {
@@ -25,8 +26,8 @@ namespace JimmysUnityUtilities.Pings
         }
 
 
-        List<Ping> IndividualPings = new List<Ping>();
-        List<long> PingResponseTimes = new List<long>();
+        LockedList<Ping> IndividualPings = new LockedList<Ping>();
+        LockedList<long> PingResponseTimes = new LockedList<long>();
 
         Action<PingSuccess> PingSuccessCallback;
         Action<PingFailure> PingFailureCallback;
@@ -70,13 +71,16 @@ namespace JimmysUnityUtilities.Pings
 
         public void CancelPendingPings() // Todo make sure this works
         {
-            foreach (var ping in IndividualPings)
+            lock (IndividualPings.__InternalListLock)
             {
-                try
+                foreach (var ping in IndividualPings)
                 {
-                    ping.SendAsyncCancel();
+                    try
+                    {
+                        ping.SendAsyncCancel();
+                    }
+                    catch (InvalidOperationException) { } // No active async requests to cancel
                 }
-                catch (InvalidOperationException) { } // No active async requests to cancel
             }
 
             IndividualPings.Clear();
@@ -106,7 +110,12 @@ namespace JimmysUnityUtilities.Pings
             
             if (PingResponseTimes.Count >= IndividualPings.Count)
             {
-                long averageTime = PingResponseTimes.GetMean();
+                long averageTime;
+
+                // Must use the lock here as GetMean() iterates over the collection
+                lock (PingResponseTimes.__InternalListLock)
+                    averageTime = PingResponseTimes.GetMean();
+
                 Dispatcher.InvokeAsync(() =>
                 {
                     // Invoke on the main thread
