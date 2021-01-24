@@ -77,6 +77,9 @@ namespace JimmysUnityUtilities
         /// </summary>
         public static IPAddress ParseServerIP(string ip)
         {
+            if (ip.Contains(":")) // If user passes string with port, handle that case and return the IP
+                return ParseServerIpAndPort(ip, 0).ip;
+
             if (ip == "localhost")
                 return IPAddress.Loopback;
             
