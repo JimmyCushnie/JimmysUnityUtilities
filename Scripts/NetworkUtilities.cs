@@ -25,16 +25,16 @@ namespace JimmysUnityUtilities
         }
 
 
-        public static bool TryParseServerIpAndPort(string address, int defaultPort, out (IPAddress ip, int port) result)
+        public static bool TryParseServerIpAndPort(string address, int defaultPort, out IPEndPoint endpoint)
         {
             try
             {
-                result = ParseServerIpAndPort(address, defaultPort);
+                endpoint = ParseServerEndpoint(address, defaultPort);
                 return true;
             }
             catch
             {
-                result = default;
+                endpoint = default;
                 return false;
             }
         }
@@ -43,7 +43,7 @@ namespace JimmysUnityUtilities
         /// Convert an IP address and port in the form ip:port
         /// </summary>
         /// <param name="defaultPort">The port that will be returned if the provided string does not contain a port.</param>
-        public static (IPAddress ip, int port) ParseServerIpAndPort(string address, int defaultPort)
+        public static IPEndPoint ParseServerEndpoint(string address, int defaultPort)
         {
             string ip = address;
             int port = defaultPort;
@@ -55,7 +55,7 @@ namespace JimmysUnityUtilities
                 port = int.Parse(parts[1]);
             }
 
-            return (ParseServerIP(ip), port);
+            return new IPEndPoint(ParseServerIP(ip), port);
         }
 
         public static bool TryParseServerIP(string ip, out IPAddress ipAddress)
@@ -78,7 +78,7 @@ namespace JimmysUnityUtilities
         public static IPAddress ParseServerIP(string ip)
         {
             if (ip.Contains(":")) // If user passes string with port, handle that case and return the IP
-                return ParseServerIpAndPort(ip, 0).ip;
+                return ParseServerEndpoint(ip, 0).Address;
 
             if (ip == "localhost")
                 return IPAddress.Loopback;
