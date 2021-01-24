@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace JimmysUnityUtilities
 {
+    /// <summary>
+    /// Utility for calling functions on the main Unity thread from multithreaded code.
+    /// </summary>
     public class Dispatcher : MonoBehaviour
     {
         private static Dispatcher _Instance;
@@ -47,6 +50,9 @@ namespace JimmysUnityUtilities
         }
 
 
+        /// <summary>
+        /// Runs some code on the main thread. If called from a non-main thread, will return immediately, before <paramref name="action"/> has finished running.
+        /// </summary>
         public static void InvokeAsync(Action action)
         {
             if (Instance.OnMainThread)
@@ -55,6 +61,9 @@ namespace JimmysUnityUtilities
                 Instance.Queue.Enqueue((action, null));
         }
 
+        /// <summary>
+        /// Runs some code on the main thread. Will wait for <paramref name="action"/> to finish running before it returns.
+        /// </summary>
         public static void Invoke(Action action)
         {
             if (Instance.OnMainThread)
