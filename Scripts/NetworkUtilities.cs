@@ -11,13 +11,18 @@ namespace JimmysUnityUtilities
     {
         public static int GetAvailablePort()
         {
+            int port;
+
             using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
                 var localEndPoint = new IPEndPoint(IPAddress.Any, 0);
                 socket.Bind(localEndPoint);
-                localEndPoint = (IPEndPoint)socket.LocalEndPoint;
-                return localEndPoint.Port;
+                port = ((IPEndPoint)socket.LocalEndPoint).Port;
+                socket.Close();
             }
+
+            return port;
+        }
         }
     }
 }
