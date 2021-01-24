@@ -107,7 +107,7 @@ namespace JimmysUnityUtilities.Pings
             if (PingResponseTimes.Count >= IndividualPings.Count)
             {
                 long averageTime = PingResponseTimes.GetMean();
-                Dispatcher.Invoke(() =>
+                Dispatcher.InvokeAsync(() =>
                 {
                     // Invoke on the main thread
                     PingSuccessCallback.Invoke(new PingSuccess() { AverageRoundTripTimeMilliseconds = averageTime });
@@ -124,7 +124,7 @@ namespace JimmysUnityUtilities.Pings
         private void TriggerPingFailure(PingFailureReason failure)
         {
             CancelPendingPings();
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 // Invoke on the main thread
                 PingFailureCallback?.Invoke(new PingFailure() { Failure = failure });
