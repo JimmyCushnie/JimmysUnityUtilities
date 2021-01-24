@@ -31,7 +31,7 @@ namespace JimmysUnityUtilities.Pings
         Action<PingSuccess> PingSuccessCallback;
         Action<PingFailure> PingFailureCallback;
 
-        public void PingDestination(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10) // todo timeout
+        public void PingDestination(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
         {
             PingSuccessCallback = onPingSuccessCallback;
             PingFailureCallback = onPingFailureCallback;
@@ -62,7 +62,7 @@ namespace JimmysUnityUtilities.Pings
                     IndividualPings.Add(ping);
 
                     ping.PingCompleted += OnPingCompleted;
-                    ping.SendAsync(TargetAddress, null);
+                    ping.SendAsync(TargetAddress, timeOutMilliseconds, null);
                 }
             });
         }
