@@ -26,13 +26,23 @@ namespace JimmysUnityUtilities
 
         public static Coroutine Run(IEnumerator enumerator)
         {
-            return Instance.StartCoroutine(enumerator);
+            Coroutine coroutine = null;
+            Dispatcher.Invoke(() =>
+            {
+                coroutine = Instance.StartCoroutine(enumerator);
+            });
+
+            return coroutine;
         }
         public static void StopRunning(Coroutine coroutine)
         {
             if (coroutine == null) 
                 return;
-            Instance.StopCoroutine(coroutine);
+
+            Dispatcher.Invoke(() =>
+            {
+                Instance.StopCoroutine(coroutine);
+            });
         }
 
 
