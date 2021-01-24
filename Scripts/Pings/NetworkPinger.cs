@@ -51,7 +51,7 @@ namespace JimmysUnityUtilities.Pings
                     }
                     catch
                     {
-                        TriggerPingFailure(FailureReason.AddressNotFound);
+                        TriggerPingFailure(PingFailureReason.AddressNotFound);
                         return;
                     }
                 }
@@ -119,9 +119,9 @@ namespace JimmysUnityUtilities.Pings
 
 
         private void TriggerPingFailure(IPStatus status)
-            => TriggerPingFailure((FailureReason)status);
+            => TriggerPingFailure((PingFailureReason)status);
 
-        private void TriggerPingFailure(FailureReason failure)
+        private void TriggerPingFailure(PingFailureReason failure)
         {
             CancelPendingPings();
             Dispatcher.Invoke(() =>

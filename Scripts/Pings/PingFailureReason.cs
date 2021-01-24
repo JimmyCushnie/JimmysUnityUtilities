@@ -1,6 +1,6 @@
 ﻿namespace JimmysUnityUtilities.Pings
 {
-    public enum FailureReason
+    public enum PingFailureReason
     {
         AddressNotFound = -69,
 
