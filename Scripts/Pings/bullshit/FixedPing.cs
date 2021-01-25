@@ -555,7 +555,8 @@ namespace JimmysUnityUtilities.Pings.Bullshit
 
 
             //bool is_mac = Platform.IsMacOS;
-            bool is_mac = UnityEngine.Application.platform == UnityEngine.RuntimePlatform.OSXPlayer || platform == UnityEngine.RuntimePlatform.OSXEditor;
+            var platform = UnityEngine.Application.platform;
+            bool is_mac = platform == UnityEngine.RuntimePlatform.OSXPlayer || platform == UnityEngine.RuntimePlatform.OSXEditor;
             
             
             if (!is_mac)
