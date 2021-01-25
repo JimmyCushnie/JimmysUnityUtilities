@@ -90,7 +90,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
 
         public event PingCompletedEventHandler PingCompleted;
 
-        static Ping()
+        static FixedPing()
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
@@ -114,7 +114,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
                 PingBinPath = "/bin/ping"; // default, fallback value
         }
 
-        public Ping()
+        public FixedPing()
         {
             // Generate a new random 16 bit identifier for every ping
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
