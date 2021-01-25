@@ -28,11 +28,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Globalization;
 using System.ComponentModel;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Security.Principal;
 using System.Security.Cryptography;
@@ -40,9 +43,12 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.NetworkInformation
+namespace JimmysUnityUtilities.Pings.Bullshit
 {
-    public class Ping : Component, IDisposable
+    /// <summary>
+    /// Like <see cref="Ping"/> but I fixed it to work with IPv6
+    /// </summary>
+    internal class FixedPing : Component, IDisposable
     {
         [StructLayout(LayoutKind.Sequential)]
         struct cap_user_header_t
