@@ -32,7 +32,7 @@ namespace JimmysUnityUtilities.Pings
         Action<PingSuccess> PingSuccessCallback;
         Action<PingFailure> PingFailureCallback;
 
-        public void PingDestination(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
+        public void SendPing(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
         {
             PingSuccessCallback = onPingSuccessCallback;
             PingFailureCallback = onPingFailureCallback;
@@ -94,7 +94,7 @@ namespace JimmysUnityUtilities.Pings
 
             if (args.Error != null)
             {
-                TriggerPingFailure(IPStatus.Unknown);
+                TriggerPingFailure(PingFailureReason.Unknown);
                 return;
             }
 
