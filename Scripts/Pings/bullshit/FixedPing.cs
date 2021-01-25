@@ -401,7 +401,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
             worker.WorkerSupportsCancellation = true;
             worker.RunWorkerCompleted += delegate (object o, RunWorkerCompletedEventArgs ea) {
                 // Note that RunWorkerCompletedEventArgs.UserState cannot be used (LAMESPEC)
-                OnPingCompleted(new PingCompletedEventArgs(ea.Error, ea.Cancelled, user_async_state, ea.Result as PingReply));
+                OnPingCompleted(PingCompletedEventArgsReflection.Constructor(ea.Error, ea.Cancelled, user_async_state, ea.Result as PingReply));
             };
             worker.RunWorkerAsync(userToken);
         }
@@ -621,11 +621,11 @@ namespace JimmysUnityUtilities.Pings.Bullshit
 
             task.ContinueWith((t) => {
                 if (t.IsCanceled)
-                    OnPingCompleted(new PingCompletedEventArgs(null, true, null, null));
+                    OnPingCompleted(PingCompletedEventArgsReflection.Constructor(null, true, null, null));
                 else if (t.IsFaulted)
-                    OnPingCompleted(new PingCompletedEventArgs(t.Exception, false, null, null));
+                    OnPingCompleted(PingCompletedEventArgsReflection.Constructor(t.Exception, false, null, null));
                 else
-                    OnPingCompleted(new PingCompletedEventArgs(null, false, null, t.Result));
+                    OnPingCompleted(PingCompletedEventArgsReflection.Constructor(null, false, null, t.Result));
             });
 
             return task;

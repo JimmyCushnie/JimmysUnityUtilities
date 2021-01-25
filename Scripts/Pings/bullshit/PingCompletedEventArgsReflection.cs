@@ -1,0 +1,23 @@
+﻿using System;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Reflection;
+
+namespace JimmysUnityUtilities.Pings.Bullshit
+{
+    internal static class PingCompletedEventArgsReflection
+    {
+        private static readonly ConstructorInfo ConstructorInfo;
+
+        static PingCompletedEventArgsReflection()
+        {
+            var pingCompletedEventArgsType = typeof(PingCompletedEventArgs);
+
+            ConstructorInfo = pingCompletedEventArgsType.GetConstructor(new Type[] { typeof(Exception), typeof(bool), typeof(object), typeof(PingReply) });
+        }
+
+
+        public static PingCompletedEventArgs Constructor(Exception ex, bool cancelled, object userState, PingReply reply)
+            => (PingCompletedEventArgs)ConstructorInfo.Invoke(new object[] { ex, cancelled, userState, reply});
+    }
+}
