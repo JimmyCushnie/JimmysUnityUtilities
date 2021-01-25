@@ -3,6 +3,7 @@
     public enum PingFailureReason
     {
         AddressNotFound = -69,
+        IPv6Unsupported = -6969,
 
         // Copy from System.Net.NetworkInformation.IPStatus
         Unknown = -1,

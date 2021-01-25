@@ -57,6 +57,15 @@ namespace JimmysUnityUtilities.Pings
                     }
                 }
 
+                if (TargetAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    // Sorry about this... Mono's Ping() doesn't support IPv6. I tried to add support (see the 'fixedping' branch) but
+                    // Unity's Mono fork has a bug where you can't create IPv6 ICMP sockets. This bug is *not* present on upstream
+                    // Mono. I've reported the bug to Unity, as soon as they fix it I should be able to add IPv6 suport to this class.
+                    TriggerPingFailure(PingFailureReason.IPv6Unsupported);
+                    return;
+                }
+
                 for (int i = 0; i <= numberOfSeparatePings; i++)
                 {
                     var ping = new Ping();
