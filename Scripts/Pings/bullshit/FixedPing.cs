@@ -546,7 +546,12 @@ namespace System.Net.NetworkInformation
             CultureInfo culture = CultureInfo.InvariantCulture;
             StringBuilder args = new StringBuilder();
             uint t = Convert.ToUInt32(Math.Floor((timeout + 1000) / 1000.0));
-            bool is_mac = Platform.IsMacOS;
+
+
+            //bool is_mac = Platform.IsMacOS;
+            bool is_mac = UnityEngine.Application.platform == UnityEngine.RuntimePlatform.OSXPlayer || platform == UnityEngine.RuntimePlatform.OSXEditor;
+            
+            
             if (!is_mac)
                 args.AppendFormat(culture, "-q -n -c {0} -w {1} -t {2} -M ", DefaultCount, t, options.Ttl);
             else
