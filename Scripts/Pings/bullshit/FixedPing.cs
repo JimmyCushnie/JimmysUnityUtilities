@@ -265,7 +265,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
                     {
                         if (error == SocketError.TimedOut)
                         {
-                            return new PingReply(null, new byte[0], options, 0, IPStatus.TimedOut);
+                            return PingReplyReflection.Constructor(null, new byte[0], options, 0, IPStatus.TimedOut);
                         }
                         throw new NotSupportedException(String.Format("Unexpected socket error during ping request: {0}", error));
                     }
@@ -278,7 +278,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
                     {
                         long t = timeout - rtt;
                         if (t <= 0)
-                            return new PingReply(null, new byte[0], options, 0, IPStatus.TimedOut);
+                            return PingReplyReflection.Constructor(null, new byte[0], options, 0, IPStatus.TimedOut);
                         s.ReceiveTimeout = (int)t;
                         continue;
                     }
@@ -290,12 +290,12 @@ namespace JimmysUnityUtilities.Pings.Bullshit
                     {
                         long t = timeout - rtt;
                         if (t <= 0)
-                            return new PingReply(null, new byte[0], options, 0, IPStatus.TimedOut);
+                            return PingReplyReflection.Constructor(null, new byte[0], options, 0, IPStatus.TimedOut);
                         s.ReceiveTimeout = (int)t;
                         continue;
                     }
 
-                    return new PingReply(address, recv.Data, options, rtt, recv.IPStatus);
+                    return PingReplyReflection.Constructor(address, recv.Data, options, rtt, recv.IPStatus);
                 } while (true);
             }
         }
@@ -340,7 +340,7 @@ namespace JimmysUnityUtilities.Pings.Bullshit
 				ping.Dispose ();
 			}
 
-			return new PingReply (address, buffer, options, trip_time, status);
+			return PingReplyReflection.Constructor(address, buffer, options, trip_time, status);
         }
 
         // Async
