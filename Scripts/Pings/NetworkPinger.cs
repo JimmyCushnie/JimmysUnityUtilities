@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using JimmysUnityUtilities.Pings.Bullshit;
 using JimmysUnityUtilities.Threading;
 
 namespace JimmysUnityUtilities.Pings
@@ -26,7 +27,7 @@ namespace JimmysUnityUtilities.Pings
         }
 
 
-        LockedList<Ping> IndividualPings = new LockedList<Ping>();
+        LockedList<FixedPing> IndividualPings = new LockedList<FixedPing>();
         LockedList<long> PingResponseTimes = new LockedList<long>();
 
         Action<PingSuccess> PingSuccessCallback;
@@ -59,7 +60,7 @@ namespace JimmysUnityUtilities.Pings
 
                 for (int i = 0; i <= numberOfSeparatePings; i++)
                 {
-                    var ping = new Ping();
+                    var ping = new FixedPing();
                     IndividualPings.Add(ping);
 
                     ping.PingCompleted += OnPingCompleted;
