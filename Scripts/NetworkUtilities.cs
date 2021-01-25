@@ -25,6 +25,11 @@ namespace JimmysUnityUtilities
         }
 
 
+        // Todo: support ipv6 with the below methods
+
+        /// <summary>
+        /// Like <see cref="ParseServerEndpoint(string, int)"/> but with graceful failure handling.
+        /// </summary>
         public static bool TryParseServerEndpoint(string address, int defaultPort, out IPEndPoint endpoint)
         {
             try
@@ -40,9 +45,9 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// Convert an IP address and port in the form ip:port
+        /// Parse a string that refers to an IP endpoint in the format ip:port. This is the kind of string a user might enter to connect to the server.
         /// </summary>
-        /// <param name="defaultPort">The port that will be returned if the provided string does not contain a port.</param>
+        /// <param name="defaultPort">The port that will be returned if <paramref name="address"/> does not contain a port.</param>
         public static IPEndPoint ParseServerEndpoint(string address, int defaultPort)
         {
             string ip = address;
@@ -51,6 +56,10 @@ namespace JimmysUnityUtilities
             if (address.Contains(":"))
             {
                 var parts = address.Split(':');
+
+                if (parts.Length != 2)
+                    throw new FormatException($"Cannot parse {address} as {nameof(IPEndPoint)}");
+
                 ip = parts[0];
                 port = int.Parse(parts[1]);
             }
@@ -58,6 +67,9 @@ namespace JimmysUnityUtilities
             return new IPEndPoint(ParseServerIP(ip), port);
         }
 
+        /// <summary>
+        /// Like <see cref="ParseServerIP(string)"/> but with graceful failure handling.
+        /// </summary>
         public static bool TryParseServerIP(string ip, out IPAddress ipAddress)
         {
             try
@@ -75,6 +87,11 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Convert a string to an ip address. Handles numbered IPs, hostname ips, and the "localhost" case.
         /// </summary>
+        /// <remarks>
+        /// If a string is entered that is not a valid IP, this method will take 5 entire seconds to fail the DNS 
+        /// lookup (dotnet doesn't let you change this). Therefore, this method should be run asynchronously when
+        /// possible.
+        /// </remarks>
         public static IPAddress ParseServerIP(string ip)
         {
             if (ip.Contains(":")) // If user passes string with port, handle that case and return the IP
@@ -88,7 +105,7 @@ namespace JimmysUnityUtilities
 
             try
             {
-                var hostEntry = Dns.GetHostEntry(ip); // This will time out after 5 seconds (not configurable). Therefore, if the hostname could be invalid, this method should be called async.
+                var hostEntry = Dns.GetHostEntry(ip); // This will time out after 5 seconds (not configurable)
                 if (hostEntry.AddressList.Length > 0)
                     return hostEntry.AddressList[0];
             }
