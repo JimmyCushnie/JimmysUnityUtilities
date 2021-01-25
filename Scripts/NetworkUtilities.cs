@@ -113,8 +113,11 @@ namespace JimmysUnityUtilities
             try
             {
                 var hostEntry = Dns.GetHostEntry(ip); // This will time out after 5 seconds (not configurable)
-                if (hostEntry.AddressList.Length > 0)
-                    return hostEntry.AddressList[0]; // I'm not sure what should happen if a host has multiple addresses. This works for now ¯\_(ツ)_/¯
+                foreach (var address in hostEntry.AddressList)
+                {
+                    if (address.AddressFamily == AddressFamily.InterNetwork || address.AddressFamily == AddressFamily.InterNetworkV6)
+                        return address;
+                }
             }
             catch (SocketException)
             {
