@@ -16,11 +16,12 @@ namespace JimmysUnityUtilities.Pings.Bullshit
         static PingReplyReflection()
         {
             var pingReplyType = typeof(PingReply);
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            ConstructorInfo                                             = pingReplyType.GetConstructor(new Type[] { });
-            ConstructorInfo_ipStatus                                    = pingReplyType.GetConstructor(new Type[] { typeof(IPStatus) });
-            ConstructorInfo_data_dataLength_address_time                = pingReplyType.GetConstructor(new Type[] { typeof(byte[]), typeof(int), typeof(IPAddress), typeof(int) });
-            ConstructorInfo_address_buffer_options_roundtripTime_status = pingReplyType.GetConstructor(new Type[] { typeof(IPAddress), typeof(byte[]), typeof(PingOptions), typeof(long), typeof(IPStatus) });
+            ConstructorInfo                                             = pingReplyType.GetConstructor(flags, null, new Type[] { }, null);
+            ConstructorInfo_ipStatus                                    = pingReplyType.GetConstructor(flags, null, new Type[] { typeof(IPStatus) }, null);
+            ConstructorInfo_data_dataLength_address_time                = pingReplyType.GetConstructor(flags, null, new Type[] { typeof(byte[]), typeof(int), typeof(IPAddress), typeof(int) }, null);
+            ConstructorInfo_address_buffer_options_roundtripTime_status = pingReplyType.GetConstructor(flags, null, new Type[] { typeof(IPAddress), typeof(byte[]), typeof(PingOptions), typeof(long), typeof(IPStatus) }, null);
         }
 
 

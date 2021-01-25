@@ -12,8 +12,9 @@ namespace JimmysUnityUtilities.Pings.Bullshit
         static PingCompletedEventArgsReflection()
         {
             var pingCompletedEventArgsType = typeof(PingCompletedEventArgs);
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            ConstructorInfo = pingCompletedEventArgsType.GetConstructor(new Type[] { typeof(Exception), typeof(bool), typeof(object), typeof(PingReply) });
+            ConstructorInfo = pingCompletedEventArgsType.GetConstructor(flags, null, new Type[] { typeof(Exception), typeof(bool), typeof(object), typeof(PingReply) }, null);
         }
 
 

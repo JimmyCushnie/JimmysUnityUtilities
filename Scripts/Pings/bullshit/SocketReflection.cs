@@ -16,8 +16,9 @@ namespace JimmysUnityUtilities.Pings.Bullshit
         static SocketReflection()
         {
             var socketType = typeof(Socket);
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            MethodInfo = socketType.GetMethod("RecieveFrom", new Type[] { typeof(byte[]), typeof(int), typeof(int), typeof(SocketFlags), typeof(EndPoint).MakeByRefType(), typeof(SocketError) });
+            MethodInfo = socketType.GetMethod("ReceiveFrom", flags, null, new Type[] { typeof(byte[]), typeof(int), typeof(int), typeof(SocketFlags), typeof(EndPoint).MakeByRefType(), typeof(SocketError).MakeByRefType() }, null);
         }
 
 
