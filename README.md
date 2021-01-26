@@ -30,8 +30,8 @@ By the time you're reading this list, it's probably outdated, but here's what's 
 * `SceneUtilities` class for working with multi-scene projects
 * `WaitForSecondsPrecise`, a version of Unity's `WaitForSeconds` that doesn't lose accuracy with repeated usage
 * `ClipboardAccess` class which allows you to set the contents of the system clipboard
-* `SimpleRotation` component for rotating a  `GameObject` and a constant speed
-* `CryptographyUtility` class to quickly hash strings
+* `SimpleRotation` component for rotating a  `GameObject` at a constant speed
+* `CryptographyUtility` class for hashing strings
 * `CustomFixedUpdate` -- like Unity's FixedUpdate, but you can have many of them, and they can all have different tickrates independant from the physics simulation
 * `Dispatcher` for calling code on the main Unity thread from code on other threads
 * `JRandom` class; like `System.Random` but with many more methods for getting random values
