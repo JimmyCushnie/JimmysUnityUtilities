@@ -34,11 +34,15 @@ namespace JimmysUnityUtilities.Pings
 
         public void SendPing(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
         {
-            PingSuccessCallback = onPingSuccessCallback;
-            PingFailureCallback = onPingFailureCallback;
+            if (numberOfSeparatePings < 1)
+                throw new ArgumentException("Must be at least one", nameof(numberOfSeparatePings));
+
 
             CancelPendingPings();
+            ClearPingResponseStuff();
 
+            PingSuccessCallback = onPingSuccessCallback;
+            PingFailureCallback = onPingFailureCallback;
 
             Task.Run(() =>
             {
@@ -72,7 +76,15 @@ namespace JimmysUnityUtilities.Pings
                     IndividualPings.Add(ping);
 
                     ping.PingCompleted += OnPingCompleted;
-                    ping.SendAsync(TargetAddress, timeOutMilliseconds, null);
+                }
+
+                // Send the pings *after* they've all been created, to make absolutely certain that we recieve no ping responses until
+                // we know how many responses are expected. This has actually happened to me a couple of times when pinging localhost,
+                // though it's pretty rare.
+                lock (IndividualPings.__InternalListLock)
+                {
+                    foreach (var ping in IndividualPings)
+                        ping.SendAsync(TargetAddress, timeOutMilliseconds, null);
                 }
             });
         }
@@ -91,9 +103,6 @@ namespace JimmysUnityUtilities.Pings
                     catch (InvalidOperationException) { } // No active async requests to cancel
                 }
             }
-
-            IndividualPings.Clear();
-            PingResponseTimes.Clear();
         }
 
         private void OnPingCompleted(object _, PingCompletedEventArgs args)
@@ -116,7 +125,7 @@ namespace JimmysUnityUtilities.Pings
 
 
             PingResponseTimes.Add(reply.RoundtripTime);
-            
+
             if (PingResponseTimes.Count >= IndividualPings.Count)
             {
                 CancelPendingPings();
@@ -131,7 +140,7 @@ namespace JimmysUnityUtilities.Pings
                 {
                     // Invoke on the main thread
                     PingSuccessCallback.Invoke(new PingSuccess() { AverageRoundTripTimeMilliseconds = averageTime });
-                    ClearCallbacks();
+                    ClearPingResponseStuff();
                 });
             }
         }
@@ -147,14 +156,17 @@ namespace JimmysUnityUtilities.Pings
             {
                 // Invoke on the main thread
                 PingFailureCallback?.Invoke(new PingFailure() { FailureReason = failure });
-                ClearCallbacks();
+                ClearPingResponseStuff();
             });
         }
 
-        private void ClearCallbacks()
+        private void ClearPingResponseStuff()
         {
             PingSuccessCallback = null;
             PingFailureCallback = null;
+
+            IndividualPings.Clear();
+            PingResponseTimes.Clear();
         }
     }
 }
