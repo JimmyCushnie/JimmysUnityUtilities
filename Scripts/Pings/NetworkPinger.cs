@@ -123,9 +123,9 @@ namespace JimmysUnityUtilities.Pings
 
                 long averageTime;
 
-                // Must use the lock here as GetMean() iterates over the collection
+                // Must use the lock here as the extension method iterates over the collection
                 lock (PingResponseTimes.__InternalListLock)
-                    averageTime = PingResponseTimes.GetMean();
+                    averageTime = PingResponseTimes.GetMeanRoundedToNearestWhole();
 
                 Dispatcher.InvokeAsync(() =>
                 {

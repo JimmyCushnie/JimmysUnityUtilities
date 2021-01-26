@@ -51,7 +51,33 @@ namespace JimmysUnityUtilities
             return total;
         }
 
-        public static int GetMean(this IEnumerable<int> numbers)
+        public static float GetMean(this IEnumerable<int> numbers)
+        {
+            int total = 0;
+            int count = 0;
+
+            foreach (var number in numbers)
+            {
+                total += number;
+                count++;
+            }
+
+            return total / (float)count;
+        }
+        public static double GetMeanPrecise(this IEnumerable<int> numbers)
+        {
+            int total = 0;
+            int count = 0;
+
+            foreach (var number in numbers)
+            {
+                total += number;
+                count++;
+            }
+
+            return total / (double)count;
+        }
+        public static int GetMeanRoundedToNearestWhole(this IEnumerable<int> numbers)
         {
             int total = 0;
             int count = 0;
@@ -74,10 +100,24 @@ namespace JimmysUnityUtilities
             return total;
         }
 
-        public static long GetMean(this IEnumerable<long> numbers)
+
+        public static double GetMean(this IEnumerable<long> numbers)
         {
             long total = 0;
-            int count = 0;
+            long count = 0;
+
+            foreach (var number in numbers)
+            {
+                total += number;
+                count++;
+            }
+
+            return total / (double)count;
+        }
+        public static long GetMeanRoundedToNearestWhole(this IEnumerable<long> numbers)
+        {
+            long total = 0;
+            long count = 0;
 
             foreach (var number in numbers)
             {
