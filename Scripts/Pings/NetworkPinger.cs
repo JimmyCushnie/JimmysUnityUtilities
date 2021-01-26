@@ -78,7 +78,7 @@ namespace JimmysUnityUtilities.Pings
         }
 
 
-        public void CancelPendingPings() // Todo make sure this works
+        public void CancelPendingPings()
         {
             lock (IndividualPings.__InternalListLock)
             {
@@ -119,6 +119,8 @@ namespace JimmysUnityUtilities.Pings
             
             if (PingResponseTimes.Count >= IndividualPings.Count)
             {
+                CancelPendingPings();
+
                 long averageTime;
 
                 // Must use the lock here as GetMean() iterates over the collection
@@ -129,9 +131,8 @@ namespace JimmysUnityUtilities.Pings
                 {
                     // Invoke on the main thread
                     PingSuccessCallback.Invoke(new PingSuccess() { AverageRoundTripTimeMilliseconds = averageTime });
+                    ClearCallbacks();
                 });
-
-                CancelPendingPings();
             }
         }
 
@@ -146,7 +147,14 @@ namespace JimmysUnityUtilities.Pings
             {
                 // Invoke on the main thread
                 PingFailureCallback?.Invoke(new PingFailure() { FailureReason = failure });
+                ClearCallbacks();
             });
+        }
+
+        private void ClearCallbacks()
+        {
+            PingSuccessCallback = null;
+            PingFailureCallback = null;
         }
     }
 }
