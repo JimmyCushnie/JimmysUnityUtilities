@@ -11,6 +11,12 @@ namespace JimmysUnityUtilities
         public static bool IsNullOrWhiteSpace(this string value)
             => string.IsNullOrWhiteSpace(value);
 
+        public static bool IsNotNullAndNotEmpty(this string value)
+            => !string.IsNullOrEmpty(value);
+
+        public static bool IsNotNullAndNotWhiteSpace(this string value)
+            => !string.IsNullOrWhiteSpace(value);
+
 
         public static int CountInstancesOf(this string source, string substring)
         {
