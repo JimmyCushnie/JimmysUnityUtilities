@@ -139,7 +139,7 @@ namespace JimmysUnityUtilities.Pings
                 Dispatcher.InvokeAsync(() =>
                 {
                     // Invoke on the main thread
-                    PingSuccessCallback.Invoke(new PingSuccess() { AverageRoundTripTimeMilliseconds = averageTime });
+                    PingSuccessCallback?.Invoke(new PingSuccess() { AverageRoundTripTimeMilliseconds = averageTime });
                     ClearPingResponseStuff();
                 });
             }
