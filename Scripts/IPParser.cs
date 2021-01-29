@@ -87,7 +87,19 @@ namespace JimmysUnityUtilities
         public static IPAddress ParseAddress(string ip)
         {
             if (ip == "localhost")
-                return IPAddress.Loopback; // Maybe this should be IPAddress.IPv6Loopback ?
+            {
+                switch (LocalHostInterpretation)
+                {
+                    case LocalHostInterpretation.IPv4Loopback:
+                        return IPAddress.Loopback;
+
+                    case LocalHostInterpretation.IPv6Loopback:
+                        return IPAddress.IPv6Loopback;
+
+                    default:
+                        throw new NotSupportedException($"{nameof(LocalHostInterpretation)} had an unexpected value of {LocalHostInterpretation}");
+                }
+            }
 
             if (IPAddress.TryParse(ip, out var ipAddress))
                 return ipAddress;
@@ -107,5 +119,17 @@ namespace JimmysUnityUtilities
 
             throw new Exception("Failed to resolve host");
         }
+
+
+        /// <summary>
+        /// Determines how "localhost" should be used when parsing IP addresses and endpoints
+        /// </summary>
+        public static LocalHostInterpretation LocalHostInterpretation { get; set; } = LocalHostInterpretation.IPv4Loopback;
+    }
+
+    public enum LocalHostInterpretation
+    {
+        IPv4Loopback,
+        IPv6Loopback,
     }
 }
