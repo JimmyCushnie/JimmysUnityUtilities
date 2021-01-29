@@ -52,7 +52,7 @@ namespace JimmysUnityUtilities.Pings
                 {
                     try
                     {
-                        TargetAddress = NetworkUtilities.ParseServerIP(HostNameOrAddress);
+                        TargetAddress = IPParser.ParseServerIP(HostNameOrAddress);
                     }
                     catch
                     {
