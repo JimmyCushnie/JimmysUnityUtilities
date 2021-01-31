@@ -31,13 +31,20 @@ namespace JimmysUnityUtilities.Networking
         /// </summary>
         public static IEnumerable<IPAddress> GetAllLocalNetworkAddressesOfThisDevice()
         {
-            // You could also get all unicast addresses by iterating through all the network interfaces.
+            // You might be tempted to refactor this by using IPGlobalProperties.GetIPGlobalProperties().GetUnicastAddresses()
+            // instead of iterating through all the network interfaces. DON'T, however; in some .NET implementations (mono)
+            // that function isn't supported and will throw an exception.
 
-            var allAvailableUnicasts = IPGlobalProperties.GetIPGlobalProperties().GetUnicastAddresses();
-            foreach (var unicast in allAvailableUnicasts)
+            foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (unicast.Address.IsLocalNetworkAddress())
-                    yield return unicast.Address;
+                if (networkInterface.OperationalStatus == OperationalStatus.Up)
+                {
+                    foreach (var unicast in networkInterface.GetIPProperties().UnicastAddresses)
+                    {
+                        if (unicast.Address.IsLocalNetworkAddress())
+                            yield return unicast.Address;
+                    }
+                }
             }
         }
     }
