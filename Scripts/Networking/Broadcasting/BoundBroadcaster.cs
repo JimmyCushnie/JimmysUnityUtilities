@@ -12,20 +12,21 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
     {
         public static bool TryCreate(IPAddress localAddress, int port, out BoundBroadcaster broadcaster)
         {
+            if (localAddress.AddressFamily != AddressFamily.InterNetwork)
+            {
+                broadcaster = null;
+                return false;
+            }
+
             try
             {
                 broadcaster = new BoundBroadcaster(localAddress, port);
                 return true;
             }
-            catch (Exception ex)
+            catch (SocketException)
             {
-                if (ex is SocketException || ex is NotSupportedException)
-                {
-                    broadcaster = null;
-                    return false;
-                }
-
-                throw;
+                broadcaster = null;
+                return false;
             }
         }
 
