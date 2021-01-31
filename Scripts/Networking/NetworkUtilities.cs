@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Globalization;
 using System.Collections.Generic;
 
-namespace JimmysUnityUtilities
+namespace JimmysUnityUtilities.Networking
 {
     public static class NetworkUtilities
     {

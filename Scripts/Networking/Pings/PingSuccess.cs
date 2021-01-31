@@ -1,4 +1,4 @@
-﻿namespace JimmysUnityUtilities.Pings
+﻿namespace JimmysUnityUtilities.Networking.Pings
 {
     public class PingSuccess
     {

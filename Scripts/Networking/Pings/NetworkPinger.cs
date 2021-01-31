@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using JimmysUnityUtilities.Threading;
 
-namespace JimmysUnityUtilities.Pings
+namespace JimmysUnityUtilities.Networking.Pings
 {
     /// <summary>
     /// A wrapper for <see cref="Ping"/> with a more convenient API, particularly for Unity applications.
