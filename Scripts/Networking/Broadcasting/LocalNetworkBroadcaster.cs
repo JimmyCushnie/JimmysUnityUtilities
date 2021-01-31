@@ -33,7 +33,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
             }
         }
 
-        public Action<UdpReceiveResult> OnDataReceived;
+        public event Action<UdpReceiveResult> OnDataReceived;
         private void OnBroadcastDataReceived(UdpReceiveResult result)
         {
             OnDataReceived?.Invoke(result);
