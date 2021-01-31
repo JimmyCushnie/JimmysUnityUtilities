@@ -12,6 +12,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
     /// This will receive messages it sends.
     /// If the device has multiple network interfaces that allow broadcasting, there can be duplicate messages. If that matters
     /// to your use case, make sure you check for duplicates.
+    /// Transmission is not 100% reliable. As UDP is used for transmission, packets occasionally get dropped.
     /// </remarks>
     public class LocalNetworkCommunicator : IDisposable
     {
