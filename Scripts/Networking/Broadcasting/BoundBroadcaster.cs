@@ -61,10 +61,10 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
             Client.Send(data, data.Length, BroadcastEndPoint);
         }
 
-        bool ReceiveThreadRunning = false;
+        public bool IsReceivingData { get; private set; } = false;
         public void StartRecievingData(Action<UdpReceiveResult> onDataRecieved)
         {
-            if (ReceiveThreadRunning)
+            if (IsReceivingData)
                 throw new InvalidOperationException("A data receiving thread is already running");
 
             Task.Run(async () =>
@@ -76,7 +76,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
                 }
             });
 
-            ReceiveThreadRunning = true;
+            IsReceivingData = true;
         }
 
         private bool IsDisposed = false;

@@ -23,21 +23,42 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
             foreach (var localAddress in NetworkUtilities.GetAllLocalNetworkAddressesOfThisDevice())
             {
                 if (BoundBroadcaster.TryCreate(localAddress, port, out var broadcaster))
-                {
                     AllBroadcasters.Add(broadcaster);
+            }
+        }
 
-                    // It's unecessary to start the data recieve threads even when the use case might not require the ability to
-                    // receive data. If there are performance problems, this could be optimized by only calling StartRecievingData
-                    // on the broadcasters when someone subscribes to the OnDataReceived event.
-                    broadcaster.StartRecievingData(OnBroadcastDataReceived);
+        private event Action<UdpReceiveResult> _OnDataReceived;
+        private readonly object __OnDataReceivedLock = new object();
+        public event Action<UdpReceiveResult> OnDataReceived
+        {
+            add
+            {
+                lock (__OnDataReceivedLock)
+                {
+                    _OnDataReceived += value;
+
+                    foreach (var broadcaster in AllBroadcasters)
+                    {
+                        if (!broadcaster.IsReceivingData)
+                            broadcaster.StartRecievingData(OnBroadcastDataReceived);
+                    }
+                }
+            }
+            remove
+            {
+                lock (__OnDataReceivedLock)
+                {
+                    _OnDataReceived -= value;
                 }
             }
         }
 
-        public event Action<UdpReceiveResult> OnDataReceived;
+
+
+
         private void OnBroadcastDataReceived(UdpReceiveResult result)
         {
-            OnDataReceived?.Invoke(result);
+            _OnDataReceived?.Invoke(result);
         }
 
         public void Broadcast(byte[] data)
