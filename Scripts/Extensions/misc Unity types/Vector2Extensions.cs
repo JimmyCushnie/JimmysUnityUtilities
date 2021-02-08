@@ -5,22 +5,23 @@ namespace JimmysUnityUtilities
     public static class Vector2Extensions
     {
         ///<summary> rotates a point about the origin. </summary>
-        public static Vector2 Rotate(this Vector2 point, float degrees)
-            => point.RotateAbout(Vector2.zero, degrees);
+        public static Vector2 Rotate(this Vector2 point, float degreesCounterClockwise)
+            => point.RotateAbout(Vector2.zero, degreesCounterClockwise);
 
         ///<summary> rotates a point about another point. </summary>
-        public static Vector2 RotateAbout(this Vector2 point, Vector2 pivot, float degrees)
+        public static Vector2 RotateAbout(this Vector2 point, Vector2 pivot, float degreesCounterClockwise)
         {
-            float radians = degrees * Mathf.Deg2Rad;
-            float CosTheta = Mathf.Cos(radians);
-            float SinTheta = Mathf.Sin(radians);
-            float DiffX = point.x - pivot.x;
-            float DiffY = point.y - pivot.y;
+            float radians = degreesCounterClockwise * Mathf.Deg2Rad;
+
+            float cosTheta = Mathf.Cos(radians);
+            float sinTheta = Mathf.Sin(radians);
+            float diffX = point.x - pivot.x;
+            float diffY = point.y - pivot.y;
 
             return new Vector2
             (
-                CosTheta * DiffX - SinTheta * DiffY + pivot.x,
-                SinTheta * DiffX + CosTheta * DiffY + pivot.y
+                cosTheta * diffX - sinTheta * diffY + pivot.x,
+                sinTheta * diffX + cosTheta * diffY + pivot.y
             );
         }
 
