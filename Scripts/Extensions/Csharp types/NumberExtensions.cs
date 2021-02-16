@@ -10,7 +10,8 @@ namespace JimmysUnityUtilities
         /// </summary>
         public static float CapRange(this float value, float max)
         {
-            // This is distinct from usuing modulus because it prevents negative values.
+            // This is distinct from using modulus because it prevents negative values.
+
             while (value < 0) 
                 value += max;
 
