@@ -49,6 +49,16 @@ namespace JimmysUnityUtilities
             list.RemoveAt(lastIndex);
         }
 
+        public static void RemoveAllItemsAtAndAfter<T>(this IList<T> list, int startRemovingAtThisIndex)
+        {
+            if (startRemovingAtThisIndex < 0)
+                throw new ArgumentOutOfRangeException();
+
+            int maxListCount = startRemovingAtThisIndex;
+            while (list.Count > maxListCount)
+                list.RemoveAt(list.Count - 1);
+        }
+
         /// <summary>
         /// Great for foreach loops on collections that might be null
         /// </summary>
