@@ -176,6 +176,16 @@ namespace JimmysUnityUtilities
         }
 
 
+        public static void ExpandIfNecessaryUntilContainsIndex<T>(this IList<T> list, int index)
+        {
+            if (index < 0)
+                throw new IndexOutOfRangeException();
+
+            while (list.Count <= index)
+                list.Add(default);
+        }
+
+
         public static int FirstIndex<T>(this IReadOnlyList<T> list)
         {
             if (list.Count == 0)
