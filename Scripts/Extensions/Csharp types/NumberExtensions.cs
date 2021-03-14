@@ -108,5 +108,10 @@ namespace JimmysUnityUtilities
         {
             return Math.Abs(number1 - number2) <= margin;
         }
+
+        public static bool IsPrettyCloseTo(this double number1, double number2, double margin = 0.01)
+        {
+            return Math.Abs(number1 - number2) <= margin;
+        }
     }
 }
