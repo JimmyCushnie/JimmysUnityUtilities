@@ -5,6 +5,9 @@ namespace JimmysUnityUtilities
 {
     public static class PhysicsUtilities
     {
+        /// <summary>
+        /// Gets a mask of layers that collide with the given layer.
+        /// </summary>
         public static LayerMask GetCollisionMaskOf(int layer)
         {
             if (layer >= 32)
