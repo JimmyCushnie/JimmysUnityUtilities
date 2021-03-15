@@ -91,6 +91,9 @@ namespace JimmysUnityUtilities
         /// <summary> This is usefully disctinct from Math.Pow because it uses integers. </summary>
         public static int ToThePowerOf(this int @base, int exponent)
         {
+            if (exponent < 0)
+                throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
+
             if (exponent == 0) 
                 return 1;
 
@@ -98,6 +101,25 @@ namespace JimmysUnityUtilities
                 return @base;
 
             int result = @base;
+            for (int i = 1; i < exponent; i++)
+                result *= @base;
+
+            return result;
+        }
+
+        /// <summary> In addition to the nicer syntax, this is significantly faster than Math.Pow because it doesn't have to account for fractional or negative exponents. </summary>
+        public static float ToThePowerOf(this float @base, int exponent)
+        {
+            if (exponent < 0)
+                throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
+
+            if (exponent == 0) 
+                return 1;
+
+            if (exponent == 1) 
+                return @base;
+
+            float result = @base;
             for (int i = 1; i < exponent; i++)
                 result *= @base;
 
