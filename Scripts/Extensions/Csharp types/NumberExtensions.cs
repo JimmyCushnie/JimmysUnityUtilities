@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace JimmysUnityUtilities
 {
@@ -126,6 +127,25 @@ namespace JimmysUnityUtilities
             return result;
         }
 
+        /// <summary> In addition to the nicer syntax, this is significantly faster than Math.Pow because it doesn't have to account for fractional or negative exponents. </summary>
+        public static double ToThePowerOf(this double @base, int exponent)
+        {
+            if (exponent < 0)
+                throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
+
+            if (exponent == 0) 
+                return 1;
+
+            if (exponent == 1) 
+                return @base;
+
+            double result = @base;
+            for (int i = 1; i < exponent; i++)
+                result *= @base;
+
+            return result;
+        }
+
         public static bool IsPrettyCloseTo(this float number1, float number2, float margin = 0.01f)
         {
             return Math.Abs(number1 - number2) <= margin;
@@ -135,5 +155,28 @@ namespace JimmysUnityUtilities
         {
             return Math.Abs(number1 - number2) <= margin;
         }
+
+
+
+        // Some functions for nicer syntax
+        public static float ToThePowerOf(this float @base, float exponent)
+            => Mathf.Pow(@base, exponent);
+
+        public static double ToThePowerOf(this double @base, double exponent)
+            => Math.Pow(@base, exponent);
+
+
+        public static float AbsoluteValue(this float value)
+            => Mathf.Abs(value);
+
+        public static double AbsoluteValue(this double value)
+            => Math.Abs(value);
+
+
+        public static float Sign(this float value)
+            => Mathf.Sign(value);
+
+        public static double Sign(this double value)
+            => Math.Sign(value);
     }
 }
