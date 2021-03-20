@@ -58,11 +58,15 @@ namespace JimmysUnityUtilities
             if (AllNamedColors.TryGetValue(text, out value))
                 return true;
 
+
             text = text.TrimStart('#');
-            value = default;
 
             if (text.Length != 6)
+            { 
+                // By default, TryParse will allow you to ignore leading zeroes, but we want to be sure that color codes are 6 digits
+                value = default;
                 return false;
+            }
 
             if (Int32.TryParse(text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int hexNumber))
             {
@@ -70,6 +74,7 @@ namespace JimmysUnityUtilities
                 return true;
             }
 
+            value = default;
             return false;
         }
 
