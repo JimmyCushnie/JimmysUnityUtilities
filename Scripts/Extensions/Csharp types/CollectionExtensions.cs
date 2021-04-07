@@ -52,7 +52,11 @@ namespace JimmysUnityUtilities
         public static void RemoveAllItemsAtAndAfter<T>(this IList<T> list, int startRemovingAtThisIndex)
         {
             if (startRemovingAtThisIndex < 0)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"{nameof(startRemovingAtThisIndex)} must be at least 0");
+
+            if (startRemovingAtThisIndex >= list.Count)
+                throw new ArgumentOutOfRangeException($"{nameof(startRemovingAtThisIndex)} must be less than the list's count");
+
 
             int maxListCount = startRemovingAtThisIndex;
             while (list.Count > maxListCount)
