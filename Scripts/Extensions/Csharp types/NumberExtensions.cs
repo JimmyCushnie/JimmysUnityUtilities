@@ -178,5 +178,9 @@ namespace JimmysUnityUtilities
 
         public static double Sign(this double value)
             => Math.Sign(value);
+
+
+        public static int RoundToInt(this float value)
+            => Mathf.RoundToInt(value);
     }
 }
