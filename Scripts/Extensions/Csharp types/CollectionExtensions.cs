@@ -211,5 +211,32 @@ namespace JimmysUnityUtilities
             foreach (var item in source)
                 action.Invoke(item);
         }
+
+
+        /// <summary>
+        /// Efficiently convert an array of one type to an array of a different type.
+        /// </summary>
+        public static Tdestination[] Convert<Tsource, Tdestination>(this Tsource[] sourceArray, Func<Tsource, Tdestination> conversionFunction)
+        {
+            if (sourceArray == null)
+                return null;
+
+
+            var convertedArray = new Tdestination[sourceArray.Length];
+            for (int i = 0; i < sourceArray.Length; i++)
+            {
+                convertedArray[i] = conversionFunction(sourceArray[i]);
+            }
+
+            return convertedArray;
+        }
+
+        /// <summary>
+        /// Like <see cref="Enumerable.SequenceEqual{TSource}(IEnumerable{TSource}, IEnumerable{TSource})"/>, but it accepts null parameters, and treats them the same as an empty enumerable.
+        /// </summary>
+        public static bool HasTheSameContentsAs<T>(this IEnumerable<T> enumerable1, IEnumerable<T> enumerable2)
+        {
+            return enumerable1.OrEmptyIfNull().SequenceEqual(enumerable2.OrEmptyIfNull());
+        }
     }
 }
