@@ -18,14 +18,33 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
     {
         private readonly List<BoundBroadcaster> AllBroadcasters = new List<BoundBroadcaster>();
 
+        public int Port { get; }
         public LocalNetworkCommunicator(int port)
         {
+            Port = port;
+
+            InitializeNewBroadcastersForAllLocalNetworks();
+        }
+
+        private void InitializeNewBroadcastersForAllLocalNetworks()
+        {
+            RemoveAllBroadcasters();
+
             foreach (var localAddress in NetworkUtilities.GetAllLocalNetworkAddressesOfThisDevice())
             {
-                if (BoundBroadcaster.TryCreate(localAddress, port, out var broadcaster))
+                if (BoundBroadcaster.TryCreate(localAddress, Port, out var broadcaster))
                     AllBroadcasters.Add(broadcaster);
             }
         }
+
+        private void RemoveAllBroadcasters()
+        {
+            foreach (var broadcaster in AllBroadcasters)
+                broadcaster.Dispose();
+
+            AllBroadcasters.Clear();
+        }
+
 
         private event Action<UdpReceiveResult> _OnDataReceived;
         private readonly object __OnDataReceivedLock = new object();
@@ -55,7 +74,6 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
 
 
 
-
         private void OnBroadcastDataReceived(UdpReceiveResult result)
         {
             _OnDataReceived?.Invoke(result);
@@ -63,14 +81,30 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
 
         public void Broadcast(byte[] data)
         {
-            foreach (var broadcaster in AllBroadcasters)
-                broadcaster.Send(data);
+            try
+            {
+                SendDataOnAllBroadcasters();
+            }
+            catch (SocketException)
+            {
+                // This exception occurs when the list of local networks changes, i.e. the computer disconnects
+                // from a wifi network. In this case we just reset things and try again.
+
+                InitializeNewBroadcastersForAllLocalNetworks();
+                SendDataOnAllBroadcasters();
+            }
+
+
+            void SendDataOnAllBroadcasters()
+            {
+                foreach (var broadcaster in AllBroadcasters)
+                    broadcaster.Send(data);
+            }
         }
 
         public void Dispose()
         {
-            foreach (var broadcaster in AllBroadcasters)
-                broadcaster.Dispose();
+            RemoveAllBroadcasters();
         }
     }
 }
