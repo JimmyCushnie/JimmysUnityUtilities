@@ -63,5 +63,19 @@ namespace JimmysUnityUtilities
             foreach (var component in components)
                 component.enabled = value;
         }
+
+
+        // There's a built in TryGetComponent. This adds the same method in parent/children.
+        public static bool TryGetComponentInChildren<T>(this Component co, out T component) where T : Component
+        {
+            component = co.GetComponentInChildren<T>();
+            return component != null;
+        }
+
+        public static bool TryGetComponentInParent<T>(this Component co, out T component) where T : Component
+        {
+            component = co.GetComponentInParent<T>();
+            return component != null;
+        }
     }
 }
