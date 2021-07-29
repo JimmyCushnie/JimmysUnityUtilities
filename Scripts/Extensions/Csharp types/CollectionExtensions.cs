@@ -238,5 +238,32 @@ namespace JimmysUnityUtilities
         {
             return enumerable1.OrEmptyIfNull().SequenceEqual(enumerable2.OrEmptyIfNull());
         }
+
+
+
+        public static T[] Duplicate<T>(this T[] sourceArray)
+        {
+            if (sourceArray == null)
+                return null;
+
+
+            var duplicateArray = new T[sourceArray.Length];
+            Array.Copy(sourceArray, duplicateArray, sourceArray.Length);
+
+            return duplicateArray;            
+        }
+
+        public static T[] Duplicate<T>(this IReadOnlyList<T> sourceList)
+        {
+            if (sourceList == null)
+                return null;
+
+
+            var duplicateArray = new T[sourceList.Count];
+            for (int i = 0; i < sourceList.Count; i++)
+                duplicateArray[i] = sourceList[i];
+
+            return duplicateArray;            
+        }
     }
 }
