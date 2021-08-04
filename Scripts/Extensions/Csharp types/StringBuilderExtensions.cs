@@ -185,6 +185,31 @@ namespace JimmysUnityUtilities
         }
 
 
+        public static StringBuilder RemoveCharactersAtStart(this StringBuilder builder, int characterCount)
+        {
+            if (characterCount > builder.Length)
+                throw new ArgumentException($"{nameof(characterCount)} is greater than the length of the builder");
+
+            if (characterCount < 0)
+                throw new ArgumentException($"{nameof(characterCount)} cannot be less than 0");
+
+
+            builder.Remove(startIndex: 0, length: characterCount);
+            return builder;
+        }
+        public static StringBuilder RemoveCharactersAtEnd(this StringBuilder builder, int characterCount)
+        {
+            if (characterCount > builder.Length)
+                throw new ArgumentException($"{nameof(characterCount)} is greater than the length of the builder");
+
+            if (characterCount < 0)
+                throw new ArgumentException($"{nameof(characterCount)} cannot be less than 0");
+
+
+            builder.Remove(startIndex: builder.Length - characterCount, length: characterCount);
+            return builder;
+        }
+
 
         public static bool StartsWith(this StringBuilder builder, char character)
             => builder.Length > 0 && builder[0] == character;
