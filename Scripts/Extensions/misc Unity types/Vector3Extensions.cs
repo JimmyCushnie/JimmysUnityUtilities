@@ -93,5 +93,8 @@ namespace JimmysUnityUtilities
                 }
             }
         }
+
+
+        public static Vector3 ScaleBy(this Vector3 vector3, Vector3 scaler) => Vector3.Scale(vector3, scaler);
     }
 }

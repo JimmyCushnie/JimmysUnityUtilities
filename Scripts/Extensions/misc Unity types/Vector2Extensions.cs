@@ -33,5 +33,8 @@ namespace JimmysUnityUtilities
                 Mathf.Clamp(value.y, min.y, max.y)
                 );
         }
+
+
+        public static Vector3 XYtoXZ(this Vector2 value) => new Vector3(value.x, 0, value.y);
     }
 }
