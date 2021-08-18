@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace JimmysUnityUtilities
 {
@@ -22,7 +23,10 @@ namespace JimmysUnityUtilities
             CreateNewObjectInParent = createNewObjectInParent;
         }
 
+
         protected Stack<T> InactiveObjectPool = new Stack<T>();
+
+        public T Get() => Get(null);
         public virtual T Get(Transform parent)
         {
             if (InactiveObjectPool.Count == 0)
@@ -33,6 +37,15 @@ namespace JimmysUnityUtilities
             var item = InactiveObjectPool.Pop();
             item.transform.SetParent(parent, worldPositionStays: false);
             item.gameObject.SetActive(true);
+
+            if (parent == null)
+            {
+                // If a new object is created with no parent (i.e. using UnityEngine.Object.Instantiate), it will be in the main scene.
+                // However, if a pooled object is moved to no parent, it will stay in the DontDestroyOnLoad scene.
+                // This makes the scene of items consistent for both new items and pooled items.
+                // One example for why this might matter is that users expect the items to be destroyed by Unity when changing scenes.
+                SceneManager.MoveGameObjectToScene(item.gameObject, SceneManager.GetActiveScene());
+            }
 
             return item;
         }
