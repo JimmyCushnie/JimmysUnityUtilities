@@ -239,6 +239,16 @@ namespace JimmysUnityUtilities
             return enumerable1.OrEmptyIfNull().SequenceEqual(enumerable2.OrEmptyIfNull());
         }
 
+        public static bool AllElementsAreTheSame<T>(this IEnumerable<T> enumerable)
+        {
+            return enumerable.GroupBy(o => o).Count() == 1;
+        }
+
+        public static bool AllElementsHaveTheSameProperty<TSource, TProperty>(this IEnumerable<TSource> sourceEnumerable, Func<TSource, TProperty> getProperty)
+        {
+            return sourceEnumerable.GroupBy(getProperty).Count() == 1;
+        }
+
 
 
         public static T[] Duplicate<T>(this T[] sourceArray)
