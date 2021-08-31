@@ -250,6 +250,26 @@ namespace JimmysUnityUtilities
         }
 
 
+        public static bool HasTheSameKeysAndValuesAs<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dicA, IReadOnlyDictionary<TKey, TValue> dicB, IEqualityComparer<TValue> valueComparer = null)
+        {
+            if (dicA.Count != dicB.Count)
+                return false;
+
+            valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;
+
+            foreach (var key in dicA.Keys)
+            {
+                if (!dicB.ContainsKey(key))
+                    return false;
+
+                if (!valueComparer.Equals(dicB[key], dicA[key]))
+                    return false;
+            }
+
+            return true;
+        }
+
+
 
         public static T[] Duplicate<T>(this T[] sourceArray)
         {
