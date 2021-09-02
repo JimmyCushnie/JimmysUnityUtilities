@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JimmysUnityUtilities
+namespace JimmysUnityUtilities.Random
 {
     /// <summary>
     /// Seeded random generation, with more built-in methods than <see cref="System.Random"/>.
@@ -15,7 +15,7 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Creates a new <see cref="JRandom"/> with a pseudorandom seed.
         /// </summary>
-        public JRandom(): this(GetPseudorandomSeed())
+        public JRandom() : this(GetPseudorandomSeed())
         {
         }
         static int GetPseudorandomSeed()
@@ -128,7 +128,7 @@ namespace JimmysUnityUtilities
         public float Angle()
             => Range(0f, 360f);
 
-        public Vector2 PointOnUnitCircle() 
+        public Vector2 PointOnUnitCircle()
             => Vector2.up.Rotate(Angle());
 
         public Vector2 PointWithinUnitCircle()
