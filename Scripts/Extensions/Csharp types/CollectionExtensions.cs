@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Random = UnityEngine.Random;
-
 namespace JimmysUnityUtilities
 {
     public static class CollectionExtensions
     {
         public static T GetRandomElement<T>(this IReadOnlyList<T> list)
-            => list[Random.Range(0, list.Count)];
+            => list[UnityEngine.Random.Range(0, list.Count)];
 
         public static void SwapPositions<T>(this IList<T> list, int index1, int index2)
         {
