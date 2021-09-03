@@ -71,37 +71,6 @@ namespace JimmysUnityUtilities.Random
             return 32 + Log2(hi);
         }
 
-        /// <summary>Returns the integer (ceiling) log of the specified value, base 2.</summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static int Log2Ceiling(ulong value)
-        {
-            int result = Log2(value);
-            if (PopCount(value) != 1)
-            {
-                result++;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Returns the population count (number of bits set) of a mask.
-        /// Similar in behavior to the x86 instruction POPCNT.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int PopCount(ulong value)
-        {
-            const ulong c1 = 0x_55555555_55555555ul;
-            const ulong c2 = 0x_33333333_33333333ul;
-            const ulong c3 = 0x_0F0F0F0F_0F0F0F0Ful;
-            const ulong c4 = 0x_01010101_01010101ul;
-
-            value -= (value >> 1) & c1;
-            value = (value & c2) + ((value >> 2) & c2);
-            value = (((value + (value >> 4)) & c3) * c4) >> 56;
-
-            return (int)value;
-        }
-
         /// <summary>
         /// Rotates the specified value left by the specified number of bits.
         /// Similar in behavior to the x86 instruction ROL.
