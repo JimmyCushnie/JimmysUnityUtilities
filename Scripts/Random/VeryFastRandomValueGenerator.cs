@@ -21,30 +21,46 @@ namespace JimmysUnityUtilities.Random
         private ulong _s0, _s1, _s2, _s3;
 
         /// <summary>
-        /// Creates a <see cref="VeryFastRandomValueGenerator"/> with a convenient integer seed.
+        /// Creates a <see cref="VeryFastRandomValueGenerator"/> with a 64-bit seed.
         /// </summary>
-        public VeryFastRandomValueGenerator(int seed)
+        public VeryFastRandomValueGenerator(ulong seed)
         {
-            var systemRandom = new System.Random(seed);
+            ulong x = seed;
 
             do
             {
-                _s0 = GetSystemRandomUlong();
-                _s1 = GetSystemRandomUlong();
-                _s2 = GetSystemRandomUlong();
-                _s3 = GetSystemRandomUlong();
+                _s0 = GetNextSplitMix64RandomValue();
+                _s1 = GetNextSplitMix64RandomValue();
+                _s2 = GetNextSplitMix64RandomValue();
+                _s3 = GetNextSplitMix64RandomValue();
             }
             while ((_s0 | _s1 | _s2 | _s3) == 0); // Chance of this is infinitesimal but we cover it anyway
 
 
-            ulong GetSystemRandomUlong()
+            // Implements SplitMix64 algorithm: https://prng.di.unimi.it/splitmix64.c
+            // From https://prng.di.unimi.it/:
+            // "We suggest to use SplitMix64 to initialize the state of our generators starting from a 64-bit seed,
+            //  as research has shown (https://dl.acm.org/doi/10.1145/1276927.1276928) that initialization must be
+            //  performed with a generator radically different in nature from the one initialized to avoid correlation
+            //  on similar seeds.
+            ulong GetNextSplitMix64RandomValue()
             {
-                ulong left = (ulong)systemRandom.Next();
-                ulong right = (ulong)systemRandom.Next();
-
-                return (left << 32) | right;
+                ulong z = (x += 0x9e3779b97f4a7c15);
+                z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9;
+                z = (z ^ (z >> 27)) * 0x94d049bb133111eb;
+                return z ^ (z >> 31);
             }
         }
+
+        /// <summary>
+        /// Creates a <see cref="VeryFastRandomValueGenerator"/> with a 32-bit seed.
+        /// </summary>
+        public VeryFastRandomValueGenerator(int seed) : this((ulong)seed)
+        {
+        }
+
+
+
 
 
         /// <summary>
