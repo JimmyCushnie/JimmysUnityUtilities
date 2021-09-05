@@ -13,8 +13,8 @@ namespace JimmysUnityUtilities.Random
         public JRandom() : this(GetPseudorandomSeed())
         {
         }
-        static int GetPseudorandomSeed()
-            => unchecked((int)(DateTime.Now.Ticks & long.MaxValue));
+        static ulong GetPseudorandomSeed()
+            => (ulong)DateTime.Now.Ticks;
 
         /// <summary>
         /// Creates a new seeded <see cref="JRandom"/>, using the hashcode of the provided object.
@@ -24,9 +24,16 @@ namespace JimmysUnityUtilities.Random
         }
 
         /// <summary>
-        /// Creates a new seeded <see cref="JRandom"/>.
+        /// Creates a new <see cref="JRandom"/> with a 32-bit seed.
         /// </summary>
-        public JRandom(int seed)
+        public JRandom(int seed) : this((ulong)seed)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="JRandom"/> with a 64-bit seed.
+        /// </summary>
+        public JRandom(ulong seed)
         {
             _Generator = new VeryFastRandomValueGenerator(seed);
         }

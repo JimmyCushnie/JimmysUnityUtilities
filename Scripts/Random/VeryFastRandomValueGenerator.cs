@@ -54,13 +54,6 @@ namespace JimmysUnityUtilities.Random
             }
         }
 
-        /// <summary>
-        /// Creates a <see cref="VeryFastRandomValueGenerator"/> with a 32-bit seed.
-        /// </summary>
-        public VeryFastRandomValueGenerator(int seed) : this((ulong)seed)
-        {
-        }
-
 
 
 
