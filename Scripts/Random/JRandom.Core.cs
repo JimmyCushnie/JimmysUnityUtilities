@@ -37,5 +37,12 @@ namespace JimmysUnityUtilities.Random
         {
             return _Generator.GetNextRandom64Bits();
         }
+
+
+
+        /// <summary>
+        /// Shared instance of <see cref="JRandom"/> so that you can sporadically get a pseudorandom value without having to instantiate a new instance.
+        /// </summary>
+        public static JRandom Shared { get; } = new JRandom(); // I don't think this is thread safe, but I'm not sure lol. Todo, verify that it's not, then make it thread-safe
     }
 }
