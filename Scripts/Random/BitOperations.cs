@@ -8,8 +8,8 @@ namespace JimmysUnityUtilities.Random
 {
     internal static class BitOperations
     {
-        //https://stackoverflow.com/questions/10439242/count-leading-zeroes-in-an-int32/10439333#10439333
-        //https://stackoverflow.com/questions/10439242/count-leading-zeroes-in-an-int32/10439333#10439333
+        //https://stackoverflow.com/a/58496974
+        //https://stackoverflow.com/a/10439333
         //https://github.com/SunsetQuest/Fast-Integer-Log2/blob/master/BenchmarkLeading0Count/Program.cs#L583
         //fuck
         public static int Log2(ulong x)

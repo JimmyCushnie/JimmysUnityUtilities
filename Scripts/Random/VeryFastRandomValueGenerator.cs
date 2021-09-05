@@ -34,7 +34,9 @@ namespace JimmysUnityUtilities.Random
                 _s2 = GetNextSplitMix64RandomValue();
                 _s3 = GetNextSplitMix64RandomValue();
             }
-            while ((_s0 | _s1 | _s2 | _s3) == 0); // Chance of this is infinitesimal but we cover it anyway
+            // At least one of the starting state values must be non-zero.
+            // Chance of this happening is infinitesimal but we cover it anyway
+            while ((_s0 | _s1 | _s2 | _s3) == 0);
 
 
             // Implements SplitMix64 algorithm: https://prng.di.unimi.it/splitmix64.c
