@@ -40,5 +40,27 @@ namespace JimmysUnityUtilities.Random
         /// <summary> Gets a random point within a circle ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
         public Vector2 PointWithinCircle(float radius)
             => PointWithinUnitCircle() * radius;
+
+
+        // Sphere picking is hard. There is room here for optimization / algorithmic improvements.
+        // https://stackoverflow.com/a/56794499
+        // https://codegolf.stackexchange.com/q/191510
+        // https://mathworld.wolfram.com/SpherePointPicking.html
+
+        /// <summary> Gets a random point on the edge of a sphere ceneterd on (0, 0) with a radius of 1. </summary>
+        public Vector3 PointOnUnitSphere()
+            => Rotation3D() * Vector3.up;
+
+        /// <summary> Gets a random point within a sphere ceneterd on (0, 0) with a radius of 1. </summary>
+        public Vector3 PointWithinUnitSphere()
+            => PointOnUnitSphere() * Fraction();
+
+        /// <summary> Gets a random point on the edge of a sphere ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        public Vector3 PointOnSphere(float radius)
+            => PointOnUnitSphere() * radius;
+
+        /// <summary> Gets a random point within a sphere ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        public Vector3 PointWithinSphere(float radius)
+            => PointWithinUnitSphere() * radius;
     }
 }
