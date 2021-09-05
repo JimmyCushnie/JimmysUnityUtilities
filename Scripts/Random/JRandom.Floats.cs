@@ -60,7 +60,7 @@ namespace JimmysUnityUtilities.Random
 
         /// <summary> 50% chance to be true, 50% chance to be false. </summary>
         public bool FiftyFifty()
-            => Chance(0.5);
+            => (GetSourceRandom64Bits() & 1) == 0; // I benchmarked a few different ways of doing this method, this was the fastest
 
 
         /// <summary> 50% chance to be 1, 50% chance to be 0. </summary>
