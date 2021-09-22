@@ -291,7 +291,19 @@ namespace JimmysUnityUtilities
             for (int i = 0; i < sourceList.Count; i++)
                 duplicateArray[i] = sourceList[i];
 
-            return duplicateArray;            
+            return duplicateArray;
+        }
+
+
+        public static bool ContainsSequence<T>(this T[] source, T[] sequence)
+        {
+            for (int i = 0; i <= source.Length - sequence.Length; i++)
+            {
+                if (source.Skip(i).Take(sequence.Length).SequenceEqual(sequence))
+                    return true;
+            }
+
+            return false;
         }
     }
 }
