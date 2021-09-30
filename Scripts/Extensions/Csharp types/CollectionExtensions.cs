@@ -237,6 +237,14 @@ namespace JimmysUnityUtilities
             return enumerable1.OrEmptyIfNull().SequenceEqual(enumerable2.OrEmptyIfNull());
         }
 
+        public static bool HasTheSameContentsAs_IgnoringOrder<T>(this IEnumerable<T> enumerable1, IEnumerable<T> enumerable2)
+        {
+            enumerable1 = enumerable1.OrEmptyIfNull().OrderBy(x => x);
+            enumerable2 = enumerable2.OrEmptyIfNull().OrderBy(x => x);
+
+            return enumerable1.SequenceEqual(enumerable2);
+        }
+
         public static bool AllElementsAreTheSame<T>(this IEnumerable<T> enumerable)
         {
             return enumerable.GroupBy(o => o).Count() == 1;
