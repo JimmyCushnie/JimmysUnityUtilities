@@ -52,6 +52,9 @@ namespace JimmysUnityUtilities
 
         public virtual void Recycle(T item)
         {
+            if (item == null) // In case the item was destroyed before being recycled (i.e, the scene it was in got unloaded)
+                return;
+
             item.gameObject.SetActive(false);
             item.transform.SetParent(InactiveObjectParent, worldPositionStays: false);
             InactiveObjectPool.Push(item);
