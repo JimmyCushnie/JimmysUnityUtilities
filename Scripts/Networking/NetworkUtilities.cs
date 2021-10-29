@@ -10,11 +10,11 @@ namespace JimmysUnityUtilities.Networking
 {
     public static class NetworkUtilities
     {
-        public static int GetAvailablePort()
+        public static int GetAvailablePort_TCP()
         {
             int port;
 
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            using (var socket = new Socket(GetSupportedAddressFamilyForNewSocket(), SocketType.Stream, ProtocolType.Tcp))
             {
                 var localEndPoint = new IPEndPoint(IPAddress.Any, 0);
                 socket.Bind(localEndPoint);
@@ -23,6 +23,32 @@ namespace JimmysUnityUtilities.Networking
             }
 
             return port;
+        }
+
+        public static int GetAvailablePort_UDP()
+        {
+            int port;
+
+            using (var socket = new Socket(GetSupportedAddressFamilyForNewSocket(), SocketType.Dgram, ProtocolType.Udp))
+            {
+                var localEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                socket.Bind(localEndPoint);
+                port = ((IPEndPoint)socket.LocalEndPoint).Port;
+                socket.Close();
+            }
+
+            return port;
+        }
+
+        private static AddressFamily GetSupportedAddressFamilyForNewSocket()
+        {
+            if (IPv4IsSupportedByTheCurrentNetwork())
+                return AddressFamily.InterNetwork;
+
+            if (IPv6IsSupportedByTheCurrentNetwork())
+                return AddressFamily.InterNetworkV6;
+
+            throw new Exception($"The current environment doesn't support IPv4 or IPv6 :(");
         }
 
 
