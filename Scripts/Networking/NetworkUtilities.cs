@@ -47,5 +47,28 @@ namespace JimmysUnityUtilities.Networking
                 }
             }
         }
+
+
+        // Could also use NetworkInterface.Supports
+        public static bool IPv4IsSupportedByTheCurrentNetwork()
+        {
+            foreach (var ipAddress in GetAllLocalNetworkAddressesOfThisDevice())
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                    return true;
+            }
+
+            return false;
+        }
+        public static bool IPv6IsSupportedByTheCurrentNetwork()
+        {
+            foreach (var ipAddress in GetAllLocalNetworkAddressesOfThisDevice())
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
