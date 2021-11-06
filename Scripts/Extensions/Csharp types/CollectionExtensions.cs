@@ -11,6 +11,16 @@ namespace JimmysUnityUtilities
 
         public static void SwapPositions<T>(this IList<T> list, int index1, int index2)
         {
+            if (index1 < 0 || index1 >= list.Count)
+                throw new IndexOutOfRangeException();
+
+            if (index2 < 0 || index2 >= list.Count)
+                throw new IndexOutOfRangeException();
+
+            if (index1 == index2)
+                return;
+
+
             T t1 = list[index1];
             T t2 = list[index2];
 
