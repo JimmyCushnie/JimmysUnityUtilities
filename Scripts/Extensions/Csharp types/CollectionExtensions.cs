@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JimmysUnityUtilities.Random;
 
 namespace JimmysUnityUtilities
 {
     public static class CollectionExtensions
     {
-        public static T GetRandomElement<T>(this IReadOnlyList<T> list)
-            => list[UnityEngine.Random.Range(0, list.Count)];
+        public static T GetRandomElement<T>(this IReadOnlyList<T> list) => JRandom.Shared.RandomElementOf(list);
 
         public static void SwapPositions<T>(this IList<T> list, int index1, int index2)
         {
