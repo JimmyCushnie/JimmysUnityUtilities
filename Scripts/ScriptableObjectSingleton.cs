@@ -15,5 +15,19 @@ namespace JimmysUnityUtilities
                 return _Instance;
             }
         }
+
+
+        /// <summary> Called once in the application lifetime. </summary>
+        protected virtual void Initialize() { }
+
+        static bool InitializeCalled = false;
+        private void OnEnable()
+        {
+            if (InitializeCalled)
+                return;
+
+            InitializeCalled = true;
+            Initialize();
+        }
     }
 }
