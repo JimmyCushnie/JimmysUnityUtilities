@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 namespace JimmysUnityUtilities
@@ -9,7 +10,7 @@ namespace JimmysUnityUtilities
         {
             var textAsset = Resources.Load<TextAsset>(filePath);
             if (textAsset == null)
-                throw new Exception("The file you specified doesn't exist in Resources :(");
+                throw new FileNotFoundException("The file you specified doesn't exist in Resources :(");
 
             string text = textAsset.text;
             Resources.UnloadAsset(textAsset);
