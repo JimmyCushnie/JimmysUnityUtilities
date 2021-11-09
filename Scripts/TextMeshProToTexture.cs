@@ -29,6 +29,7 @@ namespace JimmysUnityUtilities
             camera.orthographic = true;
             camera.farClipPlane = 2f;
             camera.clearFlags = CameraClearFlags.Color;
+            camera.cullingMask = 1 << layer;
 
             // We make the background color transparent, so the rendered images correctly have transparency.
             // The RGB components of the background will be blended slightly around the edges of the text. I think this is due to anti-aliasing.
