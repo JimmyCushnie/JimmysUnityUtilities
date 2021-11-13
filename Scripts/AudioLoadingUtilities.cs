@@ -142,11 +142,16 @@ namespace JimmysUnityUtilities
                 case ".mp3":
                     audioType = AudioType.MPEG;
                     return true;
+                case ".wav":
+                    audioType = AudioType.WAV;
+                    return true;
                 case ".ogg":
                     audioType = AudioType.OGGVORBIS;
                     return true;
-                case ".wav":
-                    audioType = AudioType.WAV;
+
+                case ".aif":
+                case ".aiff":
+                    audioType = AudioType.AIFF;
                     return true;
 
                 default:
