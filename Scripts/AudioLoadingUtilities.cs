@@ -139,11 +139,9 @@ namespace JimmysUnityUtilities
         {
             switch (extension.ToLower())
             {
-                // The Unity docs claim that .mp3 is supported, but if you actually try it you get an error.
-                //case ".mp3":
-                //    audioType = AudioType.MPEG;
-                //    return true;
-
+                case ".mp3":
+                    audioType = AudioType.MPEG;
+                    return true;
                 case ".ogg":
                     audioType = AudioType.OGGVORBIS;
                     return true;
