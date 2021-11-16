@@ -6,7 +6,7 @@ namespace JimmysUnityUtilities
 {
     public class SimpleRotation : MonoBehaviour
     {
-        [SerializeField] Vector3 DegreesPerSecond;
+        public Vector3 DegreesPerSecond;
 
         private void Update()
         {
