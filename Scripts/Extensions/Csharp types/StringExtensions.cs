@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace JimmysUnityUtilities
@@ -76,6 +78,33 @@ namespace JimmysUnityUtilities
 
             int length = endIndex - startIndex + 1;
             return text.Substring(startIndex, length);
+        }
+
+
+        public static string[] Split(this string text, string separator, StringSplitOptions options = StringSplitOptions.None)
+        {
+            return text.Split(new string[] { separator }, options);
+        }
+
+        public static string[] Split(this string text, string[] separators, StringSplitOptions options = StringSplitOptions.None)
+        {
+            return text.Split(separators, options);
+        }
+
+
+        public static string[] SplitIntoLines(this string s)
+            => s.Replace("\r\n", "\n").Split('\n'); // fuck windows line endings. WHY are they still used.
+
+        public static IEnumerator<string> ReadLineByLine(this string s)
+        {
+            using (StringReader sr = new StringReader(s))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    yield return line;
+                }
+            }
         }
     }
 }
