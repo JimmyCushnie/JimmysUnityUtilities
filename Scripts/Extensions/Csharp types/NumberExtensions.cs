@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace JimmysUnityUtilities
@@ -182,5 +183,21 @@ namespace JimmysUnityUtilities
 
         public static int RoundToInt(this float value)
             => Mathf.RoundToInt(value);
+
+
+
+        const string NoScientificNotationInToString = "#####################################################################################################################################################################################################################################################################################################################################.#####################################################################################################################################################################################################################################################################################################################################";
+        
+        public static string ToStringNoScientificNotation(this double value, IFormatProvider provider)
+            => value.ToString(NoScientificNotationInToString, provider);
+
+        public static string ToStringNoScientificNotation(this double value)
+            => value.ToStringNoScientificNotation(NumberFormatInfo.CurrentInfo);
+
+        public static string ToStringNoScientificNotation(this float value, IFormatProvider provider)
+            => value.ToString(NoScientificNotationInToString, provider);
+
+        public static string ToStringNoScientificNotation(this float value)
+            => value.ToStringNoScientificNotation(NumberFormatInfo.CurrentInfo);
     }
 }
