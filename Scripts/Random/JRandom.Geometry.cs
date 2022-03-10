@@ -27,7 +27,7 @@ namespace JimmysUnityUtilities.Random
 
         /// <summary> Gets a random point on the edge of a circle ceneterd on (0, 0) with a radius of 1. </summary>
         public Vector2 PointOnUnitCircle()
-            => Vector2.up.Rotate(AngleDegrees()); // could be optimized
+            => UnityEngine.Vector2.up.Rotate(AngleDegrees()); // could be optimized
 
         /// <summary> Gets a random point within a circle ceneterd on (0, 0) with a radius of 1. </summary>
         public Vector2 PointWithinUnitCircle()
@@ -49,7 +49,7 @@ namespace JimmysUnityUtilities.Random
 
         /// <summary> Gets a random point on the edge of a sphere ceneterd on (0, 0) with a radius of 1. </summary>
         public Vector3 PointOnUnitSphere()
-            => Rotation3D() * Vector3.up;
+            => Rotation3D() * UnityEngine.Vector3.up;
 
         /// <summary> Gets a random point within a sphere ceneterd on (0, 0) with a radius of 1. </summary>
         public Vector3 PointWithinUnitSphere()
