@@ -71,6 +71,13 @@ namespace JimmysUnityUtilities
                 list.RemoveAt(list.Count - 1);
         }
 
+        public static void EnsureCapacity<T>(this List<T> list, int minimumCapacity)
+        {
+            if (list.Capacity < minimumCapacity)
+                list.Capacity = minimumCapacity;
+        }
+
+
         /// <summary>
         /// Great for foreach loops on collections that might be null
         /// </summary>
