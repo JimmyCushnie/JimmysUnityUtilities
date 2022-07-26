@@ -220,6 +220,29 @@ namespace JimmysUnityUtilities
             return list.Count - 1;
         }
 
+        public static T PopFromEnd<T>(this IList<T> list)
+        {
+            if (list.Count == 0)
+                throw new Exception("List has no elements; cannot pop");
+
+
+            int lastIndex = list.Count - 1;
+
+            T last = list[lastIndex];
+            list.RemoveAt(lastIndex);
+            return last;
+        }
+        public static T PopFromStart<T>(this IList<T> list)
+        {
+            if (list.Count == 0)
+                throw new Exception("List has no elements; cannot pop");
+
+
+            T first = list[0];
+            list.RemoveAt(0);
+            return first;
+        }
+
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
