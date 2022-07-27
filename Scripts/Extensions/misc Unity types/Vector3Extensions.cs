@@ -96,5 +96,16 @@ namespace JimmysUnityUtilities
 
 
         public static Vector3 ScaleBy(this Vector3 vector3, Vector3 scaler) => Vector3.Scale(vector3, scaler);
+
+
+        public static Vector2Int RoundToInts(this Vector2 vector)
+            => new Vector2Int(vector.x.RoundToInt(), vector.y.RoundToInt());
+
+        public static Vector3Int RoundToInts(this Vector3 vector)
+            => new Vector3Int(vector.x.RoundToInt(), vector.y.RoundToInt(), vector.z.RoundToInt());
+
+
+        public static Vector3 ScaleBy(this Vector3Int vector, float factor)
+            => new Vector3(vector.x * factor, vector.y * factor, vector.z * factor);
     }
 }
