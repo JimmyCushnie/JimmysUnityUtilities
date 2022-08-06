@@ -20,7 +20,8 @@ namespace JimmysUnityUtilities
         /// <summary> Called once in the application lifetime. </summary>
         protected virtual void Initialize() { }
 
-        static bool InitializeCalled = false;
+        // You might be tempted to use ScriptableObject.Awake(), but that method is only called when the SO is created for the first time. OnEnable is called at application startup
+        // and also some other times? Unity is fucking annoying
         private void OnEnable()
         {
             if (InitializeCalled)
@@ -29,5 +30,6 @@ namespace JimmysUnityUtilities
             InitializeCalled = true;
             Initialize();
         }
+        static bool InitializeCalled = false;
     }
 }
