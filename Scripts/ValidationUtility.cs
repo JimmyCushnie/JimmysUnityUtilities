@@ -15,15 +15,7 @@ namespace JimmysUnityUtilities
         public static void SafeOnValidate(Action onValidateAction)
         {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.delayCall += _OnValidate;
-
-
-        void _OnValidate()
-        {
-            UnityEditor.EditorApplication.delayCall -= _OnValidate;
-
-            onValidateAction();
-        }
+        UnityEditor.EditorApplication.delayCall += () => onValidateAction();
 #endif
         }
 
