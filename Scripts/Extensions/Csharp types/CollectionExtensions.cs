@@ -359,7 +359,7 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Does <see cref="List{T}.Contains(T)"/> with a null check.
         /// </summary>
-        public static bool IsNotEmptyAndContains<T>(this List<T> list, T item)
+        public static bool IsNotNullAndContains<T>(this List<T> list, T item)
             => list != null && list.Contains(item);
     }
 }
