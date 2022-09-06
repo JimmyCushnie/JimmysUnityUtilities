@@ -42,10 +42,10 @@ namespace JimmysUnityUtilities.Networking
 
         private static AddressFamily GetSupportedAddressFamilyForNewSocket()
         {
-            if (IPv4IsSupportedByTheCurrentNetwork())
+            if (Socket.OSSupportsIPv4)
                 return AddressFamily.InterNetwork;
 
-            if (IPv6IsSupportedByTheCurrentNetwork())
+            if (Socket.OSSupportsIPv6)
                 return AddressFamily.InterNetworkV6;
 
             throw new Exception($"The current environment doesn't support IPv4 or IPv6 :(");
@@ -72,29 +72,6 @@ namespace JimmysUnityUtilities.Networking
                     }
                 }
             }
-        }
-
-
-        // Could also use NetworkInterface.Supports
-        public static bool IPv4IsSupportedByTheCurrentNetwork()
-        {
-            foreach (var ipAddress in GetAllLocalNetworkAddressesOfThisDevice())
-            {
-                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                    return true;
-            }
-
-            return false;
-        }
-        public static bool IPv6IsSupportedByTheCurrentNetwork()
-        {
-            foreach (var ipAddress in GetAllLocalNetworkAddressesOfThisDevice())
-            {
-                if (ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
-                    return true;
-            }
-
-            return false;
         }
     }
 }
