@@ -329,5 +329,22 @@ namespace JimmysUnityUtilities
 
             return true;
         }
+
+
+
+        public static int FirstIndex(this StringBuilder builder)
+        {
+            if (builder.Length == 0)
+                throw new Exception("StringBuilder is empty, and therefore has no first index");
+
+            return 0;
+        }
+        public static int LastIndex(this StringBuilder builder)
+        {
+            if (builder.Length == 0)
+                throw new Exception("StringBuilder is empty, and therefore has no last index");
+
+            return builder.Length - 1;
+        }
     }
 }
