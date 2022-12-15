@@ -76,6 +76,8 @@ namespace JimmysUnityUtilities
                 string uri = FileUtilities.FilePathToURI(filePath);
                 using (var webRequest = UnityWebRequestMultimedia.GetAudioClip(uri, audioType))
                 {
+                    webRequest.useHttpContinue = false;
+
                     var clipDownloader = (DownloadHandlerAudioClip)webRequest.downloadHandler;
                     clipDownloader.streamAudio = true; // Due to a Unity bug this is actually totally non-functional... https://forum.unity.com/threads/downloadhandleraudioclip-streamaudio-is-ignored.699908/
 
