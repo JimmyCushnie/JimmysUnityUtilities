@@ -50,12 +50,12 @@ namespace JimmysUnityUtilities.Random
         /// <summary> Get a boolean value with a certain probability of being true. </summary>
         /// <param name="probabilityOfTrue"> 0 is always false, 1 is always true, 0.5 is 50/50 </param>
         public bool Chance(float probabilityOfTrue)
-            => Fraction() < probabilityOfTrue;
+            => Fraction() <= probabilityOfTrue;
 
         /// <summary> Get a boolean value with a certain probability of being true. </summary>
         /// <param name="probabilityOfTrue"> 0 is always false, 1 is always true, 0.5 is 50/50 </param>
         public bool Chance(double probabilityOfTrue)
-            => FractionD() < probabilityOfTrue;
+            => FractionD() <= probabilityOfTrue;
 
 
         /// <summary> 50% chance to be true, 50% chance to be false. </summary>
