@@ -49,7 +49,28 @@ namespace JimmysUnityUtilities.Random
 
         /// <summary>
         /// Shared instance of <see cref="JRandom"/> so that you can sporadically get a pseudorandom value without having to instantiate a new instance.
+        /// It's safe to access this from multiple different threads concurrently; each thread actually gets a different instance.
         /// </summary>
-        public static JRandom Shared { get; } = new JRandom(); // I don't think this is thread safe, but I'm not sure lol. Todo, verify that it's not, then make it thread-safe
+        public static JRandom Shared 
+        {
+            get
+            {
+                if (_Shared == null)
+                {
+                    lock (SharedInstanceSeederLock)
+                    {
+                        _Shared = new JRandom(SharedInstanceSeeder.GetNextRandom64Bits());
+                    }
+                }
+
+                return _Shared;
+            }
+        }
+
+        [ThreadStatic]
+        private static JRandom _Shared;
+
+        static readonly VeryFastRandomValueGenerator SharedInstanceSeeder = new VeryFastRandomValueGenerator((ulong)DateTime.Now.Ticks);
+        static readonly object SharedInstanceSeederLock = new object();
     }
 }
