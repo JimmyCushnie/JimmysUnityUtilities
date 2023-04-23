@@ -199,5 +199,10 @@ namespace JimmysUnityUtilities
 
         public static string ToStringNoScientificNotation(this float value)
             => value.ToStringNoScientificNotation(NumberFormatInfo.CurrentInfo);
+
+
+
+        public static float InvertIf(this float value, bool condition)
+            => condition ? -value : value;
     }
 }
