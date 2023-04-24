@@ -24,11 +24,14 @@ namespace JimmysUnityUtilities
         }
 
 
+        /// <summary>
+        /// Returns <see langword="true"/> if <paramref name="pointWorldspace"/>, is inside <paramref name="collider"/>; else returns <see langword="false"/>.
+        /// </summary>
         public static bool PointIsInsideCollider(Collider collider, Vector3 pointWorldspace)
         {
             var closestPoint = collider.ClosestPoint(pointWorldspace);
 
-            float epsilon = 0.0001f;
+            const float epsilon = 0.0001f;
             return
                 closestPoint.x.IsPrettyCloseTo(pointWorldspace.x, epsilon) &&
                 closestPoint.y.IsPrettyCloseTo(pointWorldspace.y, epsilon) &&
