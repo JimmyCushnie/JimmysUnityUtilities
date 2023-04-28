@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace JimmysUnityUtilities
+namespace JimmysUnityUtilities.EqualityComparers
 {
     // Because Unity are negligent fools, they did not include a built-in == operator or .Equals() method for Color32.
     // However, SOMETIMES YOU NEED TO FREAKING COMPARE TWO COLOR32s.
