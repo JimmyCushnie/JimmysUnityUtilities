@@ -74,8 +74,12 @@ namespace JimmysUnityUtilities.Random
 
 
         /// <summary> 50% chance to be 1, 50% chance to be 0. </summary>
+        public int OneOrZero()
+            => (int)(GetSourceRandom64Bits() & 1);
+
+        /// <summary> 50% chance to be 1, 50% chance to be -1. </summary>
         public int Sign()
-            => FiftyFifty() ? 1 : 0;
+            => FiftyFifty() ? 1 : -1;
 
 
         /// <summary> Gets a random single-precision value in the range [-1, 1]. </summary>
