@@ -78,32 +78,79 @@ namespace JimmysUnityUtilities
 
             return Path.Combine(parentPath, desiredName);
         }
+               
 
-        
 
-        // Based on https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories
-        public static void CopyDirectory(string sourcePath, string destinationPath, bool copySubDirectories = true)
+        public static void CopyDirectory(string sourcePath, string destinationPath)
         {
-            DirectoryInfo souce = new DirectoryInfo(sourcePath);
+            if (string.IsNullOrEmpty(sourcePath))
+                throw new ArgumentException($"{nameof(sourcePath)} cannot be null or empty.", nameof(sourcePath));
 
-            if (!souce.Exists)
+            if (string.IsNullOrEmpty(destinationPath))
+                throw new ArgumentException($"{nameof(destinationPath)} cannot be null or empty.", nameof(destinationPath));
+
+            if (FileUtilities.IsIllegalFileSystemPath(sourcePath))
+                throw new ArgumentException($"{nameof(sourcePath)} is illegal: {sourcePath}", nameof(sourcePath));
+
+            if (FileUtilities.IsIllegalFileSystemPath(destinationPath))
+                throw new ArgumentException($"{nameof(destinationPath)} is illegal: {destinationPath}", nameof(destinationPath));
+
+
+            var sourceDirectory = new DirectoryInfo(sourcePath);
+
+            if (!sourceDirectory.Exists)
                 throw new DirectoryNotFoundException($"Source directory does not exist or could not be found: {sourcePath}");
 
-            if (!Directory.Exists(destinationPath))
-                Directory.CreateDirectory(destinationPath);
-            
-            foreach (FileInfo file in souce.GetFiles())
+            if (Directory.Exists(destinationPath))
+                throw new Exception($"Destination path already exists: {destinationPath}");
+
+            if (FileUtilities.IsSubpathOrSamePath(potentialChildPath: destinationPath, potentialParentPath: sourcePath))
+                throw new Exception($"{nameof(destinationPath)} must not be a child of {nameof(sourcePath)}! ({destinationPath}, {sourcePath})");
+
+
+            // Trim the end so there aren't errors with getting the relative path below
+            sourcePath = Path.GetFullPath(sourcePath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+            // Recursion seems the natural way to implement this function, but I've decided to go with an iterative approach for a few reasons:
+            // - Better performance, especially when there are a lot of nested subdirectories
+            // - No risk of stack overflow with especially deeply nested directories
+            // - Easier to implement new features like parallelism, pause/resume copying, etc
+            var directoriesToCopy = new Stack<DirectoryInfo>();
+            directoriesToCopy.Push(sourceDirectory);
+
+            while (directoriesToCopy.Count > 0)
             {
-                string newPath = Path.Combine(destinationPath, file.Name);
-                file.CopyTo(newPath, false);
-            }
-            
-            if (copySubDirectories)
-            {
-                foreach (DirectoryInfo subdirectory in souce.GetDirectories())
+                var currentDirectory = directoriesToCopy.Pop();
+                string relativePath = currentDirectory.FullName.Substring(startIndex: sourcePath.Length); // todo: use Path.GetRelativePath once we make it to .NET Standard 2.1
+                string newDirectoryPath = Path.Combine(destinationPath, relativePath);
+
+                try
                 {
-                    string newPath = Path.Combine(destinationPath, subdirectory.Name);
-                    CopyDirectory(subdirectory.FullName, newPath, copySubDirectories);
+                    Directory.CreateDirectory(newDirectoryPath);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Unable to create directory at {newDirectoryPath}", ex);
+                }
+
+                // Copy all the files in this directory
+                foreach (FileInfo file in currentDirectory.GetFiles())
+                {
+                    string newFilePath = Path.Combine(newDirectoryPath, file.Name);
+                    try
+                    {
+                        file.CopyTo(newFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Unable to copy file at {file.FullName} to {newFilePath}", ex);
+                    }
+                }
+
+                // Add all the subdirectories to the stack
+                foreach (DirectoryInfo subdirectory in currentDirectory.GetDirectories())
+                {
+                    directoriesToCopy.Push(subdirectory);
                 }
             }
         }
