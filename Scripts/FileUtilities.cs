@@ -108,6 +108,25 @@ namespace JimmysUnityUtilities
             }
         }
 
+        public static bool IsSubpathOrSamePath(string potentialChildPath, string potentialParentPath)
+        {
+            potentialChildPath = Path.GetFullPath(potentialChildPath);
+            potentialParentPath = Path.GetFullPath(potentialParentPath);
+
+            if (String.Equals(potentialChildPath, potentialParentPath, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (potentialChildPath.StartsWith(potentialParentPath, StringComparison.OrdinalIgnoreCase))
+            {
+                if (potentialChildPath[potentialParentPath.Length] == Path.DirectorySeparatorChar ||
+                    potentialChildPath[potentialParentPath.Length] == Path.AltDirectorySeparatorChar)
+                    return true;
+            }
+
+            return false;
+        }
+
+
         public static long GetDirectorySizeInBytes(string directoryPath)
         {
             if (!Directory.Exists(directoryPath))
