@@ -11,7 +11,7 @@ namespace JimmysUnityUtilities
     public static class FileUtilities
     {
         public const string FileTimestampFormat = "yyyy-MM-dd@HH-mm-ss";
-        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString(FileTimestampFormat);
+        public static string CurrentTimestamp => DateTime.Now.ToLocalTime().ToString(FileTimestampFormat, CultureInfo.InvariantCulture);
 
         public static bool TryParseDateTimeFromFileTimestamp(string timeStamp, out DateTime result)
             => DateTime.TryParseExact(timeStamp, FileTimestampFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out result);
@@ -55,7 +55,7 @@ namespace JimmysUnityUtilities
             desiredName = ValidatedFileName(desiredName);
 
             while (Directory.Exists(Path.Combine(parentPath, desiredName)))
-                desiredName = desiredName + append;
+                desiredName += append;
 
             return Path.Combine(parentPath, desiredName);
         }
@@ -160,7 +160,7 @@ namespace JimmysUnityUtilities
         /// <param name="filePath">The full, rooted path of the file or directory</param>
         public static string FilePathToURI(string filePath)
         {
-            StringBuilder uriBuilder = new StringBuilder(filePath);
+            var uriBuilder = new StringBuilder(filePath);
             for (int i = 0; i < uriBuilder.Length; i++)
             {
                 char c = uriBuilder[i];
