@@ -361,5 +361,11 @@ namespace JimmysUnityUtilities
         /// </summary>
         public static bool IsNotNullAndContains<T>(this List<T> list, T item)
             => list != null && list.Contains(item);
+
+
+
+
+        public static int IndexOf<T>(this T[] array, T value)
+            => Array.IndexOf(array, value);
     }
 }
