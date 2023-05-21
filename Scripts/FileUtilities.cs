@@ -21,13 +21,13 @@ namespace JimmysUnityUtilities
         {
             "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
         };
-        public static bool IsIllegalFileSystemPath(string path)
+        public static bool IsLegalFileSystemPath(string path)
         {
             // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
             // Todo support the rest of this nonsense
 
             if (path.Any(c => Path.GetInvalidPathChars().Contains(c)))
-                return true;
+                return false;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -36,11 +36,11 @@ namespace JimmysUnityUtilities
                 {
                     if (fileName.Equals(illegalName, StringComparison.OrdinalIgnoreCase) ||
                         fileName.StartsWith(illegalName + '.', StringComparison.OrdinalIgnoreCase))
-                        return true;
+                        return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         /// <summary> replaces any characters that cannot be in a file name </summary>
@@ -89,10 +89,10 @@ namespace JimmysUnityUtilities
             if (string.IsNullOrEmpty(destinationPath))
                 throw new ArgumentException($"{nameof(destinationPath)} cannot be null or empty.", nameof(destinationPath));
 
-            if (FileUtilities.IsIllegalFileSystemPath(sourcePath))
+            if (!FileUtilities.IsLegalFileSystemPath(sourcePath))
                 throw new ArgumentException($"{nameof(sourcePath)} is illegal: {sourcePath}", nameof(sourcePath));
 
-            if (FileUtilities.IsIllegalFileSystemPath(destinationPath))
+            if (!FileUtilities.IsLegalFileSystemPath(destinationPath))
                 throw new ArgumentException($"{nameof(destinationPath)} is illegal: {destinationPath}", nameof(destinationPath));
 
 
