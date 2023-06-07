@@ -79,7 +79,24 @@ namespace JimmysUnityUtilities
 
             return Path.Combine(parentPath, desiredName);
         }
-               
+
+        /// <summary>
+        /// Provide a path for a file you want to create. If that file already exists, the filename (before the extension) will be modified with a number after it to make it unique.
+        /// </summary>
+        public static string MakeProposedFilePathUnique(string desiredFilePath)
+        {
+            // todo use the improvements in this method for the directory one
+
+            string newFilePath = desiredFilePath;
+            int counter = 0;
+            while (File.Exists(newFilePath))
+            {
+                counter++;
+                newFilePath = AppendToFilenameWithoutChangingExtension(desiredFilePath, $" ({counter})");
+            }
+
+            return newFilePath;
+        }
 
         /// <summary> Returns a full file path </summary>
         public static string ChangeFileNameWithoutChangingExtension(string originalFilePath, string newFileName)
