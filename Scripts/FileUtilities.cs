@@ -81,6 +81,26 @@ namespace JimmysUnityUtilities
         }
                
 
+        /// <summary> Returns a full file path </summary>
+        public static string ChangeFileNameWithoutChangingExtension(string originalFilePath, string newFileName)
+        {
+            string parentDirectory = Path.GetDirectoryName(originalFilePath);
+            string extension = Path.GetExtension(originalFilePath);
+
+            return Path.Combine(parentDirectory, newFileName + extension);
+        }
+
+        /// <summary> Returns a full file path </summary>
+        public static string AppendToFilenameWithoutChangingExtension(string originalFilePath, string append)
+        {
+            string parentDirectory = Path.GetDirectoryName(originalFilePath);
+            string fileName = Path.GetFileNameWithoutExtension(originalFilePath);
+            string extension = Path.GetExtension(originalFilePath);
+
+            return Path.Combine(parentDirectory, fileName + append + extension);
+        }
+
+
 
         public static void CopyDirectory(string sourcePath, string destinationPath)
         {
