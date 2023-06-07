@@ -181,8 +181,42 @@ namespace JimmysUnityUtilities
             => Math.Sign(value);
 
 
+        public static float Round(this float value)
+            => Mathf.Round(value);
+
+        public static float Floor(this float value)
+            => Mathf.Floor(value);
+
+        public static float Ceiling(this float value)
+            => Mathf.Ceil(value);
+
         public static int RoundToInt(this float value)
             => Mathf.RoundToInt(value);
+
+        public static int FloorToInt(this float value)
+            => Mathf.FloorToInt(value);
+
+        public static int CeilingToInt(this float value)
+            => Mathf.CeilToInt(value);
+
+
+        public static double Round(this double value)
+            => Math.Round(value);
+
+        public static double Floor(this double value)
+            => Math.Floor(value);
+
+        public static double Ceiling(this double value)
+            => Math.Ceiling(value);
+
+        public static int RoundToInt(this double value)
+            => (int)Math.Round(value);
+
+        public static int FloorToInt(this double value)
+            => (int)value.Floor();
+
+        public static int CeilingToInt(this double value)
+            => (int)value.Ceiling();
 
 
 
