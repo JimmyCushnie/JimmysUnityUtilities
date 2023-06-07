@@ -14,10 +14,10 @@ namespace JimmysUnityUtilities
         {
             // This is distinct from using modulus because it prevents negative values.
 
-            while (value < 0) 
+            while (value < 0)
                 value += max;
 
-            while (value > max) 
+            while (value > max)
                 value -= max;
 
             return value;
@@ -37,10 +37,10 @@ namespace JimmysUnityUtilities
 
             int diff = max - min + 1;
 
-            while (value < min) 
+            while (value < min)
                 value += diff;
 
-            while (value > max) 
+            while (value > max)
                 value -= diff;
 
             return value;
@@ -48,10 +48,10 @@ namespace JimmysUnityUtilities
 
         public static int Clamp(this int value, int minInclusive, int maxInclusive)
         {
-            if (value > maxInclusive) 
+            if (value > maxInclusive)
                 return maxInclusive;
 
-            if (value < minInclusive) 
+            if (value < minInclusive)
                 return minInclusive;
 
             return value;
@@ -59,10 +59,10 @@ namespace JimmysUnityUtilities
 
         public static float Clamp(this float value, float minInclusive, float maxInclusive)
         {
-            if (value > maxInclusive) 
+            if (value > maxInclusive)
                 return maxInclusive;
 
-            if (value < minInclusive) 
+            if (value < minInclusive)
                 return minInclusive;
 
             return value;
@@ -70,7 +70,7 @@ namespace JimmysUnityUtilities
 
         public static bool IsBetween(this int value, int minInclusive, int maxInclusive)
         {
-            if (value < minInclusive || value > maxInclusive) 
+            if (value < minInclusive || value > maxInclusive)
                 return false;
 
             return true;
@@ -78,7 +78,7 @@ namespace JimmysUnityUtilities
 
         public static bool IsBetween(this float value, float minInclusive, float maxInclusive)
         {
-            if (value < minInclusive || value > maxInclusive) 
+            if (value < minInclusive || value > maxInclusive)
                 return false;
 
             return true;
@@ -96,10 +96,10 @@ namespace JimmysUnityUtilities
             if (exponent < 0)
                 throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
 
-            if (exponent == 0) 
+            if (exponent == 0)
                 return 1;
 
-            if (exponent == 1) 
+            if (exponent == 1)
                 return @base;
 
             int result = @base;
@@ -115,10 +115,10 @@ namespace JimmysUnityUtilities
             if (exponent < 0)
                 throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
 
-            if (exponent == 0) 
+            if (exponent == 0)
                 return 1;
 
-            if (exponent == 1) 
+            if (exponent == 1)
                 return @base;
 
             float result = @base;
@@ -134,10 +134,10 @@ namespace JimmysUnityUtilities
             if (exponent < 0)
                 throw new ArgumentOutOfRangeException(nameof(exponent), "must be at least 0");
 
-            if (exponent == 0) 
+            if (exponent == 0)
                 return 1;
 
-            if (exponent == 1) 
+            if (exponent == 1)
                 return @base;
 
             double result = @base;
@@ -187,7 +187,7 @@ namespace JimmysUnityUtilities
 
 
         const string NoScientificNotationInToString = "#####################################################################################################################################################################################################################################################################################################################################0.#####################################################################################################################################################################################################################################################################################################################################";
-        
+
         public static string ToStringNoScientificNotation(this double value, IFormatProvider provider)
             => value.ToString(NoScientificNotationInToString, provider);
 
