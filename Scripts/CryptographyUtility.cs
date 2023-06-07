@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,6 +13,17 @@ namespace JimmysUnityUtilities
             {
                 byte[] bytes = Encoding.UTF8.GetBytes(source ?? string.Empty);
                 return hasher.ComputeHash(bytes);
+            }
+        }
+
+
+        public static string GetFileSHA1(string filePath)
+        {
+            using (var fileStream = File.OpenRead(filePath))
+            using (var sha1 = new SHA1Managed())
+            {
+                byte[] hashBytes = sha1.ComputeHash(fileStream);
+                return BitConverter.ToString(hashBytes).Replace("-", string.Empty);
             }
         }
 
