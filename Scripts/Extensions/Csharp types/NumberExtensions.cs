@@ -84,6 +84,9 @@ namespace JimmysUnityUtilities
             return true;
         }
 
+        public static int DistanceTo(this int value, int target) => Mathf.Abs(value - target);
+
+
         public static bool IsEven(this int value)
             => value % 2 == 0;
 
