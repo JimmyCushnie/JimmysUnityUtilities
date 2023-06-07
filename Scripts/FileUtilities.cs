@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using JimmysUnityUtilities.Random;
 
 namespace JimmysUnityUtilities
 {
@@ -304,6 +305,20 @@ namespace JimmysUnityUtilities
             set.Add('~');
 
             return set;
+        }
+
+
+        /// <summary>
+        /// Creates a new directory with a random name in the user's temp folder. Returns the full path of the new directory.
+        /// </summary>
+        public static string CreateTemporaryDirectory()
+        {
+            var tempPath = Path.GetTempPath();
+            var directoryName = ValidatedUniqueDirectoryName(tempPath, JRandom.Shared.UppercaseAlphanumericString(10));
+            var directoryPath = Path.Combine(tempPath, directoryName);
+
+            Directory.CreateDirectory(directoryPath);
+            return directoryPath;
         }
     }
 }
