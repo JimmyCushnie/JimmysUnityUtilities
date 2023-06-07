@@ -320,5 +320,43 @@ namespace JimmysUnityUtilities
             Directory.CreateDirectory(directoryPath);
             return directoryPath;
         }
+
+
+        public static bool AreFileContentsIdentical(string filePath1, string filePath2)
+        {
+            var fileInfo1 = new FileInfo(filePath1);
+            var fileInfo2 = new FileInfo(filePath2);
+
+            if (fileInfo1.Length != fileInfo2.Length)
+                return false;
+
+
+            using (FileStream fileStream1 = fileInfo1.OpenRead())
+            using (FileStream fileStream2 = fileInfo2.OpenRead())
+            {
+                const int bufferSize = 4096;
+                var buffer1 = new byte[bufferSize];
+                var buffer2 = new byte[bufferSize];
+
+                int bytesRead1;
+                int bytesRead2;
+                while (
+                    (bytesRead1 = fileStream1.Read(buffer1, 0, bufferSize)) > 0 &&
+                    (bytesRead2 = fileStream2.Read(buffer2, 0, bufferSize)) > 0)
+                {
+                    if (bytesRead1 != bytesRead2) // This should never happen, but, hey, better check it just in case
+                        return false;
+
+                    for (int i = 0; i < bytesRead1; i++)
+                    {
+                        if (buffer1[i] != buffer2[i])
+                            return false;
+                    }
+                }
+            }
+
+            // Reached end of both files without finding any differences
+            return true;
+        }
     }
 }
