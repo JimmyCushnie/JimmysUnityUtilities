@@ -395,5 +395,10 @@ namespace JimmysUnityUtilities
             // Reached end of both files without finding any differences
             return true;
         }
+
+        public static bool DirectoryExistsAndIsNotEmpty(string directoryPath)
+        {
+            return Directory.Exists(directoryPath) && Directory.EnumerateFileSystemEntries(directoryPath).Any();
+        }
     }
 }
