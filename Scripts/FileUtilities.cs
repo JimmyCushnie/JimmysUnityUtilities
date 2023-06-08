@@ -359,7 +359,7 @@ namespace JimmysUnityUtilities
         }
 
 
-        public static bool AreFileContentsIdentical(string filePath1, string filePath2)
+        public static bool FileContentsAreIdentical(string filePath1, string filePath2)
         {
             var fileInfo1 = new FileInfo(filePath1);
             var fileInfo2 = new FileInfo(filePath2);
