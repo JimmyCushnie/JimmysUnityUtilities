@@ -83,29 +83,29 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// You provide a parent directory and a desired name. We return that name, modified if necessary to make sure it is a valid path name and doesn't already exist.
+        /// Provide a path for a file you want to create. If that directory already exists (or if a file exists at the same path), the directory name will be modified with a number after it to make it unique.
         /// </summary>
-        /// <param name="parentPath"> This path must be absolute </param>
-        public static string ValidatedUniqueDirectoryName(string parentPath, string desiredName, string append = "-")
+        public static string MakeProposedDirectoryPathUnique(string desiredDirectoryPath)
         {
-            desiredName = ValidatedFileName(desiredName);
+            string newPath = desiredDirectoryPath;
+            int counter = 0;
+            while (File.Exists(newPath) || Directory.Exists(newPath))
+            {
+                counter++;
+                newPath = desiredDirectoryPath + $" ({counter})";
+            }
 
-            while (Directory.Exists(Path.Combine(parentPath, desiredName)))
-                desiredName += append;
-
-            return Path.Combine(parentPath, desiredName);
+            return newPath;
         }
 
         /// <summary>
-        /// Provide a path for a file you want to create. If that file already exists, the filename (before the extension) will be modified with a number after it to make it unique.
+        /// Provide a path for a file you want to create. If that file already exists (or if a directory exists at the same path), the filename (before the extension) will be modified with a number after it to make it unique.
         /// </summary>
         public static string MakeProposedFilePathUnique(string desiredFilePath)
         {
-            // todo use the improvements in this method for the directory one
-
             string newFilePath = desiredFilePath;
             int counter = 0;
-            while (File.Exists(newFilePath))
+            while (File.Exists(newFilePath) || Directory.Exists(newFilePath))
             {
                 counter++;
                 newFilePath = AppendToFilenameWithoutChangingExtension(desiredFilePath, $" ({counter})");
