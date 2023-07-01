@@ -44,23 +44,39 @@ namespace JimmysUnityUtilities
             return true;
         }
 
-        /// <summary> replaces any characters that cannot be in a file name </summary>
-        /// <param name="replacement"> invalid characters will be replaced with this character </param>
-        public static string ValidatedFileName(string name, char replacement = '_')
+        /// <summary> Takes an arbitrary string, typically one entered by a user, and converts it into a string that is valid to use as a file name. </summary>
+        /// <param name="fixerChar"> This char replaces invalid chars in the name, and is added as necessary to keep the filename valid. </param>
+        public static string ValidatedFileName(string name, char fixerChar = '_')
         {
+            if (Path.GetInvalidFileNameChars().Contains(fixerChar)
+                || fixerChar == ' ' || fixerChar == '.'
+                || fixerChar == Path.DirectorySeparatorChar || fixerChar == Path.AltDirectorySeparatorChar)
+                throw new ArgumentException("Fixer char is invalid", nameof(fixerChar));
+
+
             if (name.IsNullOrEmpty())
-                name = replacement.ToString();
+                name = fixerChar.ToString();
 
-            string validatedName = name.ReplaceAny(Path.GetInvalidFileNameChars(), replacement, 0);
+            string validatedName = name.ReplaceAny(Path.GetInvalidFileNameChars(), fixerChar, startIndex: 0);
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+
+            // Okay, so the fixes below are only strictly necessary on Windows, however for now I'm opting to apply them on all OSes.
+            // The reason is that this method is typically used to get filenames for user-generated content, i.e. save files.
+            // User-generated content is frequently shared between users, and we don't want there to be any friction in this sharing.
+            // I.e. if a Linux user creates something, they should be able to just send it to their Windows friends, and the Windows
+            // friends shouldn't run into awkward confusing file system errors.
+
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 foreach (var illegalName in IllegalWindowsFileNames)
                 {
                     if (validatedName.Equals(illegalName, StringComparison.OrdinalIgnoreCase) ||
                         validatedName.StartsWith(illegalName + '.', StringComparison.OrdinalIgnoreCase))
-                        return validatedName.Insert(illegalName.Length, "_");
+                        validatedName = validatedName.Insert(illegalName.Length, fixerChar.ToString());
                 }
+
+                if (validatedName.EndsWith(".") || validatedName.EndsWith(" "))
+                    validatedName += fixerChar;
             }
 
             return validatedName;
