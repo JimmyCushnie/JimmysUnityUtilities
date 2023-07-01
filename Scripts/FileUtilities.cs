@@ -364,12 +364,11 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Creates a new directory with a random name in the user's temp folder. Returns the full path of the new directory.
         /// </summary>
-        public static string CreateTemporaryDirectory()
+        /// <param name="prefix">The directory name will be prefixed with this, if you supply it. Useful for debugging.</param>
+        public static string CreateTemporaryDirectory(string prefix = "")
         {
-            var tempPath = Path.GetTempPath();
-            var directoryName = ValidatedUniqueDirectoryName(tempPath, JRandom.Shared.UppercaseAlphanumericString(10));
-            var directoryPath = Path.Combine(tempPath, directoryName);
-
+            var directoryPath = Path.Combine(Path.GetTempPath(), prefix + JRandom.Shared.UppercaseAlphanumericString(20));
+            directoryPath = MakeProposedDirectoryPathUnique(directoryPath); // Just in case lol
             Directory.CreateDirectory(directoryPath);
             return directoryPath;
         }
