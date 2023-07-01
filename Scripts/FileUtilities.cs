@@ -361,11 +361,39 @@ namespace JimmysUnityUtilities
 
         public static bool FileContentsAreIdentical(string filePath1, string filePath2)
         {
+            if (string.IsNullOrEmpty(filePath1))
+                throw new ArgumentException($"{nameof(filePath1)} cannot be null or empty.", nameof(filePath1));
+
+            if (string.IsNullOrEmpty(filePath2))
+                throw new ArgumentException($"{nameof(filePath2)} cannot be null or empty.", nameof(filePath2));
+
+            if (!FileUtilities.IsLegalFileSystemPath(filePath1))
+                throw new ArgumentException($"{nameof(filePath1)} is illegal: {filePath1}", nameof(filePath1));
+
+            if (!FileUtilities.IsLegalFileSystemPath(filePath2))
+                throw new ArgumentException($"{nameof(filePath2)} is illegal: {filePath2}", nameof(filePath2));
+
+
             var fileInfo1 = new FileInfo(filePath1);
             var fileInfo2 = new FileInfo(filePath2);
 
+
+            if (!fileInfo1.Exists)
+                throw new FileNotFoundException($"{nameof(fileInfo1)} does not exist or could not be found: {fileInfo1}");
+
+            if (!fileInfo2.Exists)
+                throw new FileNotFoundException($"{nameof(fileInfo2)} does not exist or could not be found: {fileInfo2}");
+
+
             if (fileInfo1.Length != fileInfo2.Length)
                 return false;
+
+            if (fileInfo1.FullName == fileInfo2.FullName)
+                return true;
+
+            // Todo: determine whether this is actually a performance increase, enable it if so
+            //if (CryptographyUtility.GetFileSHA1(filePath1) != CryptographyUtility.GetFileSHA1(filePath2))
+            //    return false;
 
 
             using (FileStream fileStream1 = fileInfo1.OpenRead())
