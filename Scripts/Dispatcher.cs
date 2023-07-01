@@ -7,7 +7,7 @@ namespace JimmysUnityUtilities
 {
     /// <summary>
     /// Utility for calling functions on the main Unity thread from multithreaded code.
-    /// Note that to use <see cref="Dispatcher"/>, you must first call <see cref="Dispatcher.Initialize"/>, from the main Unity thread.
+    /// Note that to use <see cref="Dispatcher"/>, you must first call <see cref="Dispatcher.EnsureInitialized"/>, from the main Unity thread.
     /// </summary>
     public class Dispatcher : MonoBehaviour
     {
@@ -15,10 +15,10 @@ namespace JimmysUnityUtilities
         /// You must call this, exactly once, from the main Unity thread before you use the other methods in this class.
         /// It is recommended that you do this on application startup.
         /// </summary>
-        public static void Initialize()
+        public static void EnsureInitialized()
         {
             if (Initialized)
-                throw new Exception($"{nameof(Initialize)} must only be called once during the application lifetime");
+                return;
 
             try
             {
@@ -27,7 +27,7 @@ namespace JimmysUnityUtilities
             }
             catch (UnityException)
             {
-                throw new Exception($"{nameof(Initialize)} must be called from the main Unity thread");
+                throw new Exception($"{nameof(EnsureInitialized)} must be called from the main Unity thread");
             }
 
             MainThreadID = Thread.CurrentThread.ManagedThreadId;
@@ -39,7 +39,7 @@ namespace JimmysUnityUtilities
             get
             {
                 if (_Instance == null)
-                    throw new Exception($"You cannot use {nameof(Dispatcher)} until you've called {nameof(Initialize)}");
+                    throw new Exception($"You cannot use {nameof(Dispatcher)} until you've called {nameof(EnsureInitialized)}");
 
                 return _Instance;
             }
@@ -56,7 +56,7 @@ namespace JimmysUnityUtilities
         public static void InvokeAsync(Action action)
         {
             if (!Initialized)
-                throw new Exception($"You cannot use this method until you've called {nameof(Initialize)}");
+                throw new Exception($"You cannot use this method until you've called {nameof(EnsureInitialized)}");
 
 
             if (OnMainThread)
@@ -71,7 +71,7 @@ namespace JimmysUnityUtilities
         public static void Invoke(Action action)
         {
             if (!Initialized)
-                throw new Exception($"You cannot use this method until you've called {nameof(Initialize)}");
+                throw new Exception($"You cannot use this method until you've called {nameof(EnsureInitialized)}");
 
 
             if (OnMainThread)
