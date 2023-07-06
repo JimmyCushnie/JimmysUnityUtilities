@@ -158,7 +158,7 @@ namespace JimmysUnityUtilities
             if (Directory.Exists(destinationPath))
                 throw new Exception($"Destination path already exists: {destinationPath}");
 
-            if (FileUtilities.IsSubpathOrSamePath(potentialChildPath: destinationPath, potentialParentPath: sourcePath))
+            if (FileUtilities.IsSubpathOrSamePath(potentialChildPath: destinationPath, potentialParentPath: sourcePath)) // Note that this could still be a problem if we're on a case-insensitive file system...
                 throw new Exception($"{nameof(destinationPath)} must not be a child of {nameof(sourcePath)}! ({destinationPath}, {sourcePath})");
 
 
@@ -209,16 +209,46 @@ namespace JimmysUnityUtilities
             }
         }
 
+
+        /// <summary>
+        /// Returns true if <paramref name="potentialChildPath"/> is a subpath of <paramref name="potentialParentPath"/> -- i.e. <paramref name="potentialChildPath"/> is contained within <paramref name="potentialParentPath"/>
+        /// VERY IMPORTANT: even if you are on a case-insensitive file system, you MUST use the same casing for both paths, or you could have a false negative.
+        /// </summary>
+        /// <param name="potentialChildPath"> Path to a file or folder </param>
+        /// <param name="potentialParentPath"> Path to a file or folder </param>
+        public static bool IsSubpathOf(string potentialChildPath, string potentialParentPath)
+            => TestIfSubpathInternal(potentialChildPath, potentialParentPath, alsoReturnTrueIfSamePath: false);
+
+        /// <summary>
+        /// Returns true if <paramref name="potentialChildPath"/> is a subpath of <paramref name="potentialParentPath"/>, or if they represent the same file/folder.
+        /// VERY IMPORTANT: even if you are on a case-insensitive file system, you MUST use the same casing for both paths, or you could have a false negative.
+        /// </summary>
+        /// <param name="potentialChildPath"> Path to a file or folder </param>
+        /// <param name="potentialParentPath"> Path to a file or folder </param>
         public static bool IsSubpathOrSamePath(string potentialChildPath, string potentialParentPath)
+            => TestIfSubpathInternal(potentialChildPath, potentialParentPath, alsoReturnTrueIfSamePath: true);
+
+        private static bool TestIfSubpathInternal(string potentialChildPath, string potentialParentPath, bool alsoReturnTrueIfSamePath)
         {
+            // I really don't feel great about how the string comparisons are always case-sensitive. This can lead to false negatives, i.e. on a case-insensitive file system
+            // where you're comparing `documents/taxes` and `Documents/Taxes/2019`.
+            // However, I can't make the string comparison always case-insensitive, because then we'll get false positives on case-sensitive file systems!
+            // Ideally, we'd check whether the file system referenced by each path is case-sensitive, and adjust the string comparison accordingly. However, as far as I can
+            // tell this is impossible in C#.
+            // We could use an heuristic like `caseSensitive = OS != Windows`, but this will NOT work in every situation and I prefer consistently nonideal behavior to 
+            // behavior that breaks sometimes in a sneaky hard-to-anticipate way.
+            // I think being always-case-sensitive is the best compromise for now, but I'd really like to improve this in the future... maybe .NET will implement this function
+            // in the standard library and I'll be able to just delete all this lol
+
             potentialChildPath = Path.GetFullPath(potentialChildPath);
             potentialParentPath = Path.GetFullPath(potentialParentPath);
 
-            if (String.Equals(potentialChildPath, potentialParentPath, StringComparison.OrdinalIgnoreCase))
-                return true;
+            if (String.Equals(potentialChildPath, potentialParentPath, StringComparison.Ordinal))
+                return alsoReturnTrueIfSamePath;
 
-            if (potentialChildPath.StartsWith(potentialParentPath, StringComparison.OrdinalIgnoreCase))
+            if (potentialChildPath.StartsWith(potentialParentPath, StringComparison.Ordinal))
             {
+                // potentialChildPath[potentialParentPath.Length] is guaranteed to not throw an IndexOutOfRangeException. If the string was too short we would not be here
                 if (potentialChildPath[potentialParentPath.Length] == Path.DirectorySeparatorChar ||
                     potentialChildPath[potentialParentPath.Length] == Path.AltDirectorySeparatorChar)
                     return true;
