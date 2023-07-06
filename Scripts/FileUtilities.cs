@@ -269,9 +269,9 @@ namespace JimmysUnityUtilities
 
         /// <summary>
         /// When the OS reports a directory's last write time, it usually doesn't include when items inside the directory were written to.
-        /// This function iterates through a directory's files to find the last write time of any file within.
+        /// This function iterates through a directory's child FileSystemInfos to find the last write time of any info [file or directory] within.
         /// </summary>
-        public static DateTime GetDirectoryLastWriteTimeIncludingSubFiles(string directoryPath)
+        public static DateTime GetDirectoryLastWriteTimeIncludingChildren(string directoryPath)
         {
             if (!Directory.Exists(directoryPath))
                 throw new DirectoryNotFoundException($"Couldn't find directory {directoryPath}");
@@ -279,10 +279,10 @@ namespace JimmysUnityUtilities
             var directory = new DirectoryInfo(directoryPath);
             var latestTime = directory.LastWriteTime;
 
-            foreach (var file in directory.EnumerateFiles("*", SearchOption.AllDirectories))
+            foreach (var info in directory.EnumerateFileSystemInfos("*", SearchOption.AllDirectories))
             {
-                if (file.LastWriteTime > latestTime)
-                    latestTime = file.LastWriteTime;
+                if (info.LastWriteTime > latestTime)
+                    latestTime = info.LastWriteTime;
             }
 
             return latestTime;
