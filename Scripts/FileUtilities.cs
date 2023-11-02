@@ -175,7 +175,8 @@ namespace JimmysUnityUtilities
             while (directoriesToCopy.Count > 0)
             {
                 var currentDirectory = directoriesToCopy.Pop();
-                string relativePath = currentDirectory.FullName.Substring(startIndex: sourcePath.Length); // todo: use Path.GetRelativePath once we make it to .NET Standard 2.1
+                string relativePath = currentDirectory.FullName.Substring(startIndex: sourcePath.Length) // todo: use Path.GetRelativePath once we make it to .NET Standard 2.1
+                    .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar); // Path.Combine breaks if an element begins with a DirectorySeparatorChar (it gets treated as a rooted path)
                 string newDirectoryPath = Path.Combine(destinationPath, relativePath);
 
                 try
