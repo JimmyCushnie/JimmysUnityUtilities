@@ -367,5 +367,13 @@ namespace JimmysUnityUtilities
 
         public static int IndexOf<T>(this T[] array, T value)
             => Array.IndexOf(array, value);
+
+
+        /// <summary>
+        /// Converts <paramref name="source"/> to a <see cref="HashSet{T}"/> using the efficient built-in language feature for it. 
+        /// A sister method to <see cref="Enumerable.ToArray{TSource}(IEnumerable{TSource})"/> and <see cref="Enumerable.ToList{TSource}(IEnumerable{TSource})"/>.
+        /// </summary>
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
+            => new HashSet<T>(source);
     }
 }
