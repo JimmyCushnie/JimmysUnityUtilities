@@ -295,6 +295,17 @@ namespace JimmysUnityUtilities
             return sourceEnumerable.GroupBy(getProperty).Count() == 1;
         }
 
+        public static bool ContainsAll<T>(this IEnumerable<T> enumerable, IEnumerable<T> thingsToContain)
+        {
+            foreach (var thing in thingsToContain)
+            {
+                if (!enumerable.Contains(thing))
+                    return false;
+            }
+
+            return true;
+        }
+
 
         public static bool HasTheSameKeysAndValuesAs<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dicA, IReadOnlyDictionary<TKey, TValue> dicB, IEqualityComparer<TValue> valueComparer = null)
         {
