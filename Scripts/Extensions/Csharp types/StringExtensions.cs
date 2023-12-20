@@ -106,5 +106,22 @@ namespace JimmysUnityUtilities
                 }
             }
         }
+
+
+        public static string RemoveFromStartIfPresent(this string s, string removeThisFromStart)
+        {
+            if (s.StartsWith(removeThisFromStart))
+                return s.Substring(removeThisFromStart.Length);
+
+            return s;
+        }
+
+        public static string RemoveFromEndIfPresent(this string s, string removeThisFromEnd)
+        {
+            if (s.EndsWith(removeThisFromEnd))
+                return s.Substring(0, s.Length - removeThisFromEnd.Length);
+
+            return s;
+        }
     }
 }
