@@ -59,5 +59,16 @@ namespace JimmysUnityUtilities
                 }
             }
         }
+
+
+        public static byte[] GenerateCryptographicallySecureRandomBytes(int length)
+        {
+            using (var cryptoRng = new RNGCryptoServiceProvider())
+            {
+                var buf = new byte[length];
+                cryptoRng.GetBytes(buf);
+                return buf;
+            }
+        }
     }
 }
