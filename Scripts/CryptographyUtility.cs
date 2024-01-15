@@ -65,9 +65,9 @@ namespace JimmysUnityUtilities
         {
             using (var cryptoRng = new RNGCryptoServiceProvider())
             {
-                var buf = new byte[length];
-                cryptoRng.GetBytes(buf);
-                return buf;
+                var buffer = new byte[length];
+                cryptoRng.GetBytes(buffer);
+                return buffer;
             }
         }
     }
