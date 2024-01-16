@@ -83,7 +83,7 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// Provide a path for a file you want to create. If that directory already exists (or if a file exists at the same path), the directory name will be modified with a number after it to make it unique.
+        /// Provide a path for a directory you want to create. If that directory already exists (or if a file exists at the same path), the directory name will be modified with a number after it to make it unique.
         /// </summary>
         public static string MakeProposedDirectoryPathUnique(string desiredDirectoryPath)
         {
