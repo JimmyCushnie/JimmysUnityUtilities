@@ -1,4 +1,4 @@
-﻿// Based on https://wiki.unity3d.com/index.php?title=CustomFixedUpdate&oldid=18294 by Bunny83
+// Based on https://wiki.unity3d.com/index.php?title=CustomFixedUpdate&oldid=18294 by Bunny83
 
 using UnityEngine;
 using System;
@@ -6,7 +6,7 @@ using System;
 namespace JimmysUnityUtilities
 {
     /// <summary>
-    /// Like Unity's FixedUpdate, but you can have many of them, and they can all have different tickrates independant from the physics simulation.
+    /// Like Unity's FixedUpdate, but you can have many of them, and they can all have different tickrates independent from the physics simulation.
     /// </summary>
     public class CustomFixedUpdate
     {

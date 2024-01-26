@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Component = UnityEngine.Component;
 using Object = UnityEngine.Object;
@@ -19,7 +19,7 @@ namespace JimmysUnityUtilities
             return component;
         }
 
-        ///<summary> Returns true if the component existsed and was removed </summary>
+        ///<summary> Returns true if the component existed and was removed </summary>
         public static bool RemoveComponent<T>(this Component co) where T : Component
         {
             T component = co.GetComponent<T>();
@@ -31,7 +31,7 @@ namespace JimmysUnityUtilities
             return false;
         }
 
-        ///<summary> Returns true if the component existsed and was removed </summary>
+        ///<summary> Returns true if the component existed and was removed </summary>
         public static bool RemoveComponentImmediate<T>(this Component co, bool allowDestroyingAssets = false) where T : Component
         {
             T component = co.GetComponent<T>();
@@ -43,7 +43,7 @@ namespace JimmysUnityUtilities
             return false;
         }
 
-        ///<summary> Returns true if the component existsed and was removed </summary>
+        ///<summary> Returns true if the component existed and was removed </summary>
         public static bool RemoveComponentInChildren<T>(this Component co) where T : Component
         {
             T component = co.GetComponentInChildren<T>();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JimmysUnityUtilities.Random;
@@ -115,16 +115,16 @@ namespace JimmysUnityUtilities
             for (int i = 0; i < max; i++)
             {
                 var subset = new List<T>();
-                uint bitmaskFuckery = 0;
+                uint bitmaskHaxority = 0;
 
-                while (bitmaskFuckery < array.Length)
+                while (bitmaskHaxority < array.Length)
                 {
-                    if ((i & (1u << (int)bitmaskFuckery)) > 0)
+                    if ((i & (1u << (int)bitmaskHaxority)) > 0)
                     {
-                        subset.Add(array[(int)bitmaskFuckery]);
+                        subset.Add(array[(int)bitmaskHaxority]);
                     }
 
-                    bitmaskFuckery++;
+                    bitmaskHaxority++;
                 }
 
                 yield return subset;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -62,7 +62,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
         }
 
         public bool IsReceivingData { get; private set; } = false;
-        public void StartRecievingData(Action<UdpReceiveResult> onDataRecieved)
+        public void StartReceivingData(Action<UdpReceiveResult> onDataReceived)
         {
             if (IsReceivingData)
                 throw new InvalidOperationException("A data receiving thread is already running");
@@ -72,7 +72,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
                 while (!this.IsDisposed)
                 {
                     var receivedResults = await Client.ReceiveAsync();
-                    onDataRecieved.Invoke(receivedResults);
+                    onDataReceived.Invoke(receivedResults);
                 }
             });
 

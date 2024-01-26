@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using UnityEngine;
 
@@ -93,7 +93,7 @@ namespace JimmysUnityUtilities
         public static bool IsOdd(this int value)
             => !value.IsEven();
 
-        /// <summary> This is usefully disctinct from Math.Pow because it uses integers. </summary>
+        /// <summary> This is usefully distinct from Math.Pow because it uses integers. </summary>
         public static int ToThePowerOf(this int @base, int exponent)
         {
             if (exponent < 0)
