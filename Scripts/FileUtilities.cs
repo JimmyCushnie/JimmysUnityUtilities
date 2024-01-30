@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -236,7 +236,7 @@ namespace JimmysUnityUtilities
             // However, I can't make the string comparison always case-insensitive, because then we'll get false positives on case-sensitive file systems!
             // Ideally, we'd check whether the file system referenced by each path is case-sensitive, and adjust the string comparison accordingly. However, as far as I can
             // tell this is impossible in C#.
-            // We could use an heuristic like `caseSensitive = OS != Windows`, but this will NOT work in every situation and I prefer consistently nonideal behavior to 
+            // We could use an heuristic like `caseSensitive = OS != Windows`, but this will NOT work in every situation and I prefer consistently non-ideal behavior to 
             // behavior that breaks sometimes in a sneaky hard-to-anticipate way.
             // I think being always-case-sensitive is the best compromise for now, but I'd really like to improve this in the future... maybe .NET will implement this function
             // in the standard library and I'll be able to just delete all this lol

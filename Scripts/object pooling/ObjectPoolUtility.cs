@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -75,7 +75,7 @@ namespace JimmysUnityUtilities
                 return;
 
             Object.Destroy(_InactiveObjectParent);
-            _InactiveObjectParent = null; // Set this explicity so that the "is null" check works.
+            _InactiveObjectParent = null; // Set this explicitly so that the "is null" check works.
 
             InactiveObjectPool.Clear();
         }

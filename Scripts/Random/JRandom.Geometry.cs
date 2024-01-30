@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace JimmysUnityUtilities.Random
 {
@@ -25,19 +25,19 @@ namespace JimmysUnityUtilities.Random
             => Range(0d, Tau);
 
 
-        /// <summary> Gets a random point on the edge of a circle ceneterd on (0, 0) with a radius of 1. </summary>
+        /// <summary> Gets a random point on the edge of a circle centered on (0, 0) with a radius of 1. </summary>
         public Vector2 PointOnUnitCircle()
             => UnityEngine.Vector2.up.Rotate(AngleDegrees()); // could be optimized
 
-        /// <summary> Gets a random point within a circle ceneterd on (0, 0) with a radius of 1. </summary>
+        /// <summary> Gets a random point within a circle centered on (0, 0) with a radius of 1. </summary>
         public Vector2 PointWithinUnitCircle()
             => PointOnUnitCircle() * Fraction();
 
-        /// <summary> Gets a random point on the edge of a circle ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        /// <summary> Gets a random point on the edge of a circle centered on (0, 0) with a radius of <paramref name="radius"/>. </summary>
         public Vector2 PointOnCircle(float radius)
             => PointOnUnitCircle() * radius;
 
-        /// <summary> Gets a random point within a circle ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        /// <summary> Gets a random point within a circle centered on (0, 0) with a radius of <paramref name="radius"/>. </summary>
         public Vector2 PointWithinCircle(float radius)
             => PointWithinUnitCircle() * radius;
 
@@ -47,16 +47,16 @@ namespace JimmysUnityUtilities.Random
         // https://codegolf.stackexchange.com/q/191510
         // https://mathworld.wolfram.com/SpherePointPicking.html
 
-        /// <summary> Gets a random point on the edge of a sphere ceneterd on (0, 0) with a radius of 1. </summary>
+        /// <summary> Gets a random point on the edge of a sphere centered on (0, 0) with a radius of 1. </summary>
         public Vector3 PointOnUnitSphere()
             => Rotation3D() * UnityEngine.Vector3.up;
 
-        /// <summary> Gets a random point on the edge of a sphere ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        /// <summary> Gets a random point on the edge of a sphere centered on (0, 0) with a radius of <paramref name="radius"/>. </summary>
         public Vector3 PointOnSphere(float radius)
             => PointOnUnitSphere() * radius;
 
 
-        /// <summary> Gets a random point within a sphere ceneterd on (0, 0) with a radius of 1. </summary>
+        /// <summary> Gets a random point within a sphere centered on (0, 0) with a radius of 1. </summary>
         public Vector3 PointWithinUnitSphere()
         {
             // Choose random points in a cube until we find one within the sphere
@@ -71,7 +71,7 @@ namespace JimmysUnityUtilities.Random
             return candidate;
         }
 
-        /// <summary> Gets a random point within a sphere ceneterd on (0, 0) with a radius of <paramref name="radius"/>. </summary>
+        /// <summary> Gets a random point within a sphere centered on (0, 0) with a radius of <paramref name="radius"/>. </summary>
         public Vector3 PointWithinSphere(float radius)
         {
             float radiusSquared = radius * radius; // square root is a very expensive operation; by comparing to radiusSquared, we save a lot of CPU time

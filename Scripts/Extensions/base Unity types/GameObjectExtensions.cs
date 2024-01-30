@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Component = UnityEngine.Component;
 using Object = UnityEngine.Object;
 
@@ -14,7 +14,7 @@ namespace JimmysUnityUtilities
             return component;
         }
 
-        ///<summary> returns true if the component existsed and was removed </summary>
+        ///<summary> returns true if the component existed and was removed </summary>
         public static bool RemoveComponent<T>(this GameObject go) where T : Component
         {
             T component = go.GetComponent<T>();
@@ -39,7 +39,7 @@ namespace JimmysUnityUtilities
             return false;
         }
 
-        ///<summary> returns true if the component existsed and was removed </summary>
+        ///<summary> returns true if the component existed and was removed </summary>
         public static bool RemoveComponentImmediate<T>(this GameObject go) where T : Component
         {
             T component = go.GetComponent<T>();

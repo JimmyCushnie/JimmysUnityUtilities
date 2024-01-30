@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
@@ -59,7 +59,7 @@ namespace JimmysUnityUtilities.Networking.Broadcasting
                     foreach (var broadcaster in AllBroadcasters)
                     {
                         if (!broadcaster.IsReceivingData)
-                            broadcaster.StartRecievingData(OnBroadcastDataReceived);
+                            broadcaster.StartReceivingData(OnBroadcastDataReceived);
                     }
                 }
             }
