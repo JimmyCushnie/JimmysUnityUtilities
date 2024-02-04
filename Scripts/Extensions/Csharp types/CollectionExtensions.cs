@@ -326,6 +326,27 @@ namespace JimmysUnityUtilities
             return true;
         }
 
+        public static bool IsFullyIncludedWithSameKeyAndValuesIn<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> subsetDictionary, IReadOnlyDictionary<TKey, TValue> supersetDictionary, IEqualityComparer<TValue> valueComparer = null)
+        {
+            if (subsetDictionary.Count > supersetDictionary.Count)
+                return false;
+
+            valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;
+
+            foreach (var subsetEntry in subsetDictionary)
+            {
+                var (subsetKey, subsetValue) = (subsetEntry.Key, subsetEntry.Value);
+
+                if (!supersetDictionary.TryGetValue(subsetKey, out var supersetValue))
+                    return false;
+
+                if (!valueComparer.Equals(subsetValue, supersetValue))
+                    return false;
+            }
+
+            return true;
+        }
+
 
 
         public static T[] Duplicate<T>(this T[] sourceArray)
