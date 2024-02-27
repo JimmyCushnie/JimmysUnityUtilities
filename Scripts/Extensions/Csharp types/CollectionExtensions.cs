@@ -57,7 +57,7 @@ namespace JimmysUnityUtilities
             list.RemoveAt(lastIndex);
         }
 
-        public static void RemoveAllItemsAtAndAfter<T>(this IList<T> list, int startRemovingAtThisIndex)
+        public static void RemoveAllItemsAtAndAfter<T>(this List<T> list, int startRemovingAtThisIndex)
         {
             if (startRemovingAtThisIndex < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(startRemovingAtThisIndex)} must be at least 0");
@@ -66,9 +66,7 @@ namespace JimmysUnityUtilities
                 throw new ArgumentOutOfRangeException($"{nameof(startRemovingAtThisIndex)} must be less than the list's count");
 
 
-            int maxListCount = startRemovingAtThisIndex;
-            while (list.Count > maxListCount)
-                list.RemoveAt(list.Count - 1);
+            list.RemoveRange(startRemovingAtThisIndex, list.Count - startRemovingAtThisIndex);
         }
 
         public static void EnsureCapacity<T>(this List<T> list, int minimumCapacity)
