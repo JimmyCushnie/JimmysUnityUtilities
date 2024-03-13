@@ -107,5 +107,15 @@ namespace JimmysUnityUtilities
 
         public static Vector3 ScaleBy(this Vector3Int vector, float factor)
             => new Vector3(vector.x * factor, vector.y * factor, vector.z * factor);
+
+
+        /// <summary>
+        /// Gets a vector perpendicular to <paramref name="vector"/>. This method is deterministic, so the same input will always get the same output.
+        /// </summary>
+        public static Vector3 GetPerpendicularVector(this Vector3 vector)
+        {
+            Vector3 comparisonVector = vector.IsPrettyCloseToBeingParallelWith(Vector3.up) ? Vector3.right : Vector3.up;
+            return Vector3.Cross(vector, comparisonVector).normalized;
+        }
     }
 }
