@@ -48,7 +48,7 @@ namespace JimmysUnityUtilities
         public static bool IsPrettyCloseToBeingPerpendicularWith(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
             => Vector3.Dot(vectorA, vectorB).IsPrettyCloseTo(0, dotMarginOfError);
 
-        public static bool IsPrettyCloseToPointingAlongSameAxisAs(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
+        public static bool IsPrettyCloseToBeingParallelWith(this Vector3 vectorA, Vector3 vectorB, float dotMarginOfError = 0.05f)
             => vectorA.IsPrettyCloseToPointingInTheSameDirectionAs(vectorB, dotMarginOfError) || vectorA.IsPrettyCloseToPointingInTheOppositeDirectionAs(vectorB, dotMarginOfError);
 
 
