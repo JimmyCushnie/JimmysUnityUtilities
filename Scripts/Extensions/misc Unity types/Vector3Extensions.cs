@@ -117,5 +117,18 @@ namespace JimmysUnityUtilities
             Vector3 comparisonVector = vector.IsPrettyCloseToBeingParallelWith(Vector3.up) ? Vector3.right : Vector3.up;
             return Vector3.Cross(vector, comparisonVector).normalized;
         }
+
+
+        public static Vector3 RotateAroundPivot(this Vector3 point, Vector3 pivot, Quaternion rotation)
+        {
+            // Step 1: Translate the point to pivot
+            Vector3 translatedPoint = point - pivot;
+
+            // Step 2: Rotate it
+            translatedPoint = rotation * translatedPoint;
+
+            // Step 3: Translate back
+            return translatedPoint + pivot;
+        }
     }
 }
