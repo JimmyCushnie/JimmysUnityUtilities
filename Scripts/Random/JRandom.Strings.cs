@@ -18,19 +18,32 @@ namespace JimmysUnityUtilities.Random
         }
 
 
-        private static readonly char[] UppercaseAlphanumericCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
+        private static readonly char[] UppercaseAlphanumericChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
         public string UppercaseAlphanumericString(int length)
-            => GenerateRandomString(UppercaseAlphanumericCharacters, length);
+            => GenerateRandomString(UppercaseAlphanumericChars, length);
 
-        private static readonly char[] LowercaseAlphanumericCharacters = "abcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
+        private static readonly char[] LowercaseAlphanumericChars = "abcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
         public string LowercaseAlphanumericString(int length)
-            => GenerateRandomString(LowercaseAlphanumericCharacters, length);
+            => GenerateRandomString(LowercaseAlphanumericChars, length);
 
-        private static readonly char[] MixedCaseAlphanumericCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
+        private static readonly char[] MixedCaseAlphanumericChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
         public string MixedCaseAlphanumericString(int length)
-            => GenerateRandomString(MixedCaseAlphanumericCharacters, length);
+            => GenerateRandomString(MixedCaseAlphanumericChars, length);
 
-        // todo more useful string methods
-        // todo generate random strings of emojis lmao
+        private static readonly char[] UppercaseLettersChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        public string UppercaseLetters(int length)
+            => GenerateRandomString(UppercaseLettersChars, length);
+
+        private static readonly char[] LowercaseLettersChars = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        public string LowercaseLetters(int length)
+            => GenerateRandomString(LowercaseLettersChars, length);
+
+        private static readonly char[] MixedCaseLettersChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
+        public string MixedCaseLetters(int length)
+            => GenerateRandomString(MixedCaseLettersChars, length);
+
+        private static readonly char[] FaceEmojiChars = "😀😁😂🤣😃😄😅😆😉😊😋😎😍😘🥰😗😙😚🙂🤗🤩🤔🤨😐😑😶🙄😏😣😥😮🤐😯😪😫🥱😴😌😛😜😝🤤😒😓😔😕🙃🤑😲☹🙁😖😞😟😤😢😭😦😧😨😩🤯😬😰😱🥵🥶😳🤪😵🥴😠😡🤬😷🤒🤕🤢🤮🤧😇🥳🥺🤡🤠🤥🤫🤭🧐🤓".ToCharArray();
+        public string FaceEmojis(int length)
+            => GenerateRandomString(FaceEmojiChars, length);
     }
 }
