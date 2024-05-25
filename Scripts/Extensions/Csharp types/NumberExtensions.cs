@@ -68,6 +68,11 @@ namespace JimmysUnityUtilities
             return value;
         }
 
+        public static float Remap(this float value, float fromMin, float fromMax, float toMin, float toMax)
+        {
+            return (value - fromMin) / (fromMax - fromMin) * (toMax - toMin) + toMin;
+        }
+
         public static bool IsBetween(this int value, int minInclusive, int maxInclusive)
         {
             if (value < minInclusive || value > maxInclusive)
