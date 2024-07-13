@@ -31,7 +31,10 @@ namespace JimmysUnityUtilities
         public HashList(IEnumerable<T> collection)
         {
             _List = new List<T>(collection);
-            _HashSet = new HashSet<T>(collection);
+            
+            // Initializing the hashset with the list is somewhat faster if the collection is a type that has slow iteration, plus it stops
+            // my IDE from bugging me with a warning about "possible double iteration"
+            _HashSet = new HashSet<T>(_List);
         }
         
         
