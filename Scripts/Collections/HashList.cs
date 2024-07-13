@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JimmysUnityUtilities
+namespace JimmysUnityUtilities.Collections
 {
     /// <summary>
     /// A hybrid of List and HashSet that has the best of both: a specific order and fast iteration performance, but also fast Contains() checks.

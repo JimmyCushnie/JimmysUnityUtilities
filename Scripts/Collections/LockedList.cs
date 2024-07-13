@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace JimmysUnityUtilities.Threading
+namespace JimmysUnityUtilities.Collections
 {
     /// <summary>
     /// An implementation of <see cref="IList{T}"/> that is thread-safe; it acquires a lock before executing any read or write operation.
