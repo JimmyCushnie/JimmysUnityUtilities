@@ -14,11 +14,9 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Save a Texture2D to disk as PNG or JPG.
         /// </summary>
-        /// <param name="path">The rooted path of the file. Extension optional.</param>
-        public static void SaveImageToDisk(Texture2D texture, string path, ImageFormat format = ImageFormat.PNG)
+        /// <param name="filePath">The rooted path of the file. Extension optional.</param>
+        public static void SaveImageToDisk(Texture2D texture, string filePath, ImageFormat format = ImageFormat.PNG)
         {
-            path = Path.ChangeExtension(path, format.ToString().ToLower());
-
             byte[] data;
             switch (format)
             {
@@ -30,8 +28,12 @@ namespace JimmysUnityUtilities
                     data = texture.EncodeToJPG();
                     break;
             }
-
-            File.WriteAllBytes(path, data);
+            
+            filePath = Path.ChangeExtension(filePath, format.ToString().ToLower());
+            string directoryPath = Path.GetDirectoryName(filePath);
+            
+            Directory.CreateDirectory(directoryPath); // ensure directory exists before we try to save to it
+            File.WriteAllBytes(filePath, data);
         }
 
         /// <summary>
