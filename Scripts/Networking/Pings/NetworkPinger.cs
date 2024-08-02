@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
-using JimmysUnityUtilities.Threading;
+using JimmysUnityUtilities.Collections;
 
 namespace JimmysUnityUtilities.Networking.Pings
 {
@@ -61,7 +61,7 @@ namespace JimmysUnityUtilities.Networking.Pings
                     }
                 }
 
-                if (TargetAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                if (TargetAddress.AddressFamily == AddressFamily.InterNetworkV6)
                 {
                     // Sorry about this... Mono's Ping() doesn't support IPv6. I tried to add support (see the 'fixedping' branch) but
                     // Unity's Mono fork has a bug where you can't create IPv6 ICMP sockets. This bug is *not* present on upstream
