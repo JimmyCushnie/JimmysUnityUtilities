@@ -25,9 +25,18 @@ namespace JimmysUnityUtilities
             );
         }
 
-        public static Vector2 ClampDimensions(this Vector2 value, Vector2 min, Vector2 max)
+        public static Vector2 Clamped(this Vector2 value, Vector2 min, Vector2 max)
         {
             return new Vector2
+                (
+                Mathf.Clamp(value.x, min.x, max.x),
+                Mathf.Clamp(value.y, min.y, max.y)
+                );
+        }
+
+        public static Vector2Int Clamped(this Vector2Int value, Vector2Int min, Vector2Int max)
+        {
+            return new Vector2Int
                 (
                 Mathf.Clamp(value.x, min.x, max.x),
                 Mathf.Clamp(value.y, min.y, max.y)
