@@ -11,7 +11,7 @@ namespace JimmysUnityUtilities.Collections
     {
         private readonly Dictionary<TKey, List<TValue>> BackingDictionary = new Dictionary<TKey, List<TValue>>();
 
-        public void AddAt(TKey key, TValue value)
+        public void AddValueAt(TKey key, TValue value)
         {
             if (BackingDictionary.TryGetValue(key, out var list))
             {
@@ -23,7 +23,7 @@ namespace JimmysUnityUtilities.Collections
             }
         }
 
-        public IList<TValue> GetAt(TKey key)
+        public IReadOnlyList<TValue> GetValuesAt(TKey key)
         {
             if (BackingDictionary.TryGetValue(key, out var list))
                 return list;
@@ -31,12 +31,15 @@ namespace JimmysUnityUtilities.Collections
             return Array.Empty<TValue>();
         }
 
+        public bool ContainsValuesAt(TKey key)
+            => BackingDictionary.TryGetValue(key, out var list) && list.IsNotEmpty();
+
         public void Clear()
         {
             BackingDictionary.Clear();
         }
 
-        public void ClearAt(TKey key)
+        public void ClearValuesAt(TKey key)
         {
             BackingDictionary.Remove(key);
         }

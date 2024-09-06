@@ -87,6 +87,9 @@ namespace JimmysUnityUtilities
         public static bool IsEmpty<T>(this IEnumerable<T> collection)
             => !collection.Any();
 
+        public static bool IsNotEmpty<T>(this IEnumerable<T> collection)
+            => !collection.IsEmpty();
+
 
         public static IEnumerable<T> Subsequence<T>(this IReadOnlyList<T> list, int startIndex)
         {
