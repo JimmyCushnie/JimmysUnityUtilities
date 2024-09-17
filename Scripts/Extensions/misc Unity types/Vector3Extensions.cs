@@ -22,16 +22,16 @@ namespace JimmysUnityUtilities
                 value.z.IsBetween(minInclusive.z, maxInclusive.z);
         }
 
-        public static Vector3 CapRange(this Vector3 value, float maxX, float maxY, float maxZ)
-            => CapRange(value, new Vector3(maxX, maxY, maxZ));
+        public static Vector3 WrapRange(this Vector3 value, float maxX, float maxY, float maxZ)
+            => WrapRange(value, new Vector3(maxX, maxY, maxZ));
 
-        public static Vector3 CapRange(this Vector3 value, Vector3 max)
+        public static Vector3 WrapRange(this Vector3 value, Vector3 max)
         {
             return new Vector3
                 (
-                value.x.CapRange(max.x),
-                value.y.CapRange(max.y),
-                value.z.CapRange(max.z)
+                value.x.WrapRange(max.x),
+                value.y.WrapRange(max.y),
+                value.z.WrapRange(max.z)
                 );
         }
 

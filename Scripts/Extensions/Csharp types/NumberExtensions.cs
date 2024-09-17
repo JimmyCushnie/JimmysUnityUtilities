@@ -10,7 +10,7 @@ namespace JimmysUnityUtilities
         /// Used for effectively making a loop for a float, so that if it goes below zero it wraps around back to max, and if it goes above max it wraps around back to zero. </p>
         /// A common use is keeping degree floats between 0 and 360.
         /// </summary>
-        public static float CapRange(this float value, float max)
+        public static float WrapRange(this float value, float max)
         {
             // This is distinct from using modulus because it prevents negative values.
 
@@ -26,7 +26,7 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Used for effectively making a loop for the number, so that if it goes below min it wraps around back to max, and if it goes above max it wraps around back to min.
         /// </summary>
-        public static int CapRange(this int value, int max, int min = 0)
+        public static int WrapRange(this int value, int max, int min = 0)
         {
             if (max < min)
                 throw new ArgumentException($"{nameof(max)} must be greater than or equal to {nameof(min)}");
