@@ -39,7 +39,7 @@ namespace JimmysUnityUtilities.Collections
             BackingDictionary.Clear();
         }
 
-        public void ClearValuesAt(TKey key)
+        public void RemoveAllValuesAt(TKey key)
         {
             BackingDictionary.Remove(key);
         }
