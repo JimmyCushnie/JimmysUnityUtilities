@@ -8,6 +8,7 @@ namespace JimmysUnityUtilities
     public static class CollectionExtensions
     {
         public static T GetRandomElement<T>(this IReadOnlyList<T> list) => JRandom.Shared.RandomElementOf(list);
+        public static T GetRandomElement<T>(this IEnumerable<T> collection) => GetRandomElement(collection.ToArray());
 
         public static void SwapPositions<T>(this IList<T> list, int index1, int index2)
         {
