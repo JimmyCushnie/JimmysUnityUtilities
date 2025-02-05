@@ -31,10 +31,10 @@ namespace JimmysUnityUtilities
                 {
                     webRequest.SendWebRequest();
 
-                    while (!webRequest.isNetworkError && !webRequest.isDone)
+                    while (webRequest.result != UnityWebRequest.Result.ConnectionError && !webRequest.isDone)
                         yield return null;
 
-                    if (webRequest.isNetworkError)
+                    if (webRequest.result == UnityWebRequest.Result.ConnectionError)
                     {
                         Debug.LogError($"Error loading audio at {filePath}!{Environment.NewLine}{webRequest.error}");
                         yield break;

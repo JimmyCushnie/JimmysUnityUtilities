@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JimmysUnityUtilities.EqualityComparers;
 using TMPro;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace JimmysUnityUtilities.TextTextures
         public HorizontalAlignmentOptions horizontalAlignment { get; set; }
         public VerticalAlignmentOptions verticalAlignment { get; set; }
 
-        public bool enableWordWrapping { get; set; }
+        public TextWrappingModes textWrappingMode { get; set; }
         public float wordWrappingRatios { get; set; }
         public TextOverflowModes overflowMode { get; set; }
 
@@ -63,7 +64,7 @@ namespace JimmysUnityUtilities.TextTextures
         public TMP_SpriteAsset spriteAsset { get; set; }
         public TMP_StyleSheet styleSheet { get; set; }
 
-        public bool enableKerning { get; set; }
+        public List<UnityEngine.TextCore.OTL_FeatureTag> fontFeatures { get; set; }
         public bool extraPadding { get; set; }
 
 
@@ -104,7 +105,7 @@ namespace JimmysUnityUtilities.TextTextures
             data.horizontalAlignment = source.horizontalAlignment;
             data.verticalAlignment = source.verticalAlignment;
 
-            data.enableWordWrapping = source.enableWordWrapping;
+            data.textWrappingMode = source.textWrappingMode;
             data.wordWrappingRatios = source.wordWrappingRatios;
             data.overflowMode = source.overflowMode;
 
@@ -118,7 +119,7 @@ namespace JimmysUnityUtilities.TextTextures
             data.spriteAsset = source.spriteAsset;
             data.styleSheet = source.styleSheet;
 
-            data.enableKerning = source.enableKerning;
+            data.fontFeatures = source.fontFeatures;
             data.extraPadding = source.extraPadding;
 
             return data;
@@ -159,7 +160,7 @@ namespace JimmysUnityUtilities.TextTextures
             target.horizontalAlignment = this.horizontalAlignment;
             target.verticalAlignment = this.verticalAlignment;
 
-            target.enableWordWrapping = this.enableWordWrapping;
+            target.textWrappingMode = this.textWrappingMode;
             target.wordWrappingRatios = this.wordWrappingRatios;
             target.overflowMode = this.overflowMode;
 
@@ -173,7 +174,7 @@ namespace JimmysUnityUtilities.TextTextures
             target.spriteAsset = this.spriteAsset;
             target.styleSheet = this.styleSheet;
 
-            target.enableKerning = this.enableKerning;
+            target.fontFeatures = this.fontFeatures;
             target.extraPadding = this.extraPadding;
         }
 
@@ -214,7 +215,7 @@ namespace JimmysUnityUtilities.TextTextures
                 && horizontalAlignment == other.horizontalAlignment
                 && verticalAlignment == other.verticalAlignment
 
-                && enableWordWrapping == other.enableWordWrapping
+                && textWrappingMode == other.textWrappingMode
                 && wordWrappingRatios == other.wordWrappingRatios
                 && overflowMode == other.overflowMode
 
@@ -228,7 +229,7 @@ namespace JimmysUnityUtilities.TextTextures
                 && spriteAsset == other.spriteAsset //!
                 && styleSheet == other.styleSheet //!
 
-                && enableKerning == other.enableKerning
+                && fontFeatures.SequenceEqual(other.fontFeatures)
                 && extraPadding == other.extraPadding;
         }
 
@@ -267,7 +268,7 @@ namespace JimmysUnityUtilities.TextTextures
                 hashCode = hashCode * -1521134295 + alignment.GetHashCode();
                 hashCode = hashCode * -1521134295 + horizontalAlignment.GetHashCode();
                 hashCode = hashCode * -1521134295 + verticalAlignment.GetHashCode();
-                hashCode = hashCode * -1521134295 + enableWordWrapping.GetHashCode();
+                hashCode = hashCode * -1521134295 + textWrappingMode.GetHashCode();
                 hashCode = hashCode * -1521134295 + wordWrappingRatios.GetHashCode();
                 hashCode = hashCode * -1521134295 + overflowMode.GetHashCode();
                 hashCode = hashCode * -1521134295 + horizontalMapping.GetHashCode();
@@ -277,7 +278,7 @@ namespace JimmysUnityUtilities.TextTextures
                 hashCode = hashCode * -1521134295 + parseCtrlCharacters.GetHashCode();
                 hashCode = hashCode * -1521134295 + EqualityComparer<TMP_SpriteAsset>.Default.GetHashCode(spriteAsset);
                 hashCode = hashCode * -1521134295 + EqualityComparer<TMP_StyleSheet>.Default.GetHashCode(styleSheet);
-                hashCode = hashCode * -1521134295 + enableKerning.GetHashCode();
+                hashCode = hashCode * -1521134295 + fontFeatures.Sum(x => x.GetHashCode());
                 hashCode = hashCode * -1521134295 + extraPadding.GetHashCode();
                 return hashCode;
             }
