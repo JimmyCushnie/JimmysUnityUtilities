@@ -136,7 +136,7 @@ namespace JimmysUnityUtilities
 
             string extension = Path.GetExtension(filePath);
             if (!CanLoadFileType(extension, out audioType))
-                throw new Exception($"Cannot load audio file at {filePath}; wrong type. Supported types are .ogg, .wav and .mp3.");
+                throw new Exception($"Cannot load audio file at {filePath}; unsupported type. Supported types are .ogg, .wav, .mp3 and .aif/.aiff.");
         }
 
         private static bool CanLoadFileType(string extension, out AudioType audioType)
