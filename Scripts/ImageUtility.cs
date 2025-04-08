@@ -50,11 +50,24 @@ namespace JimmysUnityUtilities
                 return null;
 
 
+            var bytes = File.ReadAllBytes(path);
+            return LoadImageFromBytes(bytes, options);
+        }
+
+        /// <summary>
+        /// Load a PNG or JPG from bytes into a Texture2D.
+        /// </summary>
+        /// <param name="bytes">All bytes contained in an image file.</param>
+        /// <returns>Null if the bytes failed to load.</returns>
+        public static Texture2D LoadImageFromBytes(byte[] bytes)
+            => LoadImageFromBytes(bytes, LoadOptions.Default);
+
+        public static Texture2D LoadImageFromBytes(byte[] bytes, LoadOptions options)
+        {
             // See https://docs.unity3d.com/ScriptReference/ImageConversion.LoadImage.html for compression details
             // See https://docs.unity3d.com/ScriptReference/Texture2D-ctor.html for non-compression details
             var format = options.CompressLoadedTextureInMemory ? TextureFormat.DXT1 : TextureFormat.RGBA32;
 
-            var bytes = File.ReadAllBytes(path);
             var texture = new Texture2D(4, 4, format, options.UseMipMaps); // Must be at least 4; 2x2 textures can't be created with mipmaps enabled. This, of course, isn't documented anywhere, and the error you get doesn't mention it at all. Fuck you unity
 
             if (!texture.LoadImage(bytes, options.MarkLoadedTextureReadOnly))
