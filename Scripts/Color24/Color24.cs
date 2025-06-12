@@ -28,13 +28,13 @@ namespace JimmysUnityUtilities
             this.b = (byte)(hex & 0xFF);
         }
 
-        public Color32 WithOpacity(byte opacity = byte.MaxValue)
-            => new Color32(r, g, b, opacity);
+        public Color32 WithAlphaChannel(byte alpha = byte.MaxValue)
+            => new Color32(r, g, b, alpha);
 
-        public Color WithOpacity(float opacity)
+        public Color WithAlphaChannel(float alpha)
         {
-            Color color = this.WithOpacity();
-            color.a = opacity;
+            Color color = this.WithAlphaChannel();
+            color.a = alpha;
             return color;
         }
 
