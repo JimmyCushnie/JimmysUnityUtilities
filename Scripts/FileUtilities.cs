@@ -66,6 +66,12 @@ namespace JimmysUnityUtilities
             // I.e. if a Linux user creates something, they should be able to just send it to their Windows friends, and the Windows
             // friends shouldn't run into awkward confusing file system errors.
 
+
+            // On Linux the max a folder/filename may have is 255 ¿letters? (with ext4). On Windows most systems have a file PATH length maximum.
+            // If something is longer than 200 characters it most certainly is too long and should be cropped.
+            if (validatedName.Length > 200)
+                validatedName = validatedName[..200];
+
             //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 foreach (var illegalName in IllegalWindowsFileNames)
