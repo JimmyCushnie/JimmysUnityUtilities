@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -323,9 +324,45 @@ namespace JimmysUnityUtilities
             => ByteCountToHumanReadableString(GetDirectorySizeInBytes(directoryPath), decimalsToRoundTo);
 
 
-        public static void OpenInFileExplorer(string path)
-            => System.Diagnostics.Process.Start(path);
+        public static void OpenDirectoryInFileManager(string directoryPath)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Use explorer.exe
+                Process.Start("explorer.exe", $"\"{directoryPath}\"");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // The "open" command launches Finder or the associated GUI app to the specified directory.
+                Process.Start("open", $"\"{directoryPath}\"");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                // The freedesktop.org standard specifies xdg-open as the generic way to open a file or URL using the system’s default application.
+                // Most desktop environments (GNOME, KDE, XFCE) implement it.
+                // xdg-open on a directory opens that directory in the user's file manager.
+                Process.Start("xdg-open", $"\"{directoryPath}\"");
+            }
+        }
 
+        public static void RevealFileInFileManager(string filePath)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Use explorer.exe with the /select flag.
+                Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // -R ("reveal") tells Finder to open the folder containing the file and highlight that file in the UI.
+                Process.Start("open", "-R \"" + filePath + "\"");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                // On Linux there is no way to open the file manager with a specific file selected, so we fall back to opening the directory containing the file.
+                OpenDirectoryInFileManager(Path.GetDirectoryName(filePath));
+            }
+        }
 
 
 
