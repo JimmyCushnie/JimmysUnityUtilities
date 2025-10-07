@@ -93,7 +93,13 @@ namespace JimmysUnityUtilities.TextTextures
             data.colorGradient = source.colorGradient;
             data.colorGradientPreset = source.colorGradientPreset;
             data.faceColor = source.faceColor;
-            data.outlineColor = source.outlineColor;
+
+            // This line (specifically the getter) will create errors in the Unity console if the source material shader doesn't have a color property '_OutlineColor'
+            // This is the case for the shader 'TextMeshPro/SRP/TMP_SDF-URP Lit' which is my main use case.
+            // Also, I never use this specific property.
+            // Since I don't want my Unity console filled with errors I am commenting it out.
+            // data.outlineColor = source.outlineColor;
+
             data.overrideColorTags = source.overrideColorTags;
 
             data.characterSpacing = source.characterSpacing;
@@ -136,7 +142,11 @@ namespace JimmysUnityUtilities.TextTextures
             target.isRightToLeftText = this.isRightToLeftText;
 
             target.font = this.font;
-            target.fontSharedMaterial = this.fontSharedMaterial;
+
+            // Although it loses visual accuracy, I'm commenting out this line.
+            // This is because I often want to create images of text, where the source text is affected by lighting, but I don't want the render of the text to be affected by lighting.
+            // So I don't want to copy the material because that screws up the lighting.
+            //target.fontSharedMaterial = this.fontSharedMaterial;
             target.fontStyle = this.fontStyle;
 
             target.fontSize = this.fontSize;
