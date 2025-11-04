@@ -9,7 +9,7 @@ namespace JimmysUnityUtilities
     public static class IPParser
     {
         /// <summary>
-        /// Like <see cref="ParseEndpoint(string, int)"/> but with graceful failure handling.
+        /// Like <see cref="ParseEndpoint(string, int, AddressFamily?)"/> but with graceful failure handling.
         /// </summary>
         public static bool TryParseEndpoint(string source, int defaultPort, out IPEndPoint endpoint, AddressFamily? preferredAddressType = null)
         {
@@ -28,7 +28,9 @@ namespace JimmysUnityUtilities
         /// <summary>
         /// Parse a string that refers to an IP endpoint in the format ip:port or [ip]:port (for IPv6). This is the kind of string a user might enter to connect to the server.
         /// </summary>
-        /// <param name="defaultPort">The port that will be returned if <paramref name="address"/> does not contain a port.</param>
+        /// <param name="source">The string to parse.</param>
+        /// <param name="defaultPort">The port that will be returned if <paramref name="source"/> does not contain a port.</param>
+        /// <param name="preferredAddressType">The preferred IP version in case multiple are available.</param>
         public static IPEndPoint ParseEndpoint(string source, int defaultPort, AddressFamily? preferredAddressType = null)
         {
             int addressLength = source.Length;
@@ -59,7 +61,7 @@ namespace JimmysUnityUtilities
         }
 
         /// <summary>
-        /// Like <see cref="ParseAddress(string)"/> but with graceful failure handling.
+        /// Like <see cref="ParseAddress(string, AddressFamily?)"/> but with graceful failure handling.
         /// </summary>
         public static bool TryParseAddress(string ip, out IPAddress ipAddress, AddressFamily? preferredAddressType = null)
         {
