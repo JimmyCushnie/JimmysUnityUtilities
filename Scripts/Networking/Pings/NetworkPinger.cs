@@ -32,7 +32,8 @@ namespace JimmysUnityUtilities.Networking.Pings
         Action<PingSuccess> PingSuccessCallback;
         Action<PingFailure> PingFailureCallback;
 
-        public void SendPing(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
+        public void SendPing(Action<PingSuccess> onPingSuccessCallback, Action<PingFailure> onPingFailureCallback, AddressFamily? preferredAddressType = null,
+            int numberOfSeparatePings = 10, int timeOutMilliseconds = 5000)
         {
             if (numberOfSeparatePings < 1)
                 throw new ArgumentException("Must be at least one", nameof(numberOfSeparatePings));
@@ -52,7 +53,7 @@ namespace JimmysUnityUtilities.Networking.Pings
                 {
                     try
                     {
-                        TargetAddress = IPParser.ParseAddress(HostNameOrAddress);
+                        TargetAddress = IPParser.ParseAddress(HostNameOrAddress, preferredAddressType);
                     }
                     catch
                     {
