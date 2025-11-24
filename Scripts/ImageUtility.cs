@@ -64,11 +64,7 @@ namespace JimmysUnityUtilities
 
         public static Texture2D LoadImageFromBytes(byte[] bytes, LoadOptions options)
         {
-            // See https://docs.unity3d.com/ScriptReference/ImageConversion.LoadImage.html for compression details
-            // See https://docs.unity3d.com/ScriptReference/Texture2D-ctor.html for non-compression details
-            var format = options.CompressLoadedTextureInMemory ? TextureFormat.DXT1 : TextureFormat.RGBA32;
-
-            var texture = new Texture2D(4, 4, format, options.UseMipMaps); // Must be at least 4; 2x2 textures can't be created with mipmaps enabled. This, of course, isn't documented anywhere, and the error you get doesn't mention it at all. Fuck you unity
+            var texture = new Texture2D(4, 4, options.TextureFormat, options.UseMipMaps); // Must be at least 4; 2x2 textures can't be created with mipmaps enabled. This, of course, isn't documented anywhere, and the error you get doesn't mention it at all. Fuck you unity
 
             if (!texture.LoadImage(bytes, options.MarkLoadedTextureReadOnly))
                 return null;
@@ -83,7 +79,7 @@ namespace JimmysUnityUtilities
         {
             public bool MarkLoadedTextureReadOnly;
             public bool UseMipMaps;
-            public bool CompressLoadedTextureInMemory;
+            public TextureFormat TextureFormat;
 
             /// <summary>
             /// Create a new instance of <see cref="LoadOptions"/>
@@ -91,14 +87,14 @@ namespace JimmysUnityUtilities
             /// <param name="markLoadedTextureReadOnly">If true, the loaded texture will be read-only, and use much less memory.</param>
             /// <param name="useMipMaps">Whether the loaded texture should have mipmaps.</param>
             /// <param name="compressLoadedTextureInMemory">Whether to compress the loaded texture in memory.</param>
-            public LoadOptions(bool markLoadedTextureReadOnly = true, bool useMipMaps = true, bool compressLoadedTextureInMemory = true)
+            public LoadOptions(bool markLoadedTextureReadOnly = true, bool useMipMaps = false, TextureFormat textureFormat = TextureFormat.RGBA32)
             {
                 this.MarkLoadedTextureReadOnly = markLoadedTextureReadOnly;
                 this.UseMipMaps = useMipMaps;
-                this.CompressLoadedTextureInMemory = compressLoadedTextureInMemory;
+                this.TextureFormat = textureFormat;
             }
 
-            public static LoadOptions Default => new LoadOptions(true, true, true);
+            public static LoadOptions Default => new(true, false, TextureFormat.RGBA32);
         }
     }
 }
