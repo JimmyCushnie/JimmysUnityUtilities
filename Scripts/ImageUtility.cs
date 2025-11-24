@@ -47,7 +47,7 @@ namespace JimmysUnityUtilities
         public static Texture2D LoadImageFromDisk(string path, LoadOptions options)
         {
             if (!File.Exists(path))
-                return null;
+                throw new FileNotFoundException("Failed to find file at path");
 
 
             var bytes = File.ReadAllBytes(path);
@@ -67,7 +67,7 @@ namespace JimmysUnityUtilities
             var texture = new Texture2D(4, 4, options.TextureFormat, options.UseMipMaps); // Must be at least 4; 2x2 textures can't be created with mipmaps enabled. This, of course, isn't documented anywhere, and the error you get doesn't mention it at all. Fuck you unity
 
             if (!texture.LoadImage(bytes, options.MarkLoadedTextureReadOnly))
-                return null;
+                throw new System.Exception("Failed to load image from bytes. Are you trying to load texture compressed in memory with dimensions that aren't divisible by 4?");
             
             return texture;
         }
